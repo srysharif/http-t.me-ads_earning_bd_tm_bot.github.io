@@ -78,7 +78,7 @@
 <body>
     <div class="container">
         <h1>Ad Watching App</h1>
-        <h2>সর্বনিম্ন উইন্ডো এমাউন্ট ৳20</h2>
+        <h2>সর্বনিম্ন উইন্ডো এমাউন্ট ৳10</h2>
         <div class="progress-circle" id="progress-circle">0%</div>
         <p>Watched Ads: <span id="watched-ads">0</span></p>
         <p>Earned Points: ৳<span id="earned-points">0.00</span></p>
@@ -134,7 +134,7 @@
         }
 
         function updateProgressBar() {
-            const progress = (watchedAds % 0.5) * 5;
+            const progress = (watchedAds % 10) * 5;
             document.getElementById('progress-circle').style.background = `conic-gradient(#4caf50 ${progress}%, #444 ${progress}%)`;
             document.getElementById('progress-circle').textContent = `${progress}%`;
         }
@@ -148,7 +148,7 @@
             const method = document.getElementById('payment-method').value;
             const phone = document.getElementById('phone-number').value;
 
-            if (amount < 0.5 || amount > earnedPoints) {
+            if (amount < 10 || amount > earnedPoints) {
                 alert('Invalid withdrawal amount.');
                 return;
             }
@@ -173,4 +173,5 @@
      <script src='//whephiwums.com/vignette.min.js' data-zone='9803310' data-sdk='show_9803310'></script>
 </body>
 </html>
+
 
