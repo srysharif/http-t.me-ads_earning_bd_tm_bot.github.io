@@ -95,14 +95,16 @@ input, select {
     color:#fff;
     font-size:15px;
 }
-.referral-link {
-    background: rgba(0,255,255,0.05);
-    padding:10px;
-    border-radius:10px;
+.referral-link-box {
+    background: linear-gradient(90deg,#00fff0,#00b8e6);
+    color:#000;
+    font-weight:bold;
+    padding:15px 10px;
+    border-radius:12px;
     margin-top:10px;
-    color:#00fff0;
+    box-shadow: 0 0 15px #00fff0, 0 0 25px #00b8e6;
     word-break: break-word;
-    box-shadow:0 0 10px #00fff0;
+    font-size:16px;
 }
 .daily-limit{
     margin-top:15px;
@@ -154,9 +156,9 @@ input, select {
 </div>
 
 <div class="referral-section">
-<h3>Your Referral Link</h3>
-<div class="referral-link" id="referral-link"></div>
-<p>Referrals add directly to your balance!</p>
+<h3>Your Referral Code</h3>
+<div class="referral-link-box" id="referral-link">REF-123456</div>
+<p>Each referral adds ৳0.20 to your balance!</p>
 </div>
 </div>
 
@@ -226,7 +228,7 @@ function watchAd(){
             document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
             updateProgress();
             updateAdButtonState();
-            showFloat('+0.2');
+            showFloat('+0.20');
 
         })
         .catch(()=>{
@@ -250,13 +252,13 @@ if(ref && ref!==userId.toString()){
     let refKey = `ref_${ref}_${userId}`;
     if(!localStorage.getItem(refKey)){
         localStorage.setItem(refKey,'1');
-        earnedPoints +=0.2;
+        earnedPoints +=0.20; // 0.20 per referral
         localStorage.setItem('earnedPoints', earnedPoints.toFixed(2));
         document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
-        showFloat('+0.2');
+        showFloat('+0.20');
     }
 }
-document.getElementById('referral-link').textContent = `${window.location.href}?ref=${userId}`;
+document.getElementById('referral-link').textContent = `REF-${userId}`;
 
 // Button Listeners
 document.getElementById('watch-ad-btn').addEventListener('click', watchAd);
@@ -287,4 +289,4 @@ updateAdButtonState();
 </script>
 <script src='//whephiwums.com/vignette.min.js' data-zone='9803310' data-sdk='show_9803310'></script>
 </body>
-    </html>
+</html>
