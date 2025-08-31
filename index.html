@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ad Watching Premium Digital</title>
+<title>Ad Watching Premium Neon</title>
 <style>
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin:0; padding:0;
-    background: linear-gradient(135deg,#1a1a2e,#162447);
+    background: linear-gradient(135deg,#0f0c29,#302b63,#24243e);
     color:#fff;
     text-align:center;
 }
@@ -19,12 +19,13 @@ body {
     background: rgba(255,255,255,0.05);
     border-radius:20px;
     box-shadow: 0 0 30px rgba(0,255,255,0.3);
+    backdrop-filter: blur(10px);
 }
 h1 {
-    font-size:26px;
+    font-size:28px;
     font-weight:800;
     color:#00fff0;
-    text-shadow:0 0 10px #00fff0;
+    text-shadow:0 0 10px #00fff0,0 0 20px #00fff0;
 }
 h2 {
     font-size:14px;
@@ -82,6 +83,7 @@ button:hover{
     border-radius:15px;
     margin-top:20px;
     box-shadow:0 0 15px #00fff0;
+    backdrop-filter: blur(10px);
 }
 input, select {
     width:90%;
@@ -171,33 +173,29 @@ if(!userId){ userId=Math.floor(Math.random()*1000000); localStorage.setItem('use
 
 // Daily limit
 const DAILY_LIMIT = 100;
-let dailyInfo = JSON.parse(localStorage.getItem('dailyInfo')||'{}');
-const today = new Date().toLocaleDateString();
-if(dailyInfo.date!==today){ dailyInfo={date:today,count:0}; localStorage.setItem('dailyInfo',JSON.stringify(dailyInfo)); }
-updateAdButtonState();
+let today = new Date().toLocaleDateString();
+let dailyInfo = JSON.parse(localStorage.getItem('dailyInfo') || '{}');
+if(dailyInfo.date !== today){
+    dailyInfo = { date: today, remaining: DAILY_LIMIT };
+    localStorage.setItem('dailyInfo', JSON.stringify(dailyInfo));
+}
 
-// Referral
-let urlParams = new URLSearchParams(window.location.search);
-let ref = urlParams.get('ref');
-if(ref && ref!==userId.toString()){
-    let refKey = `ref_${ref}_${userId}`;
-    if(!localStorage.getItem(refKey)){
-        localStorage.setItem(refKey,'1');
-        earnedPoints +=0.5;
-        localStorage.setItem('earnedPoints', earnedPoints.toFixed(2));
-        document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
-        showFloat('+0.5');
+// Update ad button and daily remaining
+function updateAdButtonState(){
+    const btn = document.getElementById('watch-ad-btn');
+    const limitText = document.querySelector('.daily-limit');
+    if(dailyInfo.remaining <= 0){
+        btn.disabled = true;
+        btn.textContent = "Daily Limit Reached";
+        limitText.textContent = "Daily Limit: 0 Ads";
+    } else {
+        btn.disabled = false;
+        btn.textContent = "Watch Ad";
+        limitText.textContent = `Daily Limit: ${dailyInfo.remaining} Ads`;
     }
 }
-document.getElementById('referral-link').textContent = `${window.location.origin+window.location.pathname}?ref=${userId}`;
 
-// Buttons
-document.getElementById('watch-ad-btn').addEventListener('click',watchAd);
-document.getElementById('withdraw-btn').addEventListener('click',()=>{document.getElementById('withdraw-section').classList.toggle('hidden');});
-document.getElementById('submit-withdraw').addEventListener('click',withdrawPoints);
-document.getElementById('join-btn').addEventListener('click',()=>{window.location.href="https://t.me/SHARIF_BD_TM_2_0";});
-
-// Function to show floating points
+// Show floating points
 function showFloat(text){
     const floatEl = document.createElement('div');
     floatEl.className = 'point-float';
@@ -208,59 +206,85 @@ function showFloat(text){
     setTimeout(()=>{floatEl.remove()},1000);
 }
 
-// Watch Ad Function (Points added only after full ad)
+// Watch Ad Function
 function watchAd(){
-    if(dailyInfo.count>=DAILY_LIMIT) return;
-    document.getElementById('watch-ad-btn').disabled=true;
+    if(dailyInfo.remaining <= 0) return;
+    document.getElementById('watch-ad-btn').disabled = true;
 
     if(typeof show_9803310==='function'){
         show_9803310()
         .then(()=>{
-            // Only after full ad
             watchedAds++;
-            earnedPoints+=0.2;
+            earnedPoints += 0.2;
+            dailyInfo.remaining--;
+
             localStorage.setItem('watchedAds', watchedAds);
             localStorage.setItem('earnedPoints', earnedPoints.toFixed(2));
-            document.getElementById('watched-ads').textContent = watchedAds;
-            document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
-
-            dailyInfo.count++;
             localStorage.setItem('dailyInfo', JSON.stringify(dailyInfo));
 
+            document.getElementById('watched-ads').textContent = watchedAds;
+            document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
             updateProgress();
             updateAdButtonState();
             showFloat('+0.2');
+
         })
-        .catch(()=>{ // Ad skipped
+        .catch(()=>{
             console.log("Ad not completed, no points added");
             updateAdButtonState();
         });
-    } else { updateAdButtonState();}
+    } else { updateAdButtonState(); }
 }
 
+// Update progress circle
 function updateProgress(){
     const progress = (watchedAds%10)*10;
     document.getElementById('progress-circle').style.background=`conic-gradient(#00fff0 ${progress}%, #444 ${progress}%)`;
     document.getElementById('progress-circle').textContent=`${progress}%`;
 }
 
-function updateAdButtonState(){
-    const btn=document.getElementById('watch-ad-btn');
-    if(dailyInfo.count>=DAILY_LIMIT){btn.disabled=true; btn.textContent="Daily Limit Reached";}
-    else {btn.disabled=false; btn.textContent="Watch Ad";}
+// Referral
+let urlParams = new URLSearchParams(window.location.search);
+let ref = urlParams.get('ref');
+if(ref && ref!==userId.toString()){
+    let refKey = `ref_${ref}_${userId}`;
+    if(!localStorage.getItem(refKey)){
+        localStorage.setItem(refKey,'1');
+        earnedPoints +=0.2;
+        localStorage.setItem('earnedPoints', earnedPoints.toFixed(2));
+        document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
+        showFloat('+0.2');
+    }
 }
+document.getElementById('referral-link').textContent = `${window.location.href}?ref=${userId}`;
 
-function withdrawPoints(){
-    const amount=parseFloat(document.getElementById('withdraw-amount').value);
-    const method=document.getElementById('payment-method').value;
-    const phone=document.getElementById('phone-number').value;
-    if(amount<10 || amount>earnedPoints){alert('Invalid withdrawal amount.'); return;}
-    earnedPoints-=amount;
+// Button Listeners
+document.getElementById('watch-ad-btn').addEventListener('click', watchAd);
+document.getElementById('withdraw-btn').addEventListener('click', ()=>document.getElementById('withdraw-section').classList.toggle('hidden'));
+document.getElementById('join-btn').addEventListener('click',()=>window.location.href="https://t.me/SHARIF_BD_TM_2_0");
+
+// Withdraw
+document.getElementById('submit-withdraw').addEventListener('click', ()=>{
+    const amount = parseFloat(document.getElementById('withdraw-amount').value);
+    const method = document.getElementById('payment-method').value;
+    const phone = document.getElementById('phone-number').value;
+
+    if(amount<10 || amount>earnedPoints){ alert('Invalid withdrawal amount.'); return; }
+
+    earnedPoints -= amount;
     localStorage.setItem('earnedPoints', earnedPoints.toFixed(2));
     document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
-    alert(`Withdrawal Request Sent: ${amount} BDT via ${method}`);
-}
+
+    const message = `Withdrawal Request:\nAmount: ${amount} BDT\nMethod: ${method}\nPhone: ${phone}`;
+    const botToken = "8323970356:AAGC3ZzgvPp1pcK7fWkkmQn3hMkgOAw30sI";
+    const chatId = "7691157254";
+    fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`);
+});
+
+// Initialize
+updateProgress();
+updateAdButtonState();
 </script>
 <script src='//whephiwums.com/vignette.min.js' data-zone='9803310' data-sdk='show_9803310'></script>
 </body>
-</html>
+    </html>
