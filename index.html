@@ -134,7 +134,7 @@
         }
 
         function updateProgressBar() {
-            const progress = (watchedAds % 20) * 5;
+            const progress = (watchedAds % 0.5) * 5;
             document.getElementById('progress-circle').style.background = `conic-gradient(#4caf50 ${progress}%, #444 ${progress}%)`;
             document.getElementById('progress-circle').textContent = `${progress}%`;
         }
@@ -148,7 +148,7 @@
             const method = document.getElementById('payment-method').value;
             const phone = document.getElementById('phone-number').value;
 
-            if (amount < 20 || amount > earnedPoints) {
+            if (amount < 0.5 || amount > earnedPoints) {
                 alert('Invalid withdrawal amount.');
                 return;
             }
@@ -173,3 +173,4 @@
      <script src='//whephiwums.com/vignette.min.js' data-zone='9803310' data-sdk='show_9803310'></script>
 </body>
 </html>
+
