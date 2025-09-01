@@ -1,257 +1,375 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>𝗔𝗗𝗦 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗗 𝗧𝗠</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>💎 ADS EARNING BD TM — 10s Monetag • Min Withdraw 10</title>
+<!-- Monetag SDK (উদাহরণ) — তোমার Zone / SDK অনুযায়ী বদলাবে -->
+<script src="//libtl.com/sdk.js" data-zone="9803310" data-sdk="show_9803310"></script>
+
 <style>
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #121212;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-}
-.container {
-    max-width: 400px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #1e1e1e;
-    border-radius: 15px;
-    box-shadow: 0 0 25px rgba(255,255,255,0.1);
-}
-h1 {
-    background: linear-gradient(90deg, #ffcc00, #ff6600, #00ffff, #ff00ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    padding: 15px 30px;
-    border-radius: 50px;
-    display: inline-block;
-    font-size: 24px;
-    font-weight: bold;
-    text-shadow: 0 0 15px #fff;
-    animation: titleGlow 3s infinite alternate;
-}
-@keyframes titleGlow {
-    0% { text-shadow: 0 0 10px #fff; }
-    50% { text-shadow: 0 0 20px #ff0,0 0 30px #0ff; }
-    100% { text-shadow: 0 0 25px #f0f,0 0 35px #0ff; }
-}
-.progress-circle {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: conic-gradient(#ff9800 0%, #444 0%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: bold;
-    margin: auto;
-    margin-bottom: 15px;
-    transition: background 0.5s ease-in-out;
-    box-shadow: 0 0 15px rgba(255,152,0,0.8);
-    animation: progressGlow 3s infinite alternate;
-}
-@keyframes progressGlow {
-    0% { box-shadow: 0 0 10px #ff9800; }
-    50% { box-shadow: 0 0 20px #ff0,0 0 25px #0ff; }
-    100% { box-shadow: 0 0 25px #f0f,0 0 30px #0ff; }
-}
-button {
-    background: linear-gradient(90deg, #ff9800, #ff5722, #00bcd4);
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    margin: 10px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(255,152,0,0.7);
-    animation: btnGlow 3s infinite alternate;
-}
-@keyframes btnGlow {
-    0% { box-shadow: 0 0 10px rgba(255,152,0,0.7); }
-    50% { box-shadow: 0 0 20px #ff0,0 0 25px #0ff; }
-    100% { box-shadow: 0 0 25px #f0f,0 0 30px #0ff; }
-}
-.withdraw-section {
-    background: #252525;
-    padding: 15px;
-    border-radius: 15px;
-    margin-top: 10px;
-}
-input, select {
-    width: 90%;
-    padding: 10px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 10px;
-    background: #333;
-    color: #fff;
-}
-.ad-box {
-    display: none;
-    margin: 15px auto;
-    padding: 15px;
-    width: 90%;
-    background: linear-gradient(120deg,#e0f7fa,#b2ebf2,#ffeb3b,#ff5722);
-    border-radius: 15px;
-    box-shadow: 0 0 15px rgba(0,121,107,0.7), inset 0 0 5px rgba(0,121,107,0.3);
-    text-align: center;
-    font-weight: bold;
-    color: #00796b;
-    font-size: 16px;
-    position: relative;
-    animation: adGlow 3s infinite alternate;
-}
-@keyframes adGlow {
-    0% { box-shadow: 0 0 10px #00796b, inset 0 0 5px #004d40; }
-    50% { box-shadow: 0 0 20px #00bcd4, inset 0 0 10px #004d40; }
-    100% { box-shadow: 0 0 25px #f0f, inset 0 0 10px #00796b; }
-}
+  :root{
+    --bg:#0f1720; --card:#141821; --accent1:#ff9800; --accent2:#00bcd4; --glass: rgba(255,255,255,0.04);
+  }
+  *{box-sizing:border-box}
+  body{font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#0b1220,#10141a);color:#fff;margin:0;padding:26px;display:flex;align-items:center;justify-content:center;min-height:100vh}
+  .wrap{width:420px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+  .title{display:inline-block;padding:12px 26px;border-radius:999px;background:linear-gradient(90deg,#ffdd55,#ff6a00);color:#111;font-weight:800;font-size:18px;box-shadow:0 6px 20px rgba(255,150,0,0.18);margin-bottom:12px}
+  .meta{font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:14px}
+  .circle{width:110px;height:110px;border-radius:999px;margin:8px auto;background:conic-gradient(var(--accent1) 0%, #333 0%);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;box-shadow:0 8px 30px rgba(0,0,0,0.6);margin-bottom:10px}
+  .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
+  button.btn{border:0;padding:12px 18px;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#061016;font-weight:800;cursor:pointer;min-width:160px;box-shadow:0 8px 26px rgba(0,0,0,0.5);transition:transform .14s ease, box-shadow .14s ease}
+  button.btn:active{transform:translateY(2px)}
+  button.ghost{background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));color:#fff;border:1px solid rgba(255,255,255,0.04)}
+  .small{font-size:13px;padding:8px 12px;min-width:120px}
+  .ad-box{display:none;background:linear-gradient(120deg,#e6f7ff,#d9fff4);color:#023; padding:12px;border-radius:12px;margin-top:12px; box-shadow: inset 0 0 18px rgba(0,0,0,0.06)}
+  .ad-timer{font-weight:900;font-size:20px;margin-top:8px}
+  .info-card{background:var(--glass);padding:12px;border-radius:12px;margin:12px 0;font-size:14px;color:rgba(255,255,255,0.9)}
+  label{display:block;font-size:13px;margin:8px 0 4px;color:rgba(255,255,255,0.9)}
+  input,select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:#0b1115;color:#fff}
+  .hidden{display:none}
+  .copyRow{display:flex;gap:8px;align-items:center}
+  .copyRow input{flex:1}
+  .note{font-size:12px;color:rgba(255,255,255,0.6);margin-top:8px}
+  footer{font-size:12px;color:rgba(255,255,255,0.45);margin-top:10px;text-align:center}
 </style>
 </head>
 <body>
-<div class="container">
-<h1>𝗔𝗗𝗦 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗗 𝗧𝗠</h1>
 
-<div class="progress-circle" id="progress-circle">0%</div>
-<p>Watched Ads: <span id="watched-ads">0</span></p>
-<p>Earned Points: ৳<span id="earned-points">0.00</span></p>
-<p>Daily Limit: <span id="daily-limit">110</span></p>
-<p>Remaining Ads: <span id="remaining-ads">110</span></p>
+<div class="wrap" role="main">
+  <div style="text-align:center">
+    <div class="title">✨ BD TM ADS EARNING ✨</div>
+    <div class="meta">💳 মিনিমাম উইথড্র: <strong>৳10</strong> • প্রতি এড: <strong>৳0.20</strong> • Monetag (10s)</div>
+  </div>
 
-<button id="watch-ad-btn">Watch Ad</button>
-<button id="join-btn">Join Channel</button>
-<button id="withdraw-btn">Withdraw</button>
-<button id="referBtn">Refer</button>
+  <div class="circle" id="progressCircle">0%</div>
 
-<div class="withdraw-section hidden" id="withdraw-section">
-<h3>Withdraw Funds</h3>
-<input type="number" id="withdraw-amount" placeholder="Enter Amount">
-<select id="payment-method">
-<option value="Manual">Manual</option>
-<option value="Bkash">Bkash</option>
-<option value="Mobile Recharge">Mobile Recharge</option>
-</select>
-<input type="text" id="phone-number" placeholder="Enter Your Number">
-<input type="text" id="telegram-username" placeholder="Your Telegram Username">
-<button id="submit-withdraw">Submit</button>
+  <div class="info-card" style="text-align:center">
+    Watched: <strong id="watchedCount">0</strong> &nbsp; • &nbsp;
+    Earned: ৳<strong id="earnedPoints">0.00</strong><br/>
+    Limit: <strong id="dailyLimit">110</strong> &nbsp; • &nbsp;
+    Remaining: <strong id="remainingAds">110</strong>
+  </div>
+
+  <div class="row" style="margin-bottom:6px">
+    <button class="btn" id="watchBtn">▶ Watch Ad</button>
+    <button class="btn" id="joinBtn">🔔 Join Channel</button>
+  </div>
+
+  <div class="row">
+    <button class="ghost small" id="balanceBtn">💰 Balance</button>
+    <button class="ghost small" id="withdrawToggle">📤 Withdraw</button>
+    <button class="ghost small" id="referShow">👥 Refer</button>
+  </div>
+
+  <!-- Ad box (top-light) -->
+  <div class="ad-box" id="adBox" aria-hidden="true">
+    <div>🎬 Monetag Ad Playing — অনুগ্রহ করে অপেক্ষা করুন</div>
+    <div class="ad-timer" id="adTimer">10</div>
+    <div class="note">এড চলাকালীন অন্য ট্যাব বা পেজ থেকে বের হলে reward হবে না</div>
+  </div>
+
+  <!-- Withdraw section -->
+  <div id="withdrawSection" class="info-card hidden" aria-hidden="true">
+    <h4 style="margin:0 0 8px">Withdraw Request</h4>
+    <label>Amount (৳) — Min ৳10</label>
+    <input id="withdrawAmount" type="number" min="10" placeholder="Enter amount (e.g. 50)" />
+    <label>Payment Method</label>
+    <select id="withdrawMethod">
+      <option>Bkash</option>
+      <option>Rocket</option>
+      <option>Manual</option>
+      <option>Mobile Recharge</option>
+    </select>
+    <label>Phone Number</label>
+    <input id="withdrawPhone" type="text" placeholder="01XXXXXXXXX" />
+    <label>Telegram Username</label>
+    <input id="withdrawTelegram" type="text" placeholder="@yourusername" />
+    <div style="margin-top:10px;text-align:right">
+      <button class="btn small" id="submitWithdraw">Submit</button>
+    </div>
+  </div>
+
+  <!-- Refer area -->
+  <div id="referSection" class="info-card hidden" aria-hidden="true">
+    <h4 style="margin:0 0 8px">Your Refer Link</h4>
+    <div class="copyRow">
+      <input id="referInput" readonly />
+      <button class="btn small" id="copyReferBtn">Copy</button>
+    </div>
+    <div class="note">Share this link — refer এ পয়েন্ট মেলে</div>
+  </div>
+
+  <footer>🕒 <span id="clock">--:--:--</span></footer>
 </div>
-
-<div class="ad-box" id="ad-box">
-<p>🕒 Watch Ad for 15 seconds to earn 0.2৳</p>
-<p id="ad-timer">15</p>
-</div>
-
-</div>
-
-<script src='//libtl.com/sdk.js' data-zone='9803310' data-sdk='show_9803310'></script>
 
 <script>
-let limit = 110;
-let watchedAds = parseInt(localStorage.getItem('watchedAds')||0);
-let earnedPoints = parseFloat(localStorage.getItem('earnedPoints')||0.00);
+/* ====== CONFIG ====== */
+const DAILY_LIMIT = 110;
+const REWARD_PER_AD = 0.2;   // ৳ per ad
+const WATCH_SECONDS = 10;    // seconds required
+const MONETAG_FUNCTION_NAME = 'show_9803310'; // SDK function (if provided by Monetag script)
+const MONETAG_FALLBACK_URL = 'https://example.com/monetag-ad'; // fallback if SDK not available
+// Telegram withdraw notification (replace with your values)
+const BOT_TOKEN = 'PUT_YOUR_TELEGRAM_BOT_TOKEN_HERE';
+const ADMIN_CHAT_ID = 'PUT_ADMIN_CHAT_ID_HERE';
 
-const watchedEl = document.getElementById('watched-ads');
-const pointsEl = document.getElementById('earned-points');
-const remainingEl = document.getElementById('remaining-ads');
-const dailyLimitEl = document.getElementById('daily-limit');
-const progressCircle = document.getElementById('progress-circle');
-const adBox = document.getElementById('ad-box');
-const adTimerEl = document.getElementById('ad-timer');
-
-watchedEl.textContent = watchedAds;
-pointsEl.textContent = earnedPoints.toFixed(2);
-remainingEl.textContent = Math.max(limit - watchedAds,0);
-dailyLimitEl.textContent = limit;
-
-function updateProgressBar(){
-    const progress = (watchedAds % 10) * 10;
-    progressCircle.style.background = `conic-gradient(#ff9800 ${progress}%, #444 ${progress}%)`;
-    progressCircle.textContent = `${progress}%`;
+/* ====== STATE (localStorage) ====== */
+const LS_KEY = 'bd_ads_state_v1';
+function loadState(){
+  const raw = localStorage.getItem(LS_KEY);
+  const today = (new Date()).toDateString();
+  if(!raw) {
+    const s = { watched:0, points:0.0, referCode:null, date: today };
+    localStorage.setItem(LS_KEY, JSON.stringify(s));
+    return s;
+  }
+  try {
+    const s = JSON.parse(raw);
+    if(s.date !== today){
+      // reset daily counters
+      s.watched = 0;
+      s.date = today;
+      localStorage.setItem(LS_KEY, JSON.stringify(s));
+    }
+    return s;
+  } catch(e){
+    const s = { watched:0, points:0.0, referCode:null, date: today };
+    localStorage.setItem(LS_KEY, JSON.stringify(s));
+    return s;
+  }
 }
-updateProgressBar();
+function saveState(s){ localStorage.setItem(LS_KEY, JSON.stringify(s)); }
 
-document.getElementById('watch-ad-btn').addEventListener('click', ()=> {
-    if(watchedAds>=limit){
-        alert('⚠️ Daily Ads Limit Reached!');
+let state = loadState();
+
+/* ====== DOM ====== */
+const watchedCountEl = document.getElementById('watchedCount');
+const earnedPointsEl = document.getElementById('earnedPoints');
+const remainingEl = document.getElementById('remainingAds');
+const dailyLimitEl = document.getElementById('dailyLimit');
+const progressCircle = document.getElementById('progressCircle');
+
+const watchBtn = document.getElementById('watchBtn');
+const adBox = document.getElementById('adBox');
+const adTimer = document.getElementById('adTimer');
+
+const withdrawToggle = document.getElementById('withdrawToggle');
+const withdrawSection = document.getElementById('withdrawSection');
+const submitWithdraw = document.getElementById('submitWithdraw');
+
+const referShow = document.getElementById('referShow');
+const referSection = document.getElementById('referSection');
+const referInput = document.getElementById('referInput');
+const copyReferBtn = document.getElementById('copyReferBtn');
+
+const joinBtn = document.getElementById('joinBtn');
+const balanceBtn = document.getElementById('balanceBtn');
+
+/* ====== Initialization UI ====== */
+function render(){
+  watchedCountEl.textContent = state.watched;
+  earnedPointsEl.textContent = Number(state.points).toFixed(2);
+  dailyLimitEl.textContent = DAILY_LIMIT;
+  remainingEl.textContent = Math.max(DAILY_LIMIT - state.watched, 0);
+  // progress (0-100)
+  const pct = Math.round((state.watched / DAILY_LIMIT) * 100);
+  const pctSafe = Math.max(0, Math.min(100, pct));
+  progressCircle.style.background = `conic-gradient(${getGradientColor(pctSafe)} ${pctSafe}%, #333 ${pctSafe}%)`;
+  progressCircle.textContent = `${pctSafe}%`;
+  // refer code ensure
+  if(!state.referCode){
+    state.referCode = generateReferCode();
+    saveState(state);
+  }
+  referInput.value = `https://t.me/ads_earning_bd_tm_bot?start=r${state.referCode}`;
+}
+function getGradientColor(pct){
+  // choose color depending on pct
+  if(pct < 25) return '#ff5722';
+  if(pct < 60) return '#ff9800';
+  return '#00bcd4';
+}
+function generateReferCode(){
+  // stable unique code saved per client
+  const existing = localStorage.getItem('bd_user_ref_v1');
+  if(existing) return existing;
+  const code = 'r' + Date.now().toString(36) + Math.floor(Math.random()*9000+1000);
+  localStorage.setItem('bd_user_ref_v1', code);
+  return code;
+}
+render();
+
+/* ====== Clock ====== */
+setInterval(()=> {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString();
+},1000);
+
+/* ====== Watch Ad Flow (Monetag preferred) ====== */
+let watching = false;
+watchBtn.addEventListener('click', async () => {
+  if(watching) return;
+  if(state.watched >= DAILY_LIMIT){ alert('⚠️ Daily Ads Limit Reached!'); return; }
+
+  // If Monetag SDK function exists, call it. We'll then run a 10s visual countdown
+  if(typeof window[MONETAG_FUNCTION_NAME] === 'function'){
+    try{
+      watching = true;
+      adBox.style.display = 'block';
+      adTimer.textContent = WATCH_SECONDS;
+      watchBtn.disabled = true;
+      // call SDK
+      await window[MONETAG_FUNCTION_NAME]();
+      // Monetag resolved — start required seconds countdown to ensure view time
+      await runCountdownThenReward(WATCH_SECONDS);
+    }catch(err){
+      console.error('Monetag ad error:', err);
+      alert('❌ Ad failed to load. Try again.');
+      adBox.style.display = 'none';
+      watchBtn.disabled = false;
+      watching = false;
+    }
+  } else {
+    // fallback: open link in new tab and do local countdown (best-effort)
+    const newWin = window.open(MONETAG_FALLBACK_URL, '_blank');
+    if(!newWin){
+      alert('Popup blocked. Allow popups for this site and try again.');
+      return;
+    }
+    watching = true;
+    adBox.style.display = 'block';
+    adTimer.textContent = WATCH_SECONDS;
+    watchBtn.disabled = true;
+    try{
+      await runCountdownThenReward(WATCH_SECONDS);
+    } finally {
+      // best-effort: try to close opened tab (may fail due to cross-origin)
+      try{ newWin.close(); }catch(e){}
+      watching = false;
+    }
+  }
+});
+
+function runCountdownThenReward(seconds){
+  return new Promise((resolve, reject) => {
+    let sec = seconds;
+    adTimer.textContent = sec;
+    const iv = setInterval(() => {
+      sec--;
+      adTimer.textContent = sec;
+      // if user navigates away (visibility change) we can detect and cancel reward
+      if(document.visibilityState === 'hidden'){
+        clearInterval(iv);
+        adBox.style.display='none';
+        watchBtn.disabled = false;
+        watching = false;
+        alert('⚠️ আপনি পেইজ ছেড়ে গিয়েছেন — রিওয়ার্ড ক্যানসেল করা হয়েছে।');
+        reject(new Error('visibility_hidden'));
         return;
-    }
-    // Monetize ad with 15 sec reward
-    if(typeof show_9803310 === 'function'){
-        adBox.style.display='block';
-        let sec = 15;
-        adTimerEl.textContent = sec;
-        show_9803310().then(() => {
-            const timer = setInterval(()=>{
-                sec--;
-                adTimerEl.textContent=sec;
-                if(sec<=0){
-                    clearInterval(timer);
-                    adBox.style.display='none';
-                    watchedAds++;
-                    earnedPoints+=0.2;
-                    localStorage.setItem('watchedAds',watchedAds);
-                    localStorage.setItem('earnedPoints',earnedPoints.toFixed(2));
-                    watchedEl.textContent = watchedAds;
-                    pointsEl.textContent = earnedPoints.toFixed(2);
-                    remainingEl.textContent = Math.max(limit - watchedAds,0);
-                    updateProgressBar();
-                    alert('✅ You earned 0.2৳');
-                }
-            },1000);
-        }).catch(err=> {
-            adBox.style.display='none';
-            alert('⚠️ Ad failed to load. Try again!');
-            console.error(err);
-        });
-    } else {
-        alert('⚠️ Ad function not available!');
-    }
+      }
+      if(sec <= 0){
+        clearInterval(iv);
+        // reward
+        state.watched += 1;
+        state.points = Number(state.points) + Number(REWARD_PER_AD);
+        saveState(state);
+        render();
+        adBox.style.display='none';
+        watchBtn.disabled = false;
+        watching = false;
+        alert(`✅ আপনি পেয়েছেন ৳${REWARD_PER_AD.toFixed(2)}!`);
+        resolve();
+      }
+    }, 1000);
+  });
+}
+
+/* ====== Withdraw ====== */
+withdrawToggle.addEventListener('click', ()=> {
+  withdrawSection.classList.toggle('hidden');
+  withdrawSection.setAttribute('aria-hidden', withdrawSection.classList.contains('hidden'));
 });
 
-document.getElementById('withdraw-btn').addEventListener('click', ()=>{
-    document.getElementById('withdraw-section').classList.toggle('hidden');
+submitWithdraw.addEventListener('click', ()=> {
+  const amount = parseFloat(document.getElementById('withdrawAmount').value || 0);
+  const method = document.getElementById('withdrawMethod').value;
+  const phone = document.getElementById('withdrawPhone').value.trim();
+  const telegram = document.getElementById('withdrawTelegram').value.trim();
+
+  if(isNaN(amount) || amount < 10){
+    alert('⚠️ Minimum withdraw ৳10');
+    return;
+  }
+  if(amount > state.points){
+    alert('⚠️ আপনার ব্যালান্স পর্যাপ্ত নেই');
+    return;
+  }
+  // deduct locally
+  state.points = Number(state.points) - Number(amount);
+  saveState(state);
+  render();
+
+  // send message to admin via Telegram Bot API (replace BOT_TOKEN and ADMIN_CHAT_ID)
+  if(BOT_TOKEN && ADMIN_CHAT_ID && BOT_TOKEN !== 'PUT_YOUR_TELEGRAM_BOT_TOKEN_HERE'){
+    const text = `💰 Withdraw Request\nAmount: ${amount} BDT\nMethod: ${method}\nPhone: ${phone}\nTelegram: ${telegram}`;
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(text)}`)
+      .then(r => r.json())
+      .then(d => console.log('Withdraw sent', d))
+      .catch(e => console.error('Telegram send error', e));
+  } else {
+    // placeholder fallback — developer should replace BOT_TOKEN & ADMIN_CHAT_ID
+    console.log('Withdraw request (local):', {amount, method, phone, telegram});
+  }
+
+  alert('✅ Withdraw request submitted!');
+  // hide section
+  withdrawSection.classList.add('hidden');
 });
 
-document.getElementById('submit-withdraw').addEventListener('click', ()=>{
-    const amount = parseFloat(document.getElementById('withdraw-amount').value);
-    const method = document.getElementById('payment-method').value;
-    const phone = document.getElementById('phone-number').value;
-    const telegram = document.getElementById('telegram-username').value;
-
-    if(amount<10 || amount>earnedPoints){
-        alert('Invalid withdrawal amount.');
-        return;
-    }
-
-    earnedPoints-=amount;
-    localStorage.setItem('earnedPoints',earnedPoints.toFixed(2));
-    pointsEl.textContent=earnedPoints.toFixed(2);
-
-    const botToken="8323970356:AAGC3ZzgvPp1pcK7fWkkmQn3hMkgOAw30sI";
-    const chatId="7691157254";
-    const msg=`Withdrawal Request:\nAmount: ${amount} BDT\nMethod: ${method}\nPhone: ${phone}\nTelegram: ${telegram}`;
-    fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`)
-    .then(res=>res.json())
-    .then(data=>console.log('Message sent to admin'))
-    .catch(err=>console.error(err));
+/* ====== Refer link copy ====== */
+referShow.addEventListener('click', ()=> {
+  referSection.classList.toggle('hidden');
+  referSection.setAttribute('aria-hidden', referSection.classList.contains('hidden'));
+  // fill input
+  referInput.value = `https://t.me/ads_earning_bd_tm_bot?start=r${state.referCode}`;
 });
 
-document.getElementById('join-btn').addEventListener('click', ()=>{
-    window.location.href = "https://t.me/SHARIF_BD_TM_2_0";
+copyReferBtn.addEventListener('click', async () => {
+  try{
+    await navigator.clipboard.writeText(referInput.value);
+    alert('✅ Refer link copied to clipboard!');
+  }catch(e){
+    // fallback
+    referInput.select();
+    document.execCommand('copy');
+    alert('✅ Refer link copied (fallback).');
+  }
 });
 
-document.getElementById('referBtn').addEventListener('click', ()=>{
-    const userId = Math.floor(Math.random()*1000000000);
-    const referLink = `https://t.me/ads_earning_bd_tm_bot?start=r${userId}`;
-    alert(`👥 আপনার রেফার লিঙ্ক: ${referLink}`);
+/* ====== Join & Balance ====== */
+joinBtn.addEventListener('click', ()=> {
+  // open your channel link (previous link)
+  window.open('https://t.me/SHARIF_BD_TM_2_0', '_blank');
 });
+balanceBtn.addEventListener('click', ()=> {
+  alert(`💰 Your balance: ৳${Number(state.points).toFixed(2)}\nWatched: ${state.watched}`);
+});
+
+/* ====== Daily reset at midnight (safety) ====== */
+(function ensureDailyReset(){
+  // already handled in loadState(); but set timer to check at next midnight
+  const now = new Date();
+  const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0,0,3); // 00:00:03
+  const ms = tomorrow - now;
+  setTimeout(()=> {
+    // reload and re-render (will reset daily)
+    state = loadState();
+    render();
+    // set again
+    ensureDailyReset();
+  }, ms);
+})();
+
 </script>
 </body>
     </html>
