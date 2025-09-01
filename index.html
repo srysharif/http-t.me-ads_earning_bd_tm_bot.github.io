@@ -3,201 +3,255 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💰 𝗔𝗗𝗦 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗗 𝗧𝗠 🔥</title>
+<title>𝗔𝗗𝗦 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗗 𝗧𝗠</title>
 <style>
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background: linear-gradient(135deg,#0f0f0f,#1a1a1a);
+    background: #121212;
     color: #fff;
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
 }
 .container {
     max-width: 400px;
-    margin: 50px auto;
-    padding: 25px;
-    background: linear-gradient(145deg,#1e1e1e,#111);
-    border-radius: 20px;
-    box-shadow: 0 0 25px #4caf50;
+    margin: 30px auto;
+    padding: 20px;
+    background: #1e1e1e;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.1);
 }
 h1 {
-    font-size: 28px;
-    font-weight: bold;
-    background: linear-gradient(90deg,#4caf50,#ffeb3b,#00e5ff);
+    background: linear-gradient(90deg, #ffcc00, #ff6600, #00ffff, #ff00ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 10px #4caf50;
+    padding: 15px 30px;
+    border-radius: 50px;
+    display: inline-block;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 0 0 15px #fff;
+    animation: titleGlow 3s infinite alternate;
 }
-h2 {
-    font-size: 16px; color: #ccc;
+@keyframes titleGlow {
+    0% { text-shadow: 0 0 10px #fff; }
+    50% { text-shadow: 0 0 20px #ff0,0 0 30px #0ff; }
+    100% { text-shadow: 0 0 25px #f0f,0 0 35px #0ff; }
 }
 .progress-circle {
-    width: 120px; height: 120px; border-radius: 50%;
-    background: conic-gradient(#4caf50 0%,#444 0%);
-    display:flex;align-items:center;justify-content:center;
-    font-size:20px;font-weight:bold;margin:20px auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(#ff9800 0%, #444 0%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin: auto;
+    margin-bottom: 15px;
     transition: background 0.5s ease-in-out;
+    box-shadow: 0 0 15px rgba(255,152,0,0.8);
+    animation: progressGlow 3s infinite alternate;
+}
+@keyframes progressGlow {
+    0% { box-shadow: 0 0 10px #ff9800; }
+    50% { box-shadow: 0 0 20px #ff0,0 0 25px #0ff; }
+    100% { box-shadow: 0 0 25px #f0f,0 0 30px #0ff; }
 }
 button {
-    background: linear-gradient(45deg,#4caf50,#2e7d32);
-    color:white;border:none;padding:12px 20px;
-    margin:10px;border-radius:10px;cursor:pointer;
-    font-size:16px;font-weight:bold;
-    transition:transform 0.2s, background 0.3s;
+    background: linear-gradient(90deg, #ff9800, #ff5722, #00bcd4);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    margin: 10px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(255,152,0,0.7);
+    animation: btnGlow 3s infinite alternate;
 }
-button:hover { background: linear-gradient(45deg,#66bb6a,#388e3c); transform:scale(1.05); }
-.hidden { display:none; }
+@keyframes btnGlow {
+    0% { box-shadow: 0 0 10px rgba(255,152,0,0.7); }
+    50% { box-shadow: 0 0 20px #ff0,0 0 25px #0ff; }
+    100% { box-shadow: 0 0 25px #f0f,0 0 30px #0ff; }
+}
 .withdraw-section {
-    background:#252525;padding:20px;border-radius:15px;margin-top:15px;
+    background: #252525;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 10px;
 }
-input,select {
-    width:90%;padding:12px;margin-top:10px;border:none;border-radius:8px;
-    background:#333;color:#fff;font-size:15px;
+input, select {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: #fff;
 }
-#referral-link {
-    background:#111;padding:12px;border-radius:10px;display:block;margin:15px auto;
-    word-break:break-all;color:#4caf50;font-weight:bold;
+.ad-box {
+    display: none;
+    margin: 15px auto;
+    padding: 15px;
+    width: 90%;
+    background: linear-gradient(120deg,#e0f7fa,#b2ebf2,#ffeb3b,#ff5722);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,121,107,0.7), inset 0 0 5px rgba(0,121,107,0.3);
+    text-align: center;
+    font-weight: bold;
+    color: #00796b;
+    font-size: 16px;
+    position: relative;
+    animation: adGlow 3s infinite alternate;
 }
-.float {
-    position: fixed;color:#ffeb3b;font-size:22px;font-weight:bold;
-    animation: floatAnim 1s ease-out forwards;text-shadow:0 0 8px #fff;
-}
-@keyframes floatAnim {
-    0% { opacity:1; transform:translateY(0);}
-    100% { opacity:0; transform:translateY(-60px);}
+@keyframes adGlow {
+    0% { box-shadow: 0 0 10px #00796b, inset 0 0 5px #004d40; }
+    50% { box-shadow: 0 0 20px #00bcd4, inset 0 0 10px #004d40; }
+    100% { box-shadow: 0 0 25px #f0f, inset 0 0 10px #00796b; }
 }
 </style>
 </head>
 <body>
 <div class="container">
-    <h1>💰 𝗔𝗗𝗦 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗗 𝗧𝗠 🔥</h1>
-    <h2>সর্বনিম্ন উইন্ডো এমাউন্ট ৳10 🎉💎</h2>
-    <div class="progress-circle" id="progress-circle">0%</div>
-    <p>Watched Ads: <span id="watched-ads">0</span></p>
-    <p>Earned Points: ৳<span id="earned-points">0.00</span></p>
-    
-    <button id="watch-ad-btn">📺 Watch Ad</button>
-    <button id="join-btn">🤝 Join Now</button>
-    <button id="withdraw-btn">💵 Withdraw</button>
+<h1>𝗔𝗗𝗦 𝗘𝗔𝗥𝗡𝗜𝗡𝗚 𝗕𝗗 𝗧𝗠</h1>
 
-    <div id="withdraw-section" class="withdraw-section hidden">
-        <h3>💳 Withdraw Funds</h3>
-        <input type="number" id="withdraw-amount" placeholder="Enter Amount 💰">
-        <select id="payment-method">
-            <option value="Manual">Manual</option>
-            <option value="Bkash">Bkash</option>
-            <option value="Mobile Recharge">Mobile Recharge</option>
-        </select>
-        <input type="text" id="phone-number" placeholder="Enter Your Number 📞">
-        <input type="text" id="telegram-username" placeholder="Telegram Username 💎">
-        <button id="submit-withdraw">✅ Submit</button>
-    </div>
+<div class="progress-circle" id="progress-circle">0%</div>
+<p>Watched Ads: <span id="watched-ads">0</span></p>
+<p>Earned Points: ৳<span id="earned-points">0.00</span></p>
+<p>Daily Limit: <span id="daily-limit">110</span></p>
+<p>Remaining Ads: <span id="remaining-ads">110</span></p>
 
-    <p>🎁 Your Referral Link:</p>
-    <span id="referral-link"></span>
+<button id="watch-ad-btn">Watch Ad</button>
+<button id="join-btn">Join Channel</button>
+<button id="withdraw-btn">Withdraw</button>
+<button id="referBtn">Refer</button>
+
+<div class="withdraw-section hidden" id="withdraw-section">
+<h3>Withdraw Funds</h3>
+<input type="number" id="withdraw-amount" placeholder="Enter Amount">
+<select id="payment-method">
+<option value="Manual">Manual</option>
+<option value="Bkash">Bkash</option>
+<option value="Mobile Recharge">Mobile Recharge</option>
+</select>
+<input type="text" id="phone-number" placeholder="Enter Your Number">
+<input type="text" id="telegram-username" placeholder="Your Telegram Username">
+<button id="submit-withdraw">Submit</button>
 </div>
 
+<div class="ad-box" id="ad-box">
+<p>🕒 Watch Ad for 15 seconds to earn 0.2৳</p>
+<p id="ad-timer">15</p>
+</div>
+
+</div>
+
+<script src='//libtl.com/sdk.js' data-zone='9803310' data-sdk='show_9803310'></script>
+
 <script>
-let watchedAds = parseInt(localStorage.getItem('watchedAds') || 0);
-let earnedPoints = parseFloat(localStorage.getItem('earnedPoints') || 0.00);
-let userId = localStorage.getItem('userId');
-if(!userId){ userId = Math.floor(Math.random()*1000000); localStorage.setItem('userId', userId); }
+let limit = 110;
+let watchedAds = parseInt(localStorage.getItem('watchedAds')||0);
+let earnedPoints = parseFloat(localStorage.getItem('earnedPoints')||0.00);
 
-// Referral
-const adminBotUsername = "@ads_earning_bd_tm_bot";
-document.getElementById('referral-link').textContent = `${adminBotUsername}?start=${userId}`;
-let urlParams = new URLSearchParams(window.location.search);
-let ref = urlParams.get('start');
-if(ref && ref !== userId.toString()){
-    let refKey = `ref_${ref}_${userId}`;
-    if(!localStorage.getItem(refKey)){
-        localStorage.setItem(refKey,'1');
-        earnedPoints += 0.20;
-        localStorage.setItem('earnedPoints',earnedPoints.toFixed(2));
-        document.getElementById('earned-points').textContent=earnedPoints.toFixed(2);
-        showFloat('🎁 +0.20');
+const watchedEl = document.getElementById('watched-ads');
+const pointsEl = document.getElementById('earned-points');
+const remainingEl = document.getElementById('remaining-ads');
+const dailyLimitEl = document.getElementById('daily-limit');
+const progressCircle = document.getElementById('progress-circle');
+const adBox = document.getElementById('ad-box');
+const adTimerEl = document.getElementById('ad-timer');
+
+watchedEl.textContent = watchedAds;
+pointsEl.textContent = earnedPoints.toFixed(2);
+remainingEl.textContent = Math.max(limit - watchedAds,0);
+dailyLimitEl.textContent = limit;
+
+function updateProgressBar(){
+    const progress = (watchedAds % 10) * 10;
+    progressCircle.style.background = `conic-gradient(#ff9800 ${progress}%, #444 ${progress}%)`;
+    progressCircle.textContent = `${progress}%`;
+}
+updateProgressBar();
+
+document.getElementById('watch-ad-btn').addEventListener('click', ()=> {
+    if(watchedAds>=limit){
+        alert('⚠️ Daily Ads Limit Reached!');
+        return;
     }
-}
+    // Monetize ad with 15 sec reward
+    if(typeof show_9803310 === 'function'){
+        adBox.style.display='block';
+        let sec = 15;
+        adTimerEl.textContent = sec;
+        show_9803310().then(() => {
+            const timer = setInterval(()=>{
+                sec--;
+                adTimerEl.textContent=sec;
+                if(sec<=0){
+                    clearInterval(timer);
+                    adBox.style.display='none';
+                    watchedAds++;
+                    earnedPoints+=0.2;
+                    localStorage.setItem('watchedAds',watchedAds);
+                    localStorage.setItem('earnedPoints',earnedPoints.toFixed(2));
+                    watchedEl.textContent = watchedAds;
+                    pointsEl.textContent = earnedPoints.toFixed(2);
+                    remainingEl.textContent = Math.max(limit - watchedAds,0);
+                    updateProgressBar();
+                    alert('✅ You earned 0.2৳');
+                }
+            },1000);
+        }).catch(err=> {
+            adBox.style.display='none';
+            alert('⚠️ Ad failed to load. Try again!');
+            console.error(err);
+        });
+    } else {
+        alert('⚠️ Ad function not available!');
+    }
+});
 
-// Daily limit
-const DAILY_LIMIT=100;
-let today = new Date().toLocaleDateString();
-let dailyInfo = JSON.parse(localStorage.getItem('dailyInfo')||'{}');
-if(dailyInfo.date!==today){ dailyInfo={date:today,remaining:DAILY_LIMIT}; localStorage.setItem('dailyInfo',JSON.stringify(dailyInfo));}
+document.getElementById('withdraw-btn').addEventListener('click', ()=>{
+    document.getElementById('withdraw-section').classList.toggle('hidden');
+});
 
-document.getElementById('watched-ads').textContent=watchedAds;
-document.getElementById('earned-points').textContent=earnedPoints.toFixed(2);
-updateProgress();
+document.getElementById('submit-withdraw').addEventListener('click', ()=>{
+    const amount = parseFloat(document.getElementById('withdraw-amount').value);
+    const method = document.getElementById('payment-method').value;
+    const phone = document.getElementById('phone-number').value;
+    const telegram = document.getElementById('telegram-username').value;
 
-document.getElementById('watch-ad-btn').addEventListener('click',watchAd);
-document.getElementById('withdraw-btn').addEventListener('click',()=>{document.getElementById('withdraw-section').classList.toggle('hidden');});
-document.getElementById('submit-withdraw').addEventListener('click',withdrawPoints);
-document.getElementById('join-btn').addEventListener('click',()=>{window.location.href="https://t.me/SHARIF_BD_TM_2_0";});
+    if(amount<10 || amount>earnedPoints){
+        alert('Invalid withdrawal amount.');
+        return;
+    }
 
-function watchAd(){
-    if(dailyInfo.remaining<=0){ alert("⚠️ Daily Ads Limit Reached!"); return; }
-    document.getElementById('watch-ad-btn').disabled=true;
-    const adWindow=document.createElement('div');
-    adWindow.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;z-index:9999;cursor:pointer;";
-    adWindow.textContent='⏳ Ad Playing 20s... Click to skip ❌';
-    document.body.appendChild(adWindow);
+    earnedPoints-=amount;
+    localStorage.setItem('earnedPoints',earnedPoints.toFixed(2));
+    pointsEl.textContent=earnedPoints.toFixed(2);
 
-    let adEnded=false;
-    adWindow.addEventListener('click',()=>{
-        adEnded=true;
-        document.body.removeChild(adWindow);
-        document.getElementById('watch-ad-btn').disabled=false;
-        alert("❌ Ad Skipped, no points added!");
-    });
-
-    setTimeout(()=>{
-        if(!adEnded){
-            document.body.removeChild(adWindow);
-            watchedAds++; earnedPoints+=0.2; dailyInfo.remaining--;
-            localStorage.setItem('watchedAds',watchedAds);
-            localStorage.setItem('earnedPoints',earnedPoints.toFixed(2));
-            localStorage.setItem('dailyInfo',JSON.stringify(dailyInfo));
-            document.getElementById('watched-ads').textContent=watchedAds;
-            document.getElementById('earned-points').textContent=earnedPoints.toFixed(2);
-            showFloat('💰 +0.20');
-            updateProgress();
-        }
-        document.getElementById('watch-ad-btn').disabled=false;
-    },20000);
-}
-
-function updateProgress(){
-    const progress=(watchedAds%10)*10;
-    document.getElementById('progress-circle').style.background=`conic-gradient(#4caf50 ${progress}%,#444 ${progress}%)`;
-    document.getElementById('progress-circle').textContent=`${progress}%`;
-}
-
-function withdrawPoints(){
-    const amount=parseFloat(document.getElementById('withdraw-amount').value);
-    const method=document.getElementById('payment-method').value;
-    const phone=document.getElementById('phone-number').value;
-    if(amount<10||amount>earnedPoints){ alert('Invalid withdrawal amount'); return; }
-    earnedPoints-=amount; localStorage.setItem('earnedPoints',earnedPoints.toFixed(2));
-    document.getElementById('earned-points').textContent=earnedPoints.toFixed(2);
-    const msg=`Withdrawal Request:\nAmount: ${amount} BDT\nMethod: ${method}\nPhone: ${phone}`;
-    sendTelegramMessage(msg);
-}
-
-function sendTelegramMessage(msg){
     const botToken="8323970356:AAGC3ZzgvPp1pcK7fWkkmQn3hMkgOAw30sI";
     const chatId="7691157254";
+    const msg=`Withdrawal Request:\nAmount: ${amount} BDT\nMethod: ${method}\nPhone: ${phone}\nTelegram: ${telegram}`;
     fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`)
-        .then(r=>r.json()).then(d=>console.log('Message sent')).catch(e=>console.error(e));
-}
+    .then(res=>res.json())
+    .then(data=>console.log('Message sent to admin'))
+    .catch(err=>console.error(err));
+});
 
-function showFloat(text){
-    const floatEl=document.createElement('div');
-    floatEl.className='float'; floatEl.textContent=text;
-    floatEl.style.left=(window.innerWidth/2-50)+'px';
-    floatEl.style.top='50%';
-    document.body.appendChild(floatEl);
-    setTimeout(()=>{document.body.removeChild(floatEl);},1000);
-}
+document.getElementById('join-btn').addEventListener('click', ()=>{
+    window.location.href = "https://t.me/SHARIF_BD_TM_2_0";
+});
+
+document.getElementById('referBtn').addEventListener('click', ()=>{
+    const userId = Math.floor(Math.random()*1000000000);
+    const referLink = `https://t.me/ads_earning_bd_tm_bot?start=r${userId}`;
+    alert(`👥 আপনার রেফার লিঙ্ক: ${referLink}`);
+});
 </script>
 </body>
     </html>
