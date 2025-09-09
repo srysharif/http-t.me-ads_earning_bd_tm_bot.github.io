@@ -1,224 +1,337 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BD TM MINI BOT</title>
 
-  <!-- Tailwind CSS -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Monetag SDK (এড পপআপ) -->
+  <script src="//libtl.com/sdk.js" data-zone="9842278" data-sdk="show_9842278"></script>
+
+  <style>
+    .glass{
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 1.25rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,.35), 0 0 24px rgba(0,255,255,.25);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .glass:hover{ transform: translateY(-2px); box-shadow: 0 12px 34px rgba(0,0,0,.4), 0 0 36px rgba(0,255,255,.45); }
+    .glow-text{
+      background: linear-gradient(90deg,#00f2fe,#4facfe);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 28px rgba(79,172,254,.95);
+    }
+    button{ transition: all .22s ease-in-out; }
+    button:hover{ transform: scale(1.05); }
+    .badge{ font-size:.75rem; padding:.125rem .5rem; border-radius:.5rem; }
+  </style>
 </head>
-<body class="bg-gradient-to-r from-blue-900 to-purple-900 min-h-screen text-white flex flex-col items-center">
+<body class="bg-gradient-to-r from-blue-900 to-purple-900 min-h-screen text-white">
 
   <!-- Header -->
-  <header class="w-full p-4 text-center bg-black bg-opacity-40 shadow-lg">
-    <h1 class="text-3xl font-bold">💎 BD TM MINI BOT</h1>
-    <p class="text-sm opacity-80">Earn by Watching Ads & Referring Friends</p>
-  </header>
+  <section class="w-full text-center pt-10">
+    <h1 class="text-4xl md:text-5xl font-extrabold glow-text">💎 BD TM MINI BOT</h1>
+    <p class="opacity-90 mt-2">বিজ্ঞাপন দেখুন • রেফার করুন • আয় করুন</p>
+  </section>
 
   <!-- Join Channel -->
-  <div class="mt-6">
+  <section class="glass mt-6 p-6 w-11/12 max-w-lg mx-auto text-center">
     <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank"
-       class="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-2xl shadow-lg font-semibold">
-       📢 Join Channel
+       class="inline-block px-8 py-3 bg-green-500 hover:bg-green-600 rounded-xl font-bold shadow-lg">
+      📢 আমাদের অফিসিয়াল চ্যানেলে যোগ দিন
     </a>
-  </div>
+  </section>
 
-  <!-- Buttons Section -->
-  <div class="grid grid-cols-2 gap-6 mt-10 w-11/12 max-w-lg">
-    <button onclick="showAd()" class="p-6 bg-blue-600 hover:bg-blue-700 rounded-2xl shadow-lg">
-      ▶ View Ad
-    </button>
-
-    <button onclick="openWithdraw()" class="p-6 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-2xl shadow-lg">
-      💳 Withdraw
-    </button>
-
-    <button onclick="openHistory()" class="p-6 bg-purple-600 hover:bg-purple-700 rounded-2xl shadow-lg">
-      📜 History
-    </button>
-
-    <button onclick="copyRefer()" class="p-6 bg-pink-600 hover:bg-pink-700 rounded-2xl shadow-lg">
-      🎁 Refer
-    </button>
-  </div>
-
-  <!-- Balance -->
-  <div id="balanceBox" class="mt-10 text-lg font-semibold">
-    Balance: <span id="balance">0.00</span> ৳
-  </div>
-
-  <!-- Withdraw Modal -->
-  <div id="withdrawModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
-    <div class="bg-white text-black rounded-2xl p-6 w-80">
-      <h2 class="text-xl font-bold mb-4">Withdraw Request</h2>
-      <input id="bkashNumber" type="text" placeholder="Bkash Number"
-             class="w-full p-2 border rounded mb-3" />
-      <input id="amount" type="number" placeholder="Amount (min 10)"
-             class="w-full p-2 border rounded mb-3" />
-      <p class="text-xs text-gray-600 mb-4">⚠ Minimum Withdraw: 10৳ (Bkash only)</p>
-      <div class="flex justify-between">
-        <button onclick="submitWithdraw()" class="px-4 py-2 bg-green-600 text-white rounded-lg">Submit</button>
-        <button onclick="closeWithdraw()" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Cancel</button>
-      </div>
+  <!-- Balance + Daily Limit -->
+  <section class="glass mt-6 p-6 w-11/12 max-w-lg mx-auto text-center">
+    <p class="text-xl font-semibold">ব্যালেন্স: <span id="balance">০.০০</span> টাকা</p>
+    <p class="text-sm mt-2 opacity-90">
+      🎯 আজ দেখা বিজ্ঞাপন: <span id="adsCount">0</span> / 100
+      <span id="resetInfo" class="ml-2 badge bg-cyan-500/20">প্রতিদিন স্বয়ংক্রিয় রিসেট</span>
+    </p>
+    <div class="w-full bg-white/20 rounded-full h-3 mt-3">
+      <div id="progressBar" class="bg-cyan-400 h-3 rounded-full transition-all" style="width:0%"></div>
     </div>
-  </div>
+  </section>
 
-  <!-- History Modal -->
-  <div id="historyModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
-    <div class="bg-white text-black rounded-2xl p-6 w-96 max-h-[80vh] overflow-y-auto">
-      <h2 class="text-xl font-bold mb-4">Withdraw History</h2>
-      <ul id="historyList" class="space-y-2 text-sm"></ul>
-      <div class="flex justify-center mt-4">
-        <button onclick="closeHistory()" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Close</button>
-      </div>
+  <!-- Ads Section -->
+  <section class="glass mt-6 p-6 w-11/12 max-w-lg mx-auto text-center">
+    <h2 class="text-2xl font-bold mb-3">▶ বিজ্ঞাপন দেখুন</h2>
+    <p id="adTimer" class="text-sm opacity-90 mb-3">প্রতি বিজ্ঞাপন ১৫ সেকেন্ড • সম্পূর্ণ দেখলে ০.২০ টাকা</p>
+    <button id="watchBtn" onclick="showAd()"
+            class="px-8 py-3 bg-blue-600 rounded-xl font-bold animate-pulse">
+      এখনই বিজ্ঞাপন দেখুন
+    </button>
+  </section>
+
+  <!-- Withdraw Section -->
+  <section class="glass mt-6 p-6 w-11/12 max-w-lg mx-auto text-center">
+    <h2 class="text-2xl font-bold mb-4">💳 টাকা উত্তোলন</h2>
+    <input id="bkashNumber" type="text" placeholder="বিকাশ নম্বর লিখুন"
+           class="w-full p-3 rounded text-black mb-3 border-2 border-cyan-400"/>
+    <input id="amount" type="number" placeholder="পরিমাণ (সর্বনিম্ন ১০)"
+           class="w-full p-3 rounded text-black mb-3 border-2 border-cyan-400"/>
+    <button onclick="submitWithdraw()" class="px-6 py-3 bg-yellow-400 text-black font-bold rounded-xl">
+      উত্তোলনের অনুরোধ পাঠান
+    </button>
+    <p class="text-xs opacity-80 mt-2">⚠ সর্বনিম্ন উত্তোলন ১০ টাকা।</p>
+  </section>
+
+  <!-- History Section -->
+  <section class="glass mt-6 p-6 w-11/12 max-w-lg mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-center">📜 উত্তোলন ইতিহাস</h2>
+    <ul id="historyList" class="space-y-2 text-sm max-h-56 overflow-y-auto"></ul>
+  </section>
+
+  <!-- Refer Section -->
+  <section class="glass mt-6 p-6 w-11/12 max-w-lg mx-auto text-center">
+    <h2 class="text-2xl font-bold mb-4">🎁 রেফার করে আয় করুন</h2>
+    <button onclick="copyRefer()" class="px-6 py-3 bg-pink-600 rounded-xl font-bold">
+      🎯 রেফার লিংক কপি করুন
+    </button>
+  </section>
+
+  <!-- Admin Section -->
+  <section class="glass mt-6 p-6 w-11/12 max-w-lg mx-auto text-center mb-10">
+    <h2 class="text-2xl font-bold mb-4">👑 অ্যাডমিন প্যানেল</h2>
+    <div id="adminLoginBox" class="mb-4">
+      <input id="adminPass" type="password" placeholder="অ্যাডমিন পাসওয়ার্ড দিন"
+             class="w-full p-3 rounded text-black mb-3 border-2 border-green-400"/>
+      <button onclick="checkAdmin()" class="px-6 py-3 bg-green-600 rounded-xl font-bold">লগইন</button>
+      <p class="text-xs opacity-80 mt-2">পাসওয়ার্ড: <span class="select-all">Sharif000</span></p>
     </div>
-  </div>
+    <div id="adminPanel" class="hidden text-left">
+      <h3 class="text-xl font-bold mb-2">⏳ পেন্ডিং উত্তোলনের অনুরোধ</h3>
+      <ul id="adminRequests" class="space-y-2 text-sm"></ul>
+    </div>
+  </section>
 
   <script>
-    let balance = 0;
-    let history = JSON.parse(localStorage.getItem("history")) || [];
-    const isAdmin = false; // 👉 এডমিন হলে true করে নিন
-
-    // ✅ আপনার Bot Token + Admin Chat ID
+    /* ========= কনফিগ ========= */
+    const AD_SECONDS = 15;                // প্রতি বিজ্ঞাপনের সময় (সেকেন্ড)
+    const REWARD_PER_AD = 0.20;           // প্রতি বিজ্ঞাপনে আয়
+    const DAILY_LIMIT = 100;              // দৈনিক সর্বোচ্চ বিজ্ঞাপন
+    const MIN_WITHDRAW = 10;              // সর্বনিম্ন উত্তোলন
     const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
-    const ADMIN_CHAT_ID = "7691157254";
+    const ADMIN_ID  = "7691157254";
 
-    // Ad Show (Demo only, 17s delay)
-    function showAd() {
-      let counter = 17;
-      const interval = setInterval(() => {
-        counter--;
-        if (counter < 0) {
-          clearInterval(interval);
-          balance += 0.2;
-          document.getElementById("balance").innerText = balance.toFixed(2);
-          alert("✅ Ad watched! +0.20 ৳ added.");
+    /* ========= স্টেট ========= */
+    let state = {
+      balance: 0,
+      ads: { date: "", count: 0 },
+      withdraws: [] // {id, number, amount, status: 'Pending'|'Accepted'|'Rejected', time}
+    };
+
+    /* ========= Utils ========= */
+    const fmt = n => n.toLocaleString("bn-BD", {minimumFractionDigits:2, maximumFractionDigits:2});
+    const todayKey = () => new Date().toISOString().slice(0,10);
+    const save = () => localStorage.setItem("bdtm_state", JSON.stringify(state));
+    const load = () => {
+      const raw = localStorage.getItem("bdtm_state");
+      if(raw){
+        try { state = JSON.parse(raw); } catch(e){}
+      }
+      // daily reset
+      if(state.ads.date !== todayKey()){
+        state.ads.date = todayKey();
+        state.ads.count = 0;
+      }
+    };
+
+    function renderBalance(){
+      document.getElementById("balance").innerText = fmt(state.balance);
+      document.getElementById("adsCount").innerText = state.ads.count;
+      const percent = Math.min(100, (state.ads.count/DAILY_LIMIT)*100);
+      document.getElementById("progressBar").style.width = percent + "%";
+    }
+
+    function renderHistory(){
+      const ul = document.getElementById("historyList");
+      ul.innerHTML = "";
+      if(state.withdraws.length === 0){
+        ul.innerHTML = `<li class="opacity-80">কোনো ইতিহাস নেই।</li>`;
+        return;
+      }
+      state.withdraws.slice().reverse().forEach(w=>{
+        const li = document.createElement("li");
+        const color = w.status==="Accepted" ? "bg-green-500/20" :
+                      w.status==="Rejected" ? "bg-red-500/20" : "bg-yellow-500/20";
+        li.className = `glass ${color} p-3 rounded-lg`;
+        li.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+            <div>
+              <span class="badge bg-white/20">ID: ${w.id}</span>
+              <span class="ml-2">৳${fmt(w.amount)} ➜ ${w.number}</span>
+            </div>
+            <div>
+              <span class="badge ${w.status==='Accepted'?'bg-green-600/60':w.status==='Rejected'?'bg-red-600/60':'bg-yellow-600/60'}">
+                ${w.status==='Accepted'?'✅ অনুমোদিত':w.status==='Rejected'?'❌ বাতিল':'⏳ পেন্ডিং'}
+              </span>
+            </div>
+          </div>
+          <div class="text-xs opacity-80 mt-1">সময়: ${new Date(w.time).toLocaleString('bn-BD')}</div>
+        `;
+        ul.appendChild(li);
+      });
+    }
+
+    function renderAdminList(){
+      const ul = document.getElementById("adminRequests");
+      ul.innerHTML = "";
+      const pending = state.withdraws.filter(w=>w.status==="Pending");
+      if(pending.length===0){
+        ul.innerHTML = `<li class="opacity-80">বর্তমানে কোনো পেন্ডিং অনুরোধ নেই।</li>`;
+        return;
+      }
+      pending.slice().reverse().forEach(w=>{
+        const li = document.createElement("li");
+        li.className = "glass p-3 rounded-lg";
+        li.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+              <span class="badge bg-white/20">ID: ${w.id}</span>
+              <span class="ml-2">৳${fmt(w.amount)} ➜ ${w.number}</span>
+            </div>
+            <div class="flex gap-2">
+              <button class="px-3 py-1 bg-green-600 rounded" onclick="adminApprove('${w.id}')">অনুমোদন</button>
+              <button class="px-3 py-1 bg-red-600 rounded" onclick="adminReject('${w.id}')">বাতিল</button>
+            </div>
+          </div>
+        `;
+        ul.appendChild(li);
+      });
+    }
+
+    function notifyAdmin(text){
+      const msg = encodeURIComponent(text);
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_ID}&text=${msg}`)
+        .catch(()=>{}); // ব্যর্থ হলেও UI থামাবো না
+    }
+
+    /* ========= Ads ========= */
+    function showAd(){
+      if(state.ads.count >= DAILY_LIMIT){
+        alert("⚠ আজকের লিমিট পূর্ণ হয়েছে (১০০)।");
+        return;
+      }
+      if(typeof show_9842278 === "function"){
+        show_9842278(); // Monetag popup
+      }else{
+        alert("⚠ বিজ্ঞাপন এখনো লোড হয়নি, একটু পরে চেষ্টা করুন।");
+        return;
+      }
+
+      let left = AD_SECONDS;
+      const btn = document.getElementById("watchBtn");
+      const timer = document.getElementById("adTimer");
+      btn.disabled = true; btn.classList.remove("animate-pulse");
+      const t = setInterval(()=>{
+        timer.innerText = `⏳ ${left} সেকেন্ড চলছে...`;
+        left--;
+        if(left < 0){
+          clearInterval(t);
+          // রিওয়ার্ড
+          state.ads.count += 1;
+          state.balance = +(state.balance + REWARD_PER_AD).toFixed(2);
+          save(); renderBalance();
+          timer.innerText = "✅ বিজ্ঞাপন সম্পূর্ণ দেখেছেন! +০.২০ টাকা যুক্ত হয়েছে।";
+          alert("✅ বিজ্ঞাপন সম্পূর্ণ দেখেছেন! +০.২০ টাকা যুক্ত হয়েছে।");
+          btn.disabled = false; btn.classList.add("animate-pulse");
         }
       }, 1000);
     }
 
-    // Unique Withdraw ID জেনারেট
-    function generateWithdrawID() {
-      return "WD-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
-    }
-
-    // Telegram এডমিনকে Withdraw Request পাঠানো
-    function sendToAdmin(req) {
-      const text = `📢 New Withdraw Request\n🆔 ID: ${req.id}\n💳 Number: ${req.number}\n💰 Amount: ৳${req.amount}\n⏰ ${req.date}`;
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: ADMIN_CHAT_ID,
-          text: text
-        })
-      });
-    }
-
-    // Withdraw Modal
-    function openWithdraw() {
-      document.getElementById("withdrawModal").classList.remove("hidden");
-    }
-    function closeWithdraw() {
-      document.getElementById("withdrawModal").classList.add("hidden");
-    }
-
-    // Withdraw Submit (Min 10৳)
-    function submitWithdraw() {
-      const number = document.getElementById("bkashNumber").value;
+    /* ========= Withdraw ========= */
+    function submitWithdraw(){
+      const number = document.getElementById("bkashNumber").value.trim();
       const amount = parseFloat(document.getElementById("amount").value);
-
-      if (!number || amount < 10 || amount > balance) {
-        alert("⚠ Invalid request. Min 10 & within balance.");
+      if(!number || isNaN(amount)){
+        alert("⚠ সঠিকভাবে বিকাশ নম্বর ও পরিমাণ লিখুন।");
+        return;
+      }
+      if(amount < MIN_WITHDRAW){
+        alert(`⚠ সর্বনিম্ন উত্তোলন ${MIN_WITHDRAW} টাকা।`);
+        return;
+      }
+      if(amount > state.balance){
+        alert("⚠ পর্যাপ্ত ব্যালেন্স নেই।");
         return;
       }
 
-      const request = {
-        id: generateWithdrawID(),
-        number,
-        amount,
-        status: "Pending",
-        date: new Date().toLocaleString()
+      state.balance = +(state.balance - amount).toFixed(2);
+      const req = {
+        id: Date.now().toString(),
+        number, amount, status: "Pending",
+        time: new Date().toISOString()
       };
-
-      history.push(request);
-      localStorage.setItem("history", JSON.stringify(history));
+      state.withdraws.push(req);
+      save();
+      renderBalance();
       renderHistory();
-      closeWithdraw();
+      // অ্যাডমিন তালিকা লগইনের পর দেখাবে, তবে ডেটা সেভ আছে
 
-      // ✅ এডমিনকে নোটিফিকেশন পাঠানো
-      sendToAdmin(request);
-
-      alert("✅ Withdraw request submitted. Waiting for admin approval.\n🆔 Request ID: " + request.id);
+      // নোটিফিকেশন (ইউজার + অ্যাডমিন)
+      alert("📩 আপনার উত্তোলনের অনুরোধ পাঠানো হয়েছে। অনুগ্রহ করে অপেক্ষা করুন।");
+      notifyAdmin(
+        `📩 নতুন উত্তোলনের অনুরোধ\nID: ${req.id}\nপরিমাণ: ৳${fmt(req.amount)}\nবিকাশ: ${req.number}`
+      );
     }
 
-    // History Render
-    function renderHistory() {
-      const list = document.getElementById("historyList");
-      list.innerHTML = "";
-      history.forEach((req, index) => {
-        const li = document.createElement("li");
-        li.className = "p-2 border rounded flex flex-col";
-
-        let statusHtml = `<span class="font-semibold">${req.status}</span>`;
-        if (isAdmin && req.status === "Pending") {
-          statusHtml = `
-            <button onclick="acceptWithdraw(${index})" class="px-2 py-1 bg-green-600 text-white rounded">Accept</button>
-            <button onclick="rejectWithdraw(${index})" class="px-2 py-1 bg-red-600 text-white rounded">Reject</button>
-          `;
-        }
-
-        li.innerHTML = `
-          <div>🆔 ${req.id}</div>
-          <div>৳${req.amount} to ${req.number}</div>
-          <div class="text-sm text-gray-600">(${req.date})</div>
-          <div>→ ${statusHtml}</div>
-        `;
-        list.appendChild(li);
-      });
-    }
-
-    // Admin Accept
-    function acceptWithdraw(index) {
-      if (history[index].status === "Pending") {
-        if (balance >= history[index].amount) {
-          balance -= history[index].amount;
-          document.getElementById("balance").innerText = balance.toFixed(2);
-          history[index].status = "Paid";
-          localStorage.setItem("history", JSON.stringify(history));
-          renderHistory();
-        } else {
-          alert("⚠ Insufficient balance!");
-        }
+    /* ========= Admin ========= */
+    function checkAdmin(){
+      const pass = document.getElementById("adminPass").value;
+      if(pass === "Sharif000"){
+        document.getElementById("adminLoginBox").classList.add("hidden");
+        document.getElementById("adminPanel").classList.remove("hidden");
+        renderAdminList();
+        alert("✅ অ্যাডমিন লগইন সফল।");
+      }else{
+        alert("❌ ভুল পাসওয়ার্ড।");
       }
     }
 
-    // Admin Reject
-    function rejectWithdraw(index) {
-      if (history[index].status === "Pending") {
-        history[index].status = "Rejected";
-        localStorage.setItem("history", JSON.stringify(history));
-        renderHistory();
-      }
-    }
-
-    // History Modal
-    function openHistory() {
-      document.getElementById("historyModal").classList.remove("hidden");
+    function updateWithdrawStatus(id, status){
+      const w = state.withdraws.find(x=>x.id===id);
+      if(!w) return;
+      w.status = status;
+      save();
       renderHistory();
-    }
-    function closeHistory() {
-      document.getElementById("historyModal").classList.add("hidden");
+      renderAdminList();
     }
 
-    // Refer Copy
-    function copyRefer() {
+    function adminApprove(id){
+      updateWithdrawStatus(id, "Accepted");
+      notifyAdmin(`✅ উত্তোলন অনুমোদিত\nID: ${id}`);
+      alert("✅ অনুরোধ অনুমোদিত হয়েছে।");
+    }
+
+    function adminReject(id){
+      updateWithdrawStatus(id, "Rejected");
+      notifyAdmin(`❌ উত্তোলন বাতিল\nID: ${id}`);
+      alert("❌ অনুরোধ বাতিল করা হয়েছে।");
+    }
+
+    /* ========= Refer ========= */
+    function copyRefer(){
       const referLink = "https://t.me/BD_TM_MINI_BOT";
-      navigator.clipboard.writeText(referLink).then(() => {
-        alert("✅ Refer link copied: " + referLink);
+      navigator.clipboard.writeText(referLink).then(()=>{
+        alert("✅ রেফার লিংক কপি হয়েছে!");
       });
     }
+
+    /* ========= Init ========= */
+    (function init(){
+      load();
+      renderBalance();
+      renderHistory();
+      // দিন বদলালে UI-তে দেখাও
+      document.getElementById("resetInfo").title = `আজকের তারিখ: ${new Date().toLocaleDateString('bn-BD')} • ১২ টায় স্বয়ংক্রিয়ভাবে রিসেট হবে না; পরের দিন প্রথম ওপেনের সময় রিসেট হবে।`;
+    })();
   </script>
 </body>
-  </html>
+        </html>
