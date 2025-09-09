@@ -7,17 +7,30 @@
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Monetag SDK -->
+  <script src="//libtl.com/sdk.js" data-zone="9842278" data-sdk="show_9842278"></script>
 </head>
 <body class="bg-gradient-to-r from-blue-900 to-purple-900 min-h-screen text-white flex flex-col">
 
   <!-- Header -->
-  <header class="w-full p-4 text-center bg-black/40 shadow-lg">
+  <header class="w-full p-4 text-center bg-black bg-opacity-40 shadow-lg">
     <h1 class="text-3xl font-bold">💎 BD TM MINI BOT</h1>
-    <p class="text-sm opacity-80">এড দেখে টাকা আর্ন করুন, রেফার করে বোনাস পান</p>
+    <p class="text-sm opacity-80">Earn by Watching Ads & Referring Friends</p>
   </header>
 
-  <!-- Sections -->
-  <main class="flex-1 p-4">
+  <!-- Navigation Tabs -->
+  <nav class="flex justify-around bg-black bg-opacity-30 py-3 text-sm font-semibold">
+    <button onclick="openTab('home')" class="hover:text-yellow-400">🏠 হোম</button>
+    <button onclick="openTab('ads')" class="hover:text-yellow-400">▶ এড দেখুন</button>
+    <button onclick="openTab('withdraw')" class="hover:text-yellow-400">💳 উইথড্র</button>
+    <button onclick="openTab('history')" class="hover:text-yellow-400">📜 হিস্ট্রি</button>
+    <button onclick="openTab('refer')" class="hover:text-yellow-400">🎁 রেফার</button>
+    <button onclick="openTab('admin')" class="hover:text-yellow-400">⚙ এডমিন</button>
+  </nav>
+
+  <!-- Main Sections -->
+  <main class="flex-1 p-6">
     <!-- Home -->
     <section id="home" class="tab">
       <div class="text-center">
@@ -27,87 +40,104 @@
         <!-- Join Channel Button -->
         <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank"
            class="mt-6 inline-block px-6 py-3 bg-green-500 hover:bg-green-600 rounded-2xl shadow-lg font-semibold">
-           📢 অফিসিয়াল চ্যানেলে যোগ দিন
+           📢 অফিসিয়াল চ্যানেলে যোগ দিন
         </a>
       </div>
     </section>
 
     <!-- Ads -->
     <section id="ads" class="tab hidden text-center">
-      <button onclick="showAd()" class="mt-10 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-2xl shadow-lg">
-        ▶ বিজ্ঞাপন দেখুন
+      <p class="mb-4">প্রতিদিন সর্বোচ্চ 100টি এড দেখা যাবে</p>
+      <button onclick="showAd()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-2xl shadow-lg">
+        ▶ এড দেখুন
       </button>
-      <p class="mt-4 opacity-70 text-sm">প্রতিদিন সর্বোচ্চ 100 টি এড দেখা যাবে</p>
+      <p id="adsLeft" class="mt-4 opacity-80"></p>
     </section>
 
     <!-- Withdraw -->
     <section id="withdraw" class="tab hidden">
-      <h2 class="text-xl font-bold mb-4 text-center">উইথড্র রিকোয়েস্ট</h2>
+      <h2 class="text-xl font-bold mb-4">উইথড্র রিকোয়েস্ট</h2>
       <select id="method" class="w-full p-2 border rounded mb-3 text-black">
-        <option value="bkash">বিকাশ</option>
-        <option value="nagad">নগদ</option>
-        <option value="recharge">মোবাইল রিচার্জ</option>
+        <option value="bkash">বিকাশ (মিন 10৳)</option>
+        <option value="nagad">নগদ (মিন 50৳)</option>
+        <option value="recharge">মোবাইল রিচার্জ (মিন 20৳)</option>
       </select>
-      <input id="number" type="text" placeholder="Number"
-            class="w-full p-2 border rounded mb-3 text-black" />
-      <input id="amount" type="number" placeholder="Amount"
-            class="w-full p-2 border rounded mb-3 text-black" />
-      <button onclick="submitWithdraw()" class="w-full px-4 py-2 bg-green-600 text-white rounded-lg">
-        সাবমিট
-      </button>
+      <input id="number" type="text" placeholder="নম্বর লিখুন" class="w-full p-2 border rounded mb-3 text-black"/>
+      <input id="amount" type="number" placeholder="টাকার পরিমাণ" class="w-full p-2 border rounded mb-3 text-black"/>
+      <button onclick="submitWithdraw()" class="w-full py-2 bg-green-600 rounded-lg">রিকোয়েস্ট সাবমিট</button>
     </section>
 
     <!-- History -->
     <section id="history" class="tab hidden">
-      <h2 class="text-xl font-bold mb-4 text-center">উইথড্র হিস্ট্রি</h2>
+      <h2 class="text-xl font-bold mb-4">উইথড্র হিস্ট্রি</h2>
       <ul id="historyList" class="space-y-2 text-sm"></ul>
     </section>
 
     <!-- Refer -->
     <section id="refer" class="tab hidden text-center">
-      <p class="mb-4">বন্ধুদের রেফার করুন এবং বোনাস পান</p>
-      <button onclick="copyRefer()" class="px-6 py-3 bg-pink-600 hover:bg-pink-700 rounded-2xl shadow-lg">
-        🎁 রেফার লিঙ্ক কপি করুন
-      </button>
+      <p class="mb-3">আপনার রেফার লিংক:</p>
+      <input type="text" readonly value="https://t.me/BD_TM_MINI_BOT"
+             class="w-full p-2 border rounded mb-3 text-black"/>
+      <button onclick="copyRefer()" class="px-4 py-2 bg-pink-600 hover:bg-pink-700 rounded-lg">লিংক কপি করুন</button>
     </section>
 
     <!-- Admin -->
     <section id="admin" class="tab hidden">
-      <h2 class="text-xl font-bold mb-4 text-center">অ্যাডমিন লগইন</h2>
-      <div id="adminLoginBox" class="mb-4">
-        <input id="adminPass" type="password" placeholder="অ্যাডমিন পাসওয়ার্ড দিন"
-               class="w-full p-3 rounded text-black mb-3 border-2 border-green-400"/>
-        <button onclick="checkAdmin()" class="px-6 py-3 bg-green-600 rounded-xl font-bold">লগইন</button>
-      </div>
-      <div id="adminPanel" class="hidden">
-        <p class="mb-4 text-center">✅ অ্যাডমিন সফলভাবে লগইন হয়েছে</p>
-        <ul id="adminRequests" class="space-y-2"></ul>
+      <h2 class="text-xl font-bold mb-4">এডমিন প্যানেল</h2>
+      <input id="adminPass" type="password" placeholder="পাসওয়ার্ড দিন"
+             class="w-full p-2 border rounded mb-3 text-black"/>
+      <button onclick="checkAdmin()" class="px-4 py-2 bg-yellow-600 rounded-lg">লগইন</button>
+      <div id="adminPanel" class="hidden mt-4">
+        <h3 class="font-bold mb-2">পেন্ডিং রিকোয়েস্ট</h3>
+        <ul id="pendingList" class="space-y-2 text-sm"></ul>
       </div>
     </section>
   </main>
 
-  <!-- Bottom Nav -->
-  <nav class="fixed bottom-0 w-full bg-black/60 text-white flex justify-around py-3">
-    <button onclick="showTab('home')">🏠 হোম</button>
-    <button onclick="showTab('ads')">▶ বিজ্ঞাপন</button>
-    <button onclick="showTab('withdraw')">💳 উইথড্র</button>
-    <button onclick="showTab('history')">📜 ইতিহাস</button>
-    <button onclick="showTab('refer')">🎁 রেফার</button>
-    <button onclick="showTab('admin')">👑 অ্যাডমিন</button>
-  </nav>
-
   <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-20 right-5 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg hidden"></div>
+  <div id="toast" class="fixed bottom-20 right-5 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg hidden">
+    ✅ সফলভাবে 0.20 টাকা যোগ হয়েছে!
+  </div>
 
   <script>
     let balance = 0;
-    const adminPassword = "Sharif000";
-    let withdrawRequests = [];
+    let adsWatched = 0;
+    const maxAds = 100;
 
-    // Show Tab
-    function showTab(tabId){
-      document.querySelectorAll("section.tab").forEach(sec => sec.classList.add("hidden"));
-      document.getElementById(tabId).classList.remove("hidden");
+    function openTab(tabId) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+      if (tabId === "ads") updateAdsLeft();
+    }
+
+    function updateAdsLeft() {
+      document.getElementById("adsLeft").innerText =
+        `আজকের বাকি এড: ${maxAds - adsWatched}`;
+    }
+
+    // Show Ad
+    function showAd() {
+      if (adsWatched >= maxAds) {
+        alert("⚠ আজকের এড লিমিট শেষ হয়েছে।");
+        return;
+      }
+      if (typeof show_9842278 === "function") {
+        show_9842278(); // Monetag popup
+        let counter = 17;
+        const interval = setInterval(() => {
+          counter--;
+          if (counter < 0) {
+            clearInterval(interval);
+            adsWatched++;
+            balance += 0.20;
+            document.getElementById("balance").innerText = balance.toFixed(2);
+            showToast("✅ 0.20 টাকা যোগ হয়েছে!");
+            updateAdsLeft();
+          }
+        }, 1000);
+      } else {
+        alert("❌ এড লোড হয়নি।");
+      }
     }
 
     // Toast Notification
@@ -118,90 +148,59 @@
       setTimeout(() => toast.classList.add("hidden"), 3000);
     }
 
-    // Ad Show (17s delay)
-    function showAd() {
-      let counter = 17;
-      const interval = setInterval(() => {
-        counter--;
-        if (counter < 0) {
-          clearInterval(interval);
-          balance += 0.20;
-          document.getElementById("balance").innerText = balance.toFixed(2);
-          showToast("✅ 0.20 টাকা যোগ হয়েছে!");
-        }
-      }, 1000);
-    }
-
     // Withdraw
     function submitWithdraw() {
       const method = document.getElementById("method").value;
       const number = document.getElementById("number").value;
       const amount = parseFloat(document.getElementById("amount").value);
 
-      let minAmount = 0;
-      if(method === "bkash") minAmount = 10;
-      if(method === "nagad") minAmount = 50;
-      if(method === "recharge") minAmount = 20;
-
+      let minAmount = method === "bkash" ? 10 : method === "nagad" ? 50 : 20;
       if (!number || amount < minAmount || amount > balance) {
-        alert(`⚠ ন্যূনতম ${minAmount} টাকা ${method} এর জন্য প্রয়োজন।`);
+        alert(`⚠ মিনিমাম ${minAmount}৳ এবং ব্যালেন্সের মধ্যে দিন।`);
         return;
       }
-
       balance -= amount;
       document.getElementById("balance").innerText = balance.toFixed(2);
 
+      const req = {method, number, amount, status: "Pending"};
       const li = document.createElement("li");
-      li.innerText = `৳${amount} via ${method} to ${number} → Pending`;
+      li.innerText = `${amount}৳ (${method}) → ${number} → Pending`;
       document.getElementById("historyList").appendChild(li);
 
-      withdrawRequests.push({method, number, amount, status:"Pending"});
-      alert("✅ উইথড্র রিকোয়েস্ট পাঠানো হয়েছে, এডমিন অনুমোদনের জন্য অপেক্ষা করুন।");
+      const pendingLi = document.createElement("li");
+      pendingLi.innerHTML = `${amount}৳ (${method}) → ${number}
+        <button onclick="approve(this)" class="ml-2 px-2 bg-green-500 rounded">Approve</button>
+        <button onclick="reject(this)" class="ml-2 px-2 bg-red-500 rounded">Reject</button>`;
+      document.getElementById("pendingList").appendChild(pendingLi);
+
+      showToast("📩 উইথড্র রিকোয়েস্ট পাঠানো হয়েছে!");
+    }
+
+    function approve(btn) {
+      btn.parentElement.innerHTML = btn.parentElement.innerText.replace("Pending","✅ Approved");
+    }
+    function reject(btn) {
+      btn.parentElement.innerHTML = btn.parentElement.innerText.replace("Pending","❌ Rejected");
     }
 
     // Refer
     function copyRefer() {
       const referLink = "https://t.me/BD_TM_MINI_BOT";
       navigator.clipboard.writeText(referLink).then(() => {
-        showToast("✅ রেফার লিঙ্ক কপি হয়েছে!");
+        showToast("✅ রেফার লিংক কপি হয়েছে!");
       });
     }
 
-    // Admin Login
+    // Admin
     function checkAdmin() {
       const pass = document.getElementById("adminPass").value;
-      if (pass === adminPassword) {
-        document.getElementById("adminLoginBox").classList.add("hidden");
+      if (pass === "Sharif000") {
         document.getElementById("adminPanel").classList.remove("hidden");
-        loadAdminRequests();
+        showToast("✅ এডমিন লগইন সফল!");
       } else {
-        alert("❌ ভুল পাসওয়ার্ড");
+        alert("❌ ভুল পাসওয়ার্ড!");
       }
-    }
-
-    // Load Admin Requests
-    function loadAdminRequests(){
-      const list = document.getElementById("adminRequests");
-      list.innerHTML = "";
-      withdrawRequests.forEach((req, index) => {
-        const li = document.createElement("li");
-        li.className = "p-3 bg-gray-200 text-black rounded";
-        li.innerHTML = `৳${req.amount} via ${req.method} to ${req.number} → ${req.status}
-          <button onclick="approveRequest(${index})" class="ml-2 px-2 py-1 bg-green-500 text-white rounded">Approve</button>
-          <button onclick="rejectRequest(${index})" class="ml-2 px-2 py-1 bg-red-500 text-white rounded">Reject</button>`;
-        list.appendChild(li);
-      });
-    }
-
-    // Approve / Reject
-    function approveRequest(i){
-      withdrawRequests[i].status = "✅ Approved";
-      loadAdminRequests();
-    }
-    function rejectRequest(i){
-      withdrawRequests[i].status = "❌ Rejected";
-      loadAdminRequests();
     }
   </script>
 </body>
-        </html>
+                                             </html>
