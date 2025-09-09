@@ -7,9 +7,6 @@
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Monetag SDK -->
-  <script src="//libtl.com/sdk.js" data-zone="9842278" data-sdk="show_9842278"></script>
 </head>
 <body class="bg-gradient-to-r from-blue-900 to-purple-900 min-h-screen text-white flex flex-col items-center">
 
@@ -29,23 +26,18 @@
 
   <!-- Buttons Section -->
   <div class="grid grid-cols-2 gap-6 mt-10 w-11/12 max-w-lg">
-
-    <!-- View Ad -->
     <button onclick="showAd()" class="p-6 bg-blue-600 hover:bg-blue-700 rounded-2xl shadow-lg">
       ▶ View Ad
     </button>
 
-    <!-- Withdraw -->
     <button onclick="openWithdraw()" class="p-6 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-2xl shadow-lg">
       💳 Withdraw
     </button>
 
-    <!-- History -->
     <button onclick="openHistory()" class="p-6 bg-purple-600 hover:bg-purple-700 rounded-2xl shadow-lg">
       📜 History
     </button>
 
-    <!-- Refer -->
     <button onclick="copyRefer()" class="p-6 bg-pink-600 hover:bg-pink-700 rounded-2xl shadow-lg">
       🎁 Refer
     </button>
@@ -56,26 +48,15 @@
     Balance: <span id="balance">0.00</span> ৳
   </div>
 
-  <!-- Ad Limit -->
-  <div id="adsInfo" class="mt-4 text-sm opacity-90">
-    Today’s Ads: <span id="adsCount">0</span> / 100
-  </div>
-
-  <!-- Countdown Timer -->
-  <div id="countdownBox" class="mt-4 text-xl font-bold hidden">
-    ⏳ Please wait <span id="countdown">17</span> seconds...
-  </div>
-
   <!-- Withdraw Modal -->
   <div id="withdrawModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
     <div class="bg-white text-black rounded-2xl p-6 w-80">
-      <h2 class="text-xl font-bold mb-2">Withdraw Request</h2>
-      <p class="text-xs text-gray-600 mb-4">⚠ Minimum Withdraw: 10৳ (Bkash only)</p>
-      
+      <h2 class="text-xl font-bold mb-4">Withdraw Request</h2>
       <input id="bkashNumber" type="text" placeholder="Bkash Number"
              class="w-full p-2 border rounded mb-3" />
       <input id="amount" type="number" placeholder="Amount (min 10)"
              class="w-full p-2 border rounded mb-3" />
+      <p class="text-xs text-gray-600 mb-4">⚠ Minimum Withdraw: 10৳ (Bkash only)</p>
       <div class="flex justify-between">
         <button onclick="submitWithdraw()" class="px-4 py-2 bg-green-600 text-white rounded-lg">Submit</button>
         <button onclick="closeWithdraw()" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Cancel</button>
@@ -85,170 +66,153 @@
 
   <!-- History Modal -->
   <div id="historyModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
-    <div class="bg-white text-black rounded-2xl p-6 w-[650px] max-h-[80vh] overflow-y-auto">
+    <div class="bg-white text-black rounded-2xl p-6 w-96 max-h-[80vh] overflow-y-auto">
       <h2 class="text-xl font-bold mb-4">Withdraw History</h2>
-
-      <!-- Summary -->
-      <div class="mb-3 text-sm font-semibold">
-        Total Withdrawn: ৳<span id="totalWithdraw">0.00</span>
-      </div>
-
-      <table class="w-full text-sm border">
-        <thead class="bg-gray-200">
-          <tr>
-            <th class="p-2 border">Amount</th>
-            <th class="p-2 border">Number</th>
-            <th class="p-2 border">Status</th>
-            <th class="p-2 border">Date</th>
-            <th class="p-2 border">Action</th>
-          </tr>
-        </thead>
-        <tbody id="historyList" class="text-center"></tbody>
-      </table>
-
+      <ul id="historyList" class="space-y-2 text-sm"></ul>
       <div class="flex justify-center mt-4">
         <button onclick="closeHistory()" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Close</button>
       </div>
     </div>
   </div>
 
-  <!-- JavaScript -->
   <script>
-    let balance = parseFloat(localStorage.getItem("balance")) || 0;
-    let adsWatched = parseInt(localStorage.getItem("adsWatched")) || 0;
-    const dailyLimit = 100;
-
-    // --- Date reset system ---
-    const today = new Date().toDateString();
-    const savedDate = localStorage.getItem("adsDate");
-    if (savedDate !== today) {
-      adsWatched = 0;
-      localStorage.setItem("adsDate", today);
-      localStorage.setItem("adsWatched", adsWatched);
-    }
-
-    // --- Withdraw history load ---
+    let balance = 0;
     let history = JSON.parse(localStorage.getItem("history")) || [];
+    const isAdmin = false; // 👉 এডমিন হলে true করে নিন
 
-    // UI প্রাথমিক মান সেট
-    document.getElementById("balance").innerText = balance.toFixed(2);
-    document.getElementById("adsCount").innerText = adsWatched;
-    renderHistory();
+    // ✅ আপনার Bot Token + Admin Chat ID
+    const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
+    const ADMIN_CHAT_ID = "7691157254";
 
-    // --- Ad Watching System ---
+    // Ad Show (Demo only, 17s delay)
     function showAd() {
-      if (adsWatched >= dailyLimit) {
-        alert("⚠ Today’s limit reached (100 ads). Try again tomorrow.");
-        return;
-      }
-
-      if (typeof show_9842278 === "function") {
-        show_9842278(); 
-      } else {
-        console.log("⚠ Monetag Ad not loaded, running simulation...");
-      }
-
       let counter = 17;
-      document.getElementById("countdownBox").classList.remove("hidden");
-      document.getElementById("countdown").innerText = counter;
-
       const interval = setInterval(() => {
         counter--;
-        document.getElementById("countdown").innerText = counter;
-
         if (counter < 0) {
           clearInterval(interval);
-          document.getElementById("countdownBox").classList.add("hidden");
-
           balance += 0.2;
-          adsWatched++;
-
-          localStorage.setItem("balance", balance);
-          localStorage.setItem("adsWatched", adsWatched);
-
           document.getElementById("balance").innerText = balance.toFixed(2);
-          document.getElementById("adsCount").innerText = adsWatched;
-
           alert("✅ Ad watched! +0.20 ৳ added.");
         }
       }, 1000);
     }
 
-    // --- Withdraw System ---
+    // Unique Withdraw ID জেনারেট
+    function generateWithdrawID() {
+      return "WD-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+    }
+
+    // Telegram এডমিনকে Withdraw Request পাঠানো
+    function sendToAdmin(req) {
+      const text = `📢 New Withdraw Request\n🆔 ID: ${req.id}\n💳 Number: ${req.number}\n💰 Amount: ৳${req.amount}\n⏰ ${req.date}`;
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: ADMIN_CHAT_ID,
+          text: text
+        })
+      });
+    }
+
+    // Withdraw Modal
     function openWithdraw() {
       document.getElementById("withdrawModal").classList.remove("hidden");
     }
     function closeWithdraw() {
       document.getElementById("withdrawModal").classList.add("hidden");
     }
+
+    // Withdraw Submit (Min 10৳)
     function submitWithdraw() {
       const number = document.getElementById("bkashNumber").value;
       const amount = parseFloat(document.getElementById("amount").value);
+
       if (!number || amount < 10 || amount > balance) {
         alert("⚠ Invalid request. Min 10 & within balance.");
         return;
       }
 
-      balance -= amount;
-      document.getElementById("balance").innerText = balance.toFixed(2);
-
-      const entry = { 
-        id: Date.now(), 
-        amount, 
-        number, 
+      const request = {
+        id: generateWithdrawID(),
+        number,
+        amount,
         status: "Pending",
         date: new Date().toLocaleString()
       };
-      history.push(entry);
-      localStorage.setItem("history", JSON.stringify(history));
-      localStorage.setItem("balance", balance);
 
+      history.push(request);
+      localStorage.setItem("history", JSON.stringify(history));
       renderHistory();
       closeWithdraw();
+
+      // ✅ এডমিনকে নোটিফিকেশন পাঠানো
+      sendToAdmin(request);
+
+      alert("✅ Withdraw request submitted. Waiting for admin approval.\n🆔 Request ID: " + request.id);
     }
 
-    // --- History System ---
+    // History Render
     function renderHistory() {
       const list = document.getElementById("historyList");
       list.innerHTML = "";
-      let total = 0;
+      history.forEach((req, index) => {
+        const li = document.createElement("li");
+        li.className = "p-2 border rounded flex flex-col";
 
-      history.forEach(h => {
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-          <td class="p-2 border">৳${h.amount}</td>
-          <td class="p-2 border">${h.number}</td>
-          <td class="p-2 border font-semibold ${h.status==="Pending"?"text-orange-500":"text-green-600"}">${h.status}</td>
-          <td class="p-2 border">${h.date}</td>
-          <td class="p-2 border">
-            ${h.status==="Pending" ? `<button onclick="updateStatus(${h.id})" class="px-2 py-1 bg-green-600 text-white rounded text-xs">Mark Paid</button>` : "-"}
-          </td>
-        `;
-        list.appendChild(row);
-
-        if (h.status === "Paid") {
-          total += h.amount;
+        let statusHtml = `<span class="font-semibold">${req.status}</span>`;
+        if (isAdmin && req.status === "Pending") {
+          statusHtml = `
+            <button onclick="acceptWithdraw(${index})" class="px-2 py-1 bg-green-600 text-white rounded">Accept</button>
+            <button onclick="rejectWithdraw(${index})" class="px-2 py-1 bg-red-600 text-white rounded">Reject</button>
+          `;
         }
+
+        li.innerHTML = `
+          <div>🆔 ${req.id}</div>
+          <div>৳${req.amount} to ${req.number}</div>
+          <div class="text-sm text-gray-600">(${req.date})</div>
+          <div>→ ${statusHtml}</div>
+        `;
+        list.appendChild(li);
       });
-
-      document.getElementById("totalWithdraw").innerText = total.toFixed(2);
     }
 
-    function updateStatus(id) {
-      history = history.map(h => h.id === id ? { ...h, status: "Paid" } : h);
-      localStorage.setItem("history", JSON.stringify(history));
-      renderHistory();
+    // Admin Accept
+    function acceptWithdraw(index) {
+      if (history[index].status === "Pending") {
+        if (balance >= history[index].amount) {
+          balance -= history[index].amount;
+          document.getElementById("balance").innerText = balance.toFixed(2);
+          history[index].status = "Paid";
+          localStorage.setItem("history", JSON.stringify(history));
+          renderHistory();
+        } else {
+          alert("⚠ Insufficient balance!");
+        }
+      }
     }
 
+    // Admin Reject
+    function rejectWithdraw(index) {
+      if (history[index].status === "Pending") {
+        history[index].status = "Rejected";
+        localStorage.setItem("history", JSON.stringify(history));
+        renderHistory();
+      }
+    }
+
+    // History Modal
     function openHistory() {
       document.getElementById("historyModal").classList.remove("hidden");
+      renderHistory();
     }
     function closeHistory() {
       document.getElementById("historyModal").classList.add("hidden");
     }
 
-    // --- Refer System ---
+    // Refer Copy
     function copyRefer() {
       const referLink = "https://t.me/BD_TM_MINI_BOT";
       navigator.clipboard.writeText(referLink).then(() => {
@@ -257,4 +221,4 @@
     }
   </script>
 </body>
-          </html>
+  </html>
