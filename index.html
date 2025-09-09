@@ -56,10 +56,22 @@
     Balance: <span id="balance">0.00</span> ৳
   </div>
 
+  <!-- Ad Limit -->
+  <div id="adsInfo" class="mt-4 text-sm opacity-90">
+    Today’s Ads: <span id="adsCount">0</span> / 100
+  </div>
+
+  <!-- Countdown Timer -->
+  <div id="countdownBox" class="mt-4 text-xl font-bold hidden">
+    ⏳ Please wait <span id="countdown">17</span> seconds...
+  </div>
+
   <!-- Withdraw Modal -->
   <div id="withdrawModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
     <div class="bg-white text-black rounded-2xl p-6 w-80">
-      <h2 class="text-xl font-bold mb-4">Withdraw Request</h2>
+      <h2 class="text-xl font-bold mb-2">Withdraw Request</h2>
+      <p class="text-xs text-gray-600 mb-4">⚠ Minimum Withdraw: 10৳ (Bkash only)</p>
+      
       <input id="bkashNumber" type="text" placeholder="Bkash Number"
              class="w-full p-2 border rounded mb-3" />
       <input id="amount" type="number" placeholder="Amount (min 10)"
@@ -73,41 +85,96 @@
 
   <!-- History Modal -->
   <div id="historyModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
-    <div class="bg-white text-black rounded-2xl p-6 w-96 max-h-[80vh] overflow-y-auto">
+    <div class="bg-white text-black rounded-2xl p-6 w-[650px] max-h-[80vh] overflow-y-auto">
       <h2 class="text-xl font-bold mb-4">Withdraw History</h2>
-      <ul id="historyList" class="space-y-2 text-sm"></ul>
+
+      <!-- Summary -->
+      <div class="mb-3 text-sm font-semibold">
+        Total Withdrawn: ৳<span id="totalWithdraw">0.00</span>
+      </div>
+
+      <table class="w-full text-sm border">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="p-2 border">Amount</th>
+            <th class="p-2 border">Number</th>
+            <th class="p-2 border">Status</th>
+            <th class="p-2 border">Date</th>
+            <th class="p-2 border">Action</th>
+          </tr>
+        </thead>
+        <tbody id="historyList" class="text-center"></tbody>
+      </table>
+
       <div class="flex justify-center mt-4">
         <button onclick="closeHistory()" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Close</button>
       </div>
     </div>
   </div>
 
+  <!-- JavaScript -->
   <script>
-    let balance = 0;
+    let balance = parseFloat(localStorage.getItem("balance")) || 0;
+    let adsWatched = parseInt(localStorage.getItem("adsWatched")) || 0;
+    const dailyLimit = 100;
 
-    // Monetag Ad Show + 17s delay
-    function showAd() {
-      if (typeof show_9842278 === "function") {
-        show_9842278(); // Monetag Ad popup
-
-        // Countdown 17 seconds
-        let counter = 17;
-        const interval = setInterval(() => {
-          console.log("⏳ Ad watching... " + counter + "s left");
-          counter--;
-          if (counter < 0) {
-            clearInterval(interval);
-            balance += 0.2;
-            document.getElementById("balance").innerText = balance.toFixed(2);
-            alert("✅ Ad watched! +0.20 ৳ added.");
-          }
-        }, 1000);
-      } else {
-        alert("❌ Ad not loaded yet.");
-      }
+    // --- Date reset system ---
+    const today = new Date().toDateString();
+    const savedDate = localStorage.getItem("adsDate");
+    if (savedDate !== today) {
+      adsWatched = 0;
+      localStorage.setItem("adsDate", today);
+      localStorage.setItem("adsWatched", adsWatched);
     }
 
-    // Withdraw Modal
+    // --- Withdraw history load ---
+    let history = JSON.parse(localStorage.getItem("history")) || [];
+
+    // UI প্রাথমিক মান সেট
+    document.getElementById("balance").innerText = balance.toFixed(2);
+    document.getElementById("adsCount").innerText = adsWatched;
+    renderHistory();
+
+    // --- Ad Watching System ---
+    function showAd() {
+      if (adsWatched >= dailyLimit) {
+        alert("⚠ Today’s limit reached (100 ads). Try again tomorrow.");
+        return;
+      }
+
+      if (typeof show_9842278 === "function") {
+        show_9842278(); 
+      } else {
+        console.log("⚠ Monetag Ad not loaded, running simulation...");
+      }
+
+      let counter = 17;
+      document.getElementById("countdownBox").classList.remove("hidden");
+      document.getElementById("countdown").innerText = counter;
+
+      const interval = setInterval(() => {
+        counter--;
+        document.getElementById("countdown").innerText = counter;
+
+        if (counter < 0) {
+          clearInterval(interval);
+          document.getElementById("countdownBox").classList.add("hidden");
+
+          balance += 0.2;
+          adsWatched++;
+
+          localStorage.setItem("balance", balance);
+          localStorage.setItem("adsWatched", adsWatched);
+
+          document.getElementById("balance").innerText = balance.toFixed(2);
+          document.getElementById("adsCount").innerText = adsWatched;
+
+          alert("✅ Ad watched! +0.20 ৳ added.");
+        }
+      }, 1000);
+    }
+
+    // --- Withdraw System ---
     function openWithdraw() {
       document.getElementById("withdrawModal").classList.remove("hidden");
     }
@@ -121,18 +188,59 @@
         alert("⚠ Invalid request. Min 10 & within balance.");
         return;
       }
+
       balance -= amount;
       document.getElementById("balance").innerText = balance.toFixed(2);
 
-      // History add
-      const li = document.createElement("li");
-      li.innerText = `৳${amount} to ${number} → Pending`;
-      document.getElementById("historyList").appendChild(li);
+      const entry = { 
+        id: Date.now(), 
+        amount, 
+        number, 
+        status: "Pending",
+        date: new Date().toLocaleString()
+      };
+      history.push(entry);
+      localStorage.setItem("history", JSON.stringify(history));
+      localStorage.setItem("balance", balance);
 
+      renderHistory();
       closeWithdraw();
     }
 
-    // History Modal
+    // --- History System ---
+    function renderHistory() {
+      const list = document.getElementById("historyList");
+      list.innerHTML = "";
+      let total = 0;
+
+      history.forEach(h => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td class="p-2 border">৳${h.amount}</td>
+          <td class="p-2 border">${h.number}</td>
+          <td class="p-2 border font-semibold ${h.status==="Pending"?"text-orange-500":"text-green-600"}">${h.status}</td>
+          <td class="p-2 border">${h.date}</td>
+          <td class="p-2 border">
+            ${h.status==="Pending" ? `<button onclick="updateStatus(${h.id})" class="px-2 py-1 bg-green-600 text-white rounded text-xs">Mark Paid</button>` : "-"}
+          </td>
+        `;
+        list.appendChild(row);
+
+        if (h.status === "Paid") {
+          total += h.amount;
+        }
+      });
+
+      document.getElementById("totalWithdraw").innerText = total.toFixed(2);
+    }
+
+    function updateStatus(id) {
+      history = history.map(h => h.id === id ? { ...h, status: "Paid" } : h);
+      localStorage.setItem("history", JSON.stringify(history));
+      renderHistory();
+    }
+
     function openHistory() {
       document.getElementById("historyModal").classList.remove("hidden");
     }
@@ -140,7 +248,7 @@
       document.getElementById("historyModal").classList.add("hidden");
     }
 
-    // Refer System (copy to clipboard)
+    // --- Refer System ---
     function copyRefer() {
       const referLink = "https://t.me/BD_TM_MINI_BOT";
       navigator.clipboard.writeText(referLink).then(() => {
@@ -149,4 +257,4 @@
     }
   </script>
 </body>
-</html>
+          </html>
