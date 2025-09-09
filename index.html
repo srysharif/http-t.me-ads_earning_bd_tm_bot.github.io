@@ -5,59 +5,30 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>BD TM MINI BOT</title>
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Monetag SDK (you already had this) -->
+  <!-- Monetag SDK (আপনি আগে ব্যবহার করেছিলেন) -->
   <script src="//libtl.com/sdk.js" data-zone="9842278" data-sdk="show_9842278"></script>
 
   <style>
-    /* Basic styles + lighting */
-    :root{
-      --glass: rgba(255,255,255,0.06);
-      --accent1:#34d399; --accent2:#60a5fa; --accent3:#a78bfa; --accent4:#fb7185; --accent5:#f59e0b;
-    }
-    body{font-family: system-ui, "Noto Sans Bengali", Arial; background: linear-gradient(180deg,#071024,#120924); color:#fff; margin:0; padding-bottom:96px;}
-    .container{max-width:480px;margin:0 auto;padding:16px;}
-    .glass{background:var(--glass);backdrop-filter: blur(8px);border-radius:14px;padding:12px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+    body{font-family:system-ui,"Noto Sans Bengali",Arial;background:linear-gradient(180deg,#071024,#120924);color:#fff;margin:0;padding-bottom:110px}
+    .container{max-width:520px;margin:0 auto;padding:16px}
+    .glass{background:rgba(255,255,255,0.06);backdrop-filter:blur(8px);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.04)}
     .lighting{animation:glowColors 6s infinite}
-    @keyframes glowColors{
-      0%{color:var(--accent1); text-shadow:0 0 6px var(--accent1)}
-      25%{color:var(--accent2); text-shadow:0 0 8px var(--accent2)}
-      50%{color:var(--accent3); text-shadow:0 0 10px var(--accent3)}
-      75%{color:var(--accent4); text-shadow:0 0 10px var(--accent4)}
-      100%{color:var(--accent5); text-shadow:0 0 6px var(--accent5)}
-    }
-
-    /* Toast */
-    .toast{
-      position:fixed; right:16px; bottom:110px; background:linear-gradient(90deg,#10b981,#06b6d4);
-      color:white; padding:10px 14px; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.4); z-index:9999;
-      opacity:0; transform:translateY(8px); transition:all .25s;
-    }
-    .toast.show{opacity:1; transform:translateY(0);}
-
-    /* Bomb */
-    .bomb{position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); font-size:3.2rem; z-index:9998; animation:bombAnim .9s ease-out forwards}
-    @keyframes bombAnim{0%{opacity:1; transform:translate(-50%,-50%) scale(.6)} 60%{transform:translate(-50%,-60%) scale(1.6)} 100%{opacity:0; transform:translate(-50%,-120%) scale(2.6)}}
-
-    /* Bottom nav */
-    .bottom-nav{position:fixed; left:12px; right:12px; bottom:12px; display:flex; gap:8px; background:rgba(0,0,0,0.28); padding:8px; border-radius:14px; align-items:center; justify-content:space-between; backdrop-filter: blur(6px); z-index:50}
-    .nav-btn{flex:1; text-align:center; padding:10px 6px; border-radius:12px; cursor:pointer; user-select:none}
-    .nav-btn .icon{font-size:18px; display:block}
-    .nav-btn.active{box-shadow:0 10px 30px rgba(124,58,237,0.18); transform:translateY(-4px);}
-
-    /* Tabs */
+    @keyframes glowColors{0%{color:#34d399}25%{color:#60a5fa}50%{color:#a78bfa}75%{color:#fb7185}100%{color:#f59e0b}}
+    .toast{position:fixed;right:16px;bottom:120px;padding:10px 14px;border-radius:10px;color:#fff;display:none;z-index:9999}
+    .bomb{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);font-size:3rem;z-index:9998;animation:bombAnim .9s forwards}
+    @keyframes bombAnim{0%{opacity:1;transform:translate(-50%,-50%) scale(.6)}60%{transform:translate(-50%,-60%) scale(1.6)}100%{opacity:0;transform:translate(-50%,-120%) scale(2.6)}}
+    .bottom-nav{position:fixed;left:12px;right:12px;bottom:12px;display:flex;gap:8px;background:rgba(0,0,0,0.26);padding:8px;border-radius:14px;backdrop-filter:blur(6px);z-index:60}
+    .nav-btn{flex:1;text-align:center;padding:10px 6px;border-radius:12px;cursor:pointer;user-select:none}
+    .nav-btn .icon{font-size:18px;display:block}
+    .nav-btn.active{box-shadow:0 10px 30px rgba(124,58,237,0.18);transform:translateY(-4px)}
     .tab{display:none}
-    .tab.show{display:block; animation:fade .28s}
-    @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
-
-    /* small table */
-    table{width:100%; border-collapse:collapse}
-    table th, table td{padding:8px; border-bottom:1px solid rgba(255,255,255,0.04); text-align:left; font-size:13px}
-
-    /* responsive */
-    @media (max-width:420px){ .container{padding:12px} .nav-btn{padding:8px} }
+    .tab.show{display:block;animation:fade .25s}
+    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    table{width:100%;border-collapse:collapse}
+    table th,table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;text-align:left}
+    input,select{outline:none}
   </style>
 </head>
 <body>
@@ -66,17 +37,16 @@
     <!-- Header -->
     <header class="glass text-center mb-4">
       <h1 class="text-2xl font-bold lighting">BD TM MINI BOT</h1>
-      <p class="text-sm mt-1">এড দেখে উপার্জন করুন — প্রতিদিন সর্বোচ্চ ১০০ এড</p>
+      <p class="text-sm mt-1">এড দেখুন, আয় করুন — প্রতিদিন সর্বোচ্চ ১০০ এড</p>
     </header>
 
-    <!-- Join Tab (default view until joined) -->
+    <!-- JOIN (default until joined) -->
     <section id="tab-join" class="tab show glass mb-4">
-      <h2 class="font-bold text-lg">📢 অফিসিয়াল চ্যানেলে জয়েন করুন</h2>
-      <p class="text-sm mt-2">বট ব্যবহার করতে আগে চ্যানেলে জয়েন করতে হবে।</p>
-      <a id="joinLink" href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank"
-         class="block mt-4 px-4 py-3 bg-green-500 rounded-lg text-center font-semibold">✅ চ্যানেল জয়েন করুন</a>
+      <h3 class="font-bold">📢 অফিসিয়াল চ্যানেলে জয়েন করুন</h3>
+      <p class="text-sm mt-2">বট ব্যবহার করার জন্য চ্যানেলে জয়েন করা আবশ্যক</p>
+      <a id="joinLink" href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="block mt-4 px-4 py-3 bg-green-500 rounded-lg text-center font-semibold">✅ চ্যানেল জয়েন করুন</a>
       <button id="confirmJoinBtn" class="block mt-3 px-4 py-3 bg-yellow-500 rounded-lg w-full font-semibold">আমি জয়েন করেছি</button>
-      <p class="text-xs mt-2 text-gray-300">নোট: চ্যানেল লিংকটি আগের লিংক অনুযায়ী সেট করা আছে।</p>
+      <p class="text-xs mt-2 text-gray-300">নোট: সঠিকভাবে জয়েন করে “আমি জয়েন করেছি” চাপুন</p>
     </section>
 
     <!-- HOME -->
@@ -96,26 +66,22 @@
     <section id="tab-ads" class="tab glass mb-4">
       <div class="flex items-center justify-between">
         <div class="font-semibold lighting">বিজ্ঞাপন দেখুন</div>
-        <div class="text-xs">Monetag ১৫s (ইভেন্ট) • রিওয়ার্ড ১৭s পরে</div>
+        <div class="text-xs">Monetag ১৫s • পয়েন্ট ১৭s পরে</div>
       </div>
       <div class="mt-6">
-        <button id="btn-watch" class="w-full py-3 bg-blue-600 rounded-xl lighting">▶ এখনই দেখতে শুরু করুন
-          <div class="text-xs mt-1">বাকি এড: <span id="ads-left">100</span></div>
-        </button>
+        <button id="btn-watch" class="w-full py-3 bg-blue-600 rounded-xl lighting">▶ এখনই দেখুন <div class="text-xs mt-1">বাকি এড: <span id="ads-left">100</span></div></button>
       </div>
       <div id="ad-countdown" class="mt-4 text-sm"></div>
     </section>
 
     <!-- WITHDRAW -->
     <section id="tab-withdraw" class="tab glass mb-4">
-      <div class="font-semibold">💳 উইথড্র রিকোয়েস্ট</div>
-      <div class="text-xs mt-1">বিকাশ: মিন ১০৳ • নগদ: মিন ৫০৳ • রিচার্জ: মিন ২০৳</div>
+      <div class="font-semibold">💳 উইথড্র</div>
+      <div class="text-xs mt-1">বিকাশ: ন্যূনতম ১০৳ • নগদ: ন্যূনতম ৫০৳ • রিচার্জ: ন্যূনতম ২০৳</div>
 
       <div class="mt-3">
         <select id="withdraw-method" class="w-full p-2 rounded text-black">
-          <option value="bkash">বিকাশ</option>
-          <option value="nagad">নগদ</option>
-          <option value="recharge">মোবাইল রিচার্জ</option>
+          <option value="bkash">বিকাশ</option><option value="nagad">নগদ</option><option value="recharge">মোবাইল রিচার্জ</option>
         </select>
         <input id="withdraw-number" class="w-full p-2 mt-2 rounded" placeholder="নম্বর লিখুন (01XXXXXXXXX)" />
         <input id="withdraw-amount" type="number" class="w-full p-2 mt-2 rounded" placeholder="টাকার পরিমাণ" />
@@ -130,7 +96,7 @@
       <div class="mt-2 text-sm">ইউজার আইডি: <span id="acc-id"></span></div>
       <div class="mt-1 text-sm">ব্যালেন্স: <span id="acc-balance"></span> ৳</div>
       <div class="mt-1 text-sm">আজকের এড: <span id="acc-ads-today"></span></div>
-      <div class="mt-1 text-sm">মোট এড (সাময়িক): <span id="acc-ads-total"></span></div>
+      <div class="mt-1 text-sm">মোট এড: <span id="acc-ads-total"></span></div>
       <div class="mt-3">
         <input id="refer-link" class="w-full p-2 rounded text-black" readonly value="https://t.me/BD_TM_MINI_BOT" />
         <button id="copy-refer" class="w-full mt-2 py-2 bg-pink-600 rounded-lg">রেফার লিংক কপি করুন</button>
@@ -149,23 +115,17 @@
         <div class="mb-3">
           <div>👥 মোট ইউজার: <span id="admin-user-count">0</span></div>
           <div>▶ মোট এড দেখা: <span id="admin-total-ads">0</span></div>
-          <div>💰 টোটাল ব্যালেন্স: <span id="admin-total-balance">0.00</span> ৳</div>
+          <div>💰 সব ব্যালেন্স: <span id="admin-total-balance">0.00</span> ৳</div>
         </div>
 
         <div class="mt-2">
           <div class="font-semibold">📋 ইউজার তালিকা</div>
-          <table class="mt-2">
-            <thead><tr><th>ID</th><th>ব্যালেন্স</th><th>আজকে</th><th>মোট</th></tr></thead>
-            <tbody id="admin-users-tbody"></tbody>
-          </table>
+          <table class="mt-2"><thead><tr><th>ID</th><th>ব্যালেন্স</th><th>আজ</th><th>মোট</th></tr></thead><tbody id="admin-users-tbody"></tbody></table>
         </div>
 
         <div class="mt-4">
           <div class="font-semibold">💳 Pending Withdraw</div>
-          <table class="mt-2">
-            <thead><tr><th>ID</th><th>ইউজার</th><th>পদ্ধতি</th><th>নম্বর</th><th>টাকা</th><th>অ্যাকশন</th></tr></thead>
-            <tbody id="admin-withdraws-tbody"></tbody>
-          </table>
+          <table class="mt-2"><thead><tr><th>ID</th><th>User</th><th>পদ্ধতি</th><th>নম্বর</th><th>টাকা</th><th>Action</th></tr></thead><tbody id="admin-withdraws-tbody"></tbody></table>
         </div>
       </div>
     </section>
@@ -174,55 +134,51 @@
 
   <!-- bottom nav -->
   <div class="bottom-nav">
-    <div id="nav-home" class="nav-btn active" onclick="navOpen('home')"><span class="icon">🏠</span><span class="label" style="font-size:12px">হোম</span></div>
-    <div id="nav-ads" class="nav-btn" onclick="navOpen('ads')"><span class="icon">▶</span><span class="label" style="font-size:12px">এড</span></div>
-    <div id="nav-withdraw" class="nav-btn" onclick="navOpen('withdraw')"><span class="icon">💳</span><span class="label" style="font-size:12px">উইথড্র</span></div>
-    <div id="nav-account" class="nav-btn" onclick="navOpen('account')"><span class="icon">👤</span><span class="label" style="font-size:12px">একাউন্ট</span></div>
-    <div id="nav-admin" class="nav-btn" onclick="navOpen('admin')"><span class="icon">⚙️</span><span class="label" style="font-size:12px">এডমিন</span></div>
+    <div id="nav-home" class="nav-btn active" onclick="navOpen('home')"><span class="icon">🏠</span><div style="font-size:12px">হোম</div></div>
+    <div id="nav-ads" class="nav-btn" onclick="navOpen('ads')"><span class="icon">▶</span><div style="font-size:12px">এড</div></div>
+    <div id="nav-withdraw" class="nav-btn" onclick="navOpen('withdraw')"><span class="icon">💳</span><div style="font-size:12px">উইথড্র</div></div>
+    <div id="nav-account" class="nav-btn" onclick="navOpen('account')"><span class="icon">👤</span><div style="font-size:12px">একাউন্ট</div></div>
+    <div id="nav-admin" class="nav-btn" onclick="navOpen('admin')"><span class="icon">⚙️</span><div style="font-size:12px">এডমিন</div></div>
   </div>
 
-  <!-- toast + bomb root -->
+  <!-- toast + bomb roots -->
   <div id="toast-root" class="toast"></div>
   <div id="bomb-root"></div>
 
 <script>
 /* ========== CONFIG ========== */
-/* Use the Bot Token and Admin Chat ID you provided earlier.
-   NOTE: Browser -> Telegram API calls may be blocked by CORS in some browsers.
-   If telegram messages don't go through, use a small server-side proxy (I can give code).
-*/
 const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
 const ADMIN_CHAT_ID = "7691157254";
 const ADMIN_PASSWORD = "Sharif000";
 
 const DAILY_LIMIT = 100;
 const AD_REWARD = 0.20;
-const AD_MONETAG_SECONDS = 15; // Monetag ad length (information)
-const REWARD_SECONDS = 17;     // reward delivered after 17s
+const MONETAG_SECONDS = 15; // Monetag ad length (info)
+const REWARD_SECONDS = 17;  // reward delivered after 17s
 
-const STORAGE_KEY = "bdtm_state_v4";
+const STORAGE_KEY = "bdtm_state_final_v1";
 
 /* ========== STATE ========== */
 let state = {
-  users: {},         // userId -> { id, balance, adsToday, adsTotal, lastAdDate }
-  withdraws: [],     // { id, userId, method, number, amount, status, ts }
+  users: {},        // id -> {id,balance,adsToday,adsTotal,lastAdDate}
+  withdraws: [],    // {id,userId,method,number,amount,status,ts}
   currentUserId: null
 };
 
-/* ========== UTIL ========== */
-function uid(){ return 'u' + Date.now().toString(36) + Math.floor(Math.random()*9000+1000).toString(36); }
+/* ========== HELPERS ========== */
+function uid(){ return 'u'+Date.now().toString(36)+Math.floor(Math.random()*9000+1000).toString(36); }
 function todayKey(){ return new Date().toISOString().slice(0,10); }
 
 function loadState(){
   const raw = localStorage.getItem(STORAGE_KEY);
-  if(raw){ try{ state = JSON.parse(raw); } catch(e){ console.warn(e); } }
+  if(raw){ try{ state = JSON.parse(raw); } catch(e){ console.warn('state parse err', e); } }
   if(!state.currentUserId){
     const id = uid();
     state.currentUserId = id;
     state.users[id] = { id, balance:0, adsToday:0, adsTotal:0, lastAdDate: todayKey() };
     saveState();
   }
-  // ensure each user has fields
+  // ensure fields present
   Object.values(state.users).forEach(u=>{
     if(typeof u.balance === 'undefined') u.balance = 0;
     if(typeof u.adsToday === 'undefined') u.adsToday = 0;
@@ -232,143 +188,150 @@ function loadState(){
 }
 function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 function currentUser(){ return state.users[state.currentUserId]; }
-
-/* reset user's adsToday if date changed */
 function ensureDailyResetForUser(u){
   const tk = todayKey();
-  if(u.lastAdDate !== tk){
-    u.adsToday = 0;
-    u.lastAdDate = tk;
-  }
+  if(u.lastAdDate !== tk){ u.adsToday = 0; u.lastAdDate = tk; }
 }
 
 /* ========== UI HELPERS ========== */
-function showToast(msg, type="info", ms=3500){
+function showToast(msg, type='info', ms=3500){
   const root = document.getElementById('toast-root');
   root.innerText = msg;
-  root.className = 'toast show';
-  if(type === 'success') root.style.background = 'linear-gradient(90deg,#10b981,#06b6d4)';
-  else if(type === 'error') root.style.background = 'linear-gradient(90deg,#ef4444,#f97316)';
+  root.style.display = 'block';
+  if(type==='success') root.style.background = 'linear-gradient(90deg,#10b981,#06b6d4)';
+  else if(type==='error') root.style.background = 'linear-gradient(90deg,#ef4444,#f97316)';
   else root.style.background = 'linear-gradient(90deg,#2563eb,#06b6d4)';
-  setTimeout(()=>{ root.className = 'toast'; }, ms);
+  setTimeout(()=>{ root.style.display = 'none'; }, ms);
 }
-function showBomb(){
-  const r = document.getElementById('bomb-root');
-  const el = document.createElement('div'); el.className = 'bomb'; el.innerText = '💣💥';
-  r.appendChild(el); setTimeout(()=>el.remove(), 900);
-}
+function showBomb(){ const r=document.getElementById('bomb-root'); const el=document.createElement('div'); el.className='bomb'; el.innerText='💣💥'; r.appendChild(el); setTimeout(()=>el.remove(),900); }
 
-/* ========== NAV & JOIN CHECK ========== */
+/* ========== JOIN & NAV ========= */
 let joined_channel = (localStorage.getItem('bdtm_joined') === 'yes');
-
-function setJoined(val){
-  joined_channel = val;
-  localStorage.setItem('bdtm_joined', val ? 'yes' : 'no');
-}
-
-/* open a tab by key (home, ads, withdraw, account, admin, join) */
+function setJoined(val){ joined_channel = val; localStorage.setItem('bdtm_joined', val ? 'yes' : 'no'); }
 function navOpen(key){
-  // require join for everything except 'join'
-  if(!joined_channel && key !== 'join'){
-    showToast('⚠️ আগে অফিসিয়াল চ্যানেলে জয়েন করুন', 'error');
-    openTab('join'); return;
-  }
+  if(!joined_channel && key !== 'join'){ showToast('⚠️ আগে অফিসিয়াল চ্যানেলে জয়েন করুন', 'error'); openTab('join'); return; }
   openTab(key);
 }
-
 function openTab(key){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('show'));
-  const id = key === 'home' ? 'tab-home' : key === 'ads' ? 'tab-ads' : key === 'withdraw' ? 'tab-withdraw' : key === 'account' ? 'tab-account' : key === 'admin' ? 'tab-admin' : key === 'join' ? 'tab-join' : null;
+  const map = {home:'tab-home', ads:'tab-ads', withdraw:'tab-withdraw', account:'tab-account', admin:'tab-admin', join:'tab-join'};
+  const id = map[key];
   if(!id) return;
   document.getElementById(id).classList.add('show');
-  // nav active styles
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  const navId = key === 'home' ? 'nav-home' : key === 'ads' ? 'nav-ads' : key === 'withdraw' ? 'nav-withdraw' : key === 'account' ? 'nav-account' : key === 'admin' ? 'nav-admin' : null;
-  if(navId) document.getElementById(navId).classList.add('active');
-
-  // render dynamic if needed
+  const navMap = {home:'nav-home', ads:'nav-ads', withdraw:'nav-withdraw', account:'nav-account', admin:'nav-admin'};
+  if(navMap[key]) document.getElementById(navMap[key]).classList.add('active');
+  // render dynamic parts
   renderHome();
-  if(key === 'account') renderAccount();
-  if(key === 'admin') renderAdmin();
+  if(key==='account') renderAccount();
+  if(key==='admin') renderAdmin();
 }
 
-/* ========== INIT USER & RENDER ========== */
+/* ========== INIT ========== */
 loadState();
 ensureDailyResetForUser(currentUser());
 saveState();
 
+/* ========== RENDER FUNCTIONS ========== */
 function renderHome(){
-  const u = currentUser();
-  ensureDailyResetForUser(u);
+  const u = currentUser(); ensureDailyResetForUser(u);
   document.getElementById('ui-balance').innerText = (u.balance||0).toFixed(2) + ' ৳';
   document.getElementById('ui-ads-count').innerText = (u.adsToday||0);
   document.getElementById('ads-left').innerText = Math.max(0, DAILY_LIMIT - (u.adsToday||0));
 }
+function renderAccount(){
+  const u = currentUser(); ensureDailyResetForUser(u);
+  document.getElementById('acc-id').innerText = u.id;
+  document.getElementById('acc-balance').innerText = (u.balance||0).toFixed(2);
+  document.getElementById('acc-ads-today').innerText = u.adsToday||0;
+  document.getElementById('acc-ads-total').innerText = u.adsTotal||0;
+}
+function renderAdmin(){
+  // users
+  const tbody = document.getElementById('admin-users-tbody'); tbody.innerHTML = '';
+  let totalUsers = 0, totalAds = 0, totalBalance = 0;
+  Object.values(state.users).forEach(u=>{
+    ensureDailyResetForUser(u);
+    totalUsers++;
+    totalAds += (u.adsTotal||0);
+    totalBalance += Number(u.balance||0);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${u.id}</td><td>${(u.balance||0).toFixed(2)} ৳</td><td>${u.adsToday||0}</td><td>${u.adsTotal||0}</td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('admin-user-count').innerText = totalUsers;
+  document.getElementById('admin-total-ads').innerText = totalAds;
+  document.getElementById('admin-total-balance').innerText = totalBalance.toFixed(2);
+  // withdraws
+  const wt = document.getElementById('admin-withdraws-tbody'); wt.innerHTML = '';
+  state.withdraws.filter(w=>w.status==='Pending').forEach(w=>{
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${w.id}</td><td>${w.userId}</td><td>${w.method}</td><td>${w.number}</td><td>৳ ${w.amount}</td>
+      <td><button onclick="adminApprove('${w.id}')" style="background:#10b981;color:#fff;padding:6px;border-radius:6px">Approve</button>
+      <button onclick="adminReject('${w.id}')" style="background:#ef4444;color:#fff;padding:6px;border-radius:6px;margin-left:6px">Reject</button></td>`;
+    wt.appendChild(row);
+  });
+}
 
 /* ========== AD FLOW ========== */
 let adRunning = false;
-
-function adsRemainingForUser(){
-  const u = currentUser();
-  ensureDailyResetForUser(u);
-  return Math.max(0, DAILY_LIMIT - (u.adsToday||0));
-}
+function adsRemainingForUser(){ const u=currentUser(); ensureDailyResetForUser(u); return Math.max(0, DAILY_LIMIT - (u.adsToday||0)); }
 
 document.getElementById('btn-watch').addEventListener('click', startAdFlow);
 document.getElementById('goAdsBtn').addEventListener('click', ()=> navOpen('ads'));
 document.getElementById('goWithdrawBtn').addEventListener('click', ()=> navOpen('withdraw'));
 
 function startAdFlow(){
-  const u = currentUser();
-  ensureDailyResetForUser(u);
+  const u = currentUser(); ensureDailyResetForUser(u);
   if(adRunning) return;
   if(adsRemainingForUser() <= 0){ showToast('⚠️ আজকের 100 এড শেষ হয়েছে', 'error'); return; }
 
-  // Call Monetag - Monetag handles its own timing (15s)
+  // Monetag call (15s). If not present, we'll simulate a 15s dummy overlay.
   if(typeof show_9842278 === 'function'){
-    try { show_9842278(); } catch(e){ console.warn('Monetag invocation error', e); }
+    try{ show_9842278(); } catch(e){ console.warn('Monetag error', e); }
   } else {
-    // If SDK not present, we still simulate; Monetag popup may require live hosting
-    console.warn('Monetag SDK not available - simulating');
+    // simulate a simple overlay so user sees something
+    simulateAdOverlay();
   }
 
   adRunning = true;
   let left = REWARD_SECONDS;
-  const countdownEl = document.getElementById('ad-countdown');
+  const cd = document.getElementById('ad-countdown');
   const btn = document.getElementById('btn-watch');
-  btn.disabled = true; btn.style.opacity = '0.7';
-  countdownEl.innerText = `⏳ ${left} সেকেন্ড চলছে...`;
+  btn.disabled = true; btn.style.opacity = '0.6';
+  cd.innerText = `⏳ ${left} সেকেন্ড চলছে...`;
 
-  const tick = setInterval(()=>{
+  const t = setInterval(()=>{
     left--;
-    if(left > 0){
-      countdownEl.innerText = `⏳ ${left} সেকেন্ড চলছে...`;
-      return;
-    }
-    clearInterval(tick);
-    adRunning = false;
-    btn.disabled = false;
-    btn.style.opacity = '1';
-    // Reward user
-    u.balance = +( (u.balance || 0) + AD_REWARD ).toFixed(2);
-    u.adsToday = (u.adsToday || 0) + 1;
-    u.adsTotal = (u.adsTotal || 0) + 1;
+    if(left>0){ cd.innerText = `⏳ ${left} সেকেন্ড চলছে...`; return; }
+    clearInterval(t); adRunning = false; btn.disabled = false; btn.style.opacity = '1';
+    // reward
+    u.balance = +((u.balance||0) + AD_REWARD).toFixed(2);
+    u.adsToday = (u.adsToday||0) + 1;
+    u.adsTotal = (u.adsTotal||0) + 1;
     u.lastAdDate = todayKey();
     saveState();
     renderHome();
-
     showBomb();
     showToast(`✅ +${AD_REWARD.toFixed(2)} ৳ যোগ হয়েছে!`, 'success');
-    countdownEl.innerText = '✅ বিজ্ঞাপন শেষ!';
-
-    // (optional) Notify admin that user watched ad - commented out to avoid spam
-    // sendToAdmin(`📢 বিজ্ঞাপন দেখা:\nইউজার: ${u.id}\nআজ এড: ${u.adsToday}\nব্যালেন্স: ${u.balance.toFixed(2)} ৳`);
+    cd.innerText = '✅ বিজ্ঞাপন শেষ!';
+    // optional: notify admin (commented by default to avoid spam)
+    // sendToAdmin(`📢 বিজ্ঞাপন দেখা: User ${u.id} • আজ: ${u.adsToday} • ব্যালেন্স: ${u.balance.toFixed(2)} ৳`);
   }, 1000);
+}
+
+/* simulate overlay if Monetag SDK absent */
+function simulateAdOverlay(){
+  const overlay = document.createElement('div');
+  overlay.style.position='fixed'; overlay.style.left='0'; overlay.style.top='0'; overlay.style.right='0'; overlay.style.bottom='0';
+  overlay.style.background='rgba(0,0,0,0.85)'; overlay.style.zIndex='9997'; overlay.style.display='flex'; overlay.style.alignItems='center'; overlay.style.justifyContent='center';
+  overlay.style.color='#fff'; overlay.style.fontSize='18px'; overlay.innerText = 'Monetag Ad (Simulated) — 15s';
+  document.body.appendChild(overlay);
+  let s=15; const iv=setInterval(()=>{ s--; overlay.innerText = 'Monetag Ad (Simulated) — '+s+'s'; if(s<=0){ clearInterval(iv); overlay.remove(); } },1000);
 }
 
 /* ========== WITHDRAW FLOW ========== */
 document.getElementById('submit-withdraw').addEventListener('click', submitWithdraw);
-
 const MIN = { bkash:10, nagad:50, recharge:20 };
 
 function submitWithdraw(){
@@ -376,74 +339,85 @@ function submitWithdraw(){
   const method = document.getElementById('withdraw-method').value;
   const number = document.getElementById('withdraw-number').value.trim();
   const amount = parseFloat(document.getElementById('withdraw-amount').value);
-
-  if(!number || isNaN(amount) || amount <= 0){ showToast('⚠️ সঠিক নম্বর ও পরিমাণ দিন', 'error'); return; }
-
+  if(!number || isNaN(amount) || amount<=0){ showToast('⚠️ সঠিক নম্বর ও পরিমাণ দিন', 'error'); return; }
   const min = method === 'bkash' ? MIN.bkash : method === 'nagad' ? MIN.nagad : MIN.recharge;
-  if(amount < min){ showToast(`⚠️ ${method === 'bkash' ? 'বিকাশ' : method === 'nagad' ? 'নগদ' : 'রিচার্জ'} মিন ${min}৳`, 'error'); return; }
-
+  if(amount < min){ showToast(`⚠️ ন্যূনতম ${min}৳`, 'error'); return; }
   const u = currentUser();
-  if(amount > (u.balance || 0)){ showToast('⚠️ পর্যাপ্ত ব্যালেন্স নেই', 'error'); return; }
+  if(amount > (u.balance||0)){ showToast('⚠️ পর্যাপ্ত ব্যালেন্স নেই', 'error'); return; }
 
-  // Deduct immediately and store pending withdraw
-  u.balance = +(u.balance - amount).toFixed(2);
-  const req = { id: 'W' + Date.now().toString(36), userId: u.id, method, number, amount, status:'Pending', ts: new Date().toISOString() };
+  // deduct now and create pending withdraw
+  u.balance = +((u.balance||0) - amount).toFixed(2);
+  const req = { id:'W'+Date.now().toString(36), userId:u.id, method, number, amount, status:'Pending', ts:new Date().toISOString() };
   state.withdraws.push(req);
   saveState();
-  renderHome();
-  renderHistory();
-  renderAdmin();
-
-  // Notify user + admin
+  renderHome(); renderAdmin();
   showToast('📤 আপনার রিকোয়েস্ট অ্যাডমিনের কাছে পাঠানো হয়েছে', 'info');
 
-  // Telegram notify admin (may be CORS-blocked in some browsers)
-  const adminMessage = `💳 নতুন উইথড্র রিকোয়েস্ট\nID: ${req.id}\nUser: ${u.id}\nপদ্ধতি: ${method}\nপরিমাণ: ৳${amount}\nনম্বর: ${number}`;
-  sendToAdmin(adminMessage);
+  // notify admin (may be blocked by CORS in some browsers)
+  const adminMsg = `💳 নতুন উইথড্র রিকোয়েস্ট\nID: ${req.id}\nUser: ${u.id}\nপদ্ধতি: ${method}\nপরিমাণ: ৳${amount}\nনম্বর: ${number}`;
+  sendToAdmin(adminMsg);
 }
 
-/* render user's history list (simple) */
-function renderHistory(){
-  // show on account page or history area (we don't have separate history page here)
-  // We'll populate admin + account views; user pending list via account page not implemented separately
-  // For simplicity, account shows totals; history table available for admin.
-}
-
-/* ========== ADMIN PANEL ========== */
+/* ========== ADMIN ACTIONS ========== */
 document.getElementById('admin-login-btn').addEventListener('click', adminLogin);
 
 function adminLogin(){
-  const pass = document.getElementById('admin-pass').value;
-  if(pass !== ADMIN_PASSWORD){ showToast('❌ ভুল পাসওয়ার্ড', 'error'); return; }
+  const p = document.getElementById('admin-pass').value;
+  if(p !== ADMIN_PASSWORD){ showToast('❌ ভুল পাসওয়ার্ড', 'error'); return; }
   document.getElementById('admin-login-area').classList.add('hidden');
   document.getElementById('admin-area').classList.remove('hidden');
   renderAdmin();
   showToast('✅ অ্যাডমিন লগইন সফল', 'success');
 }
 
-function renderAdmin(){
-  const tbody = document.getElementById('admin-users-tbody');
-  tbody.innerHTML = '';
-  let totalUsers = 0, totalAds = 0, totalBalance = 0;
-  Object.values(state.users).forEach(u=>{
-    ensureDailyResetForUser(u);
-    totalUsers++;
-    totalAds += (u.adsTotal || 0);
-    totalBalance += Number(u.balance || 0);
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${u.id}</td><td>${(u.balance||0).toFixed(2)}৳</td><td>${u.adsToday||0}</td><td>${u.adsTotal||0}</td>`;
-    tbody.appendChild(tr);
-  });
-  document.getElementById('admin-user-count').innerText = totalUsers;
-  document.getElementById('admin-total-ads').innerText = totalAds;
-  document.getElementById('admin-total-balance').innerText = totalBalance.toFixed(2);
+function adminApprove(wid){
+  const w = state.withdraws.find(x=>x.id===wid); if(!w) return;
+  w.status = 'Accepted'; saveState(); renderAdmin();
+  sendToAdmin(`✅ উইথড্র অনুমোদিত\nID: ${w.id}\nUser: ${w.userId}\n৳ ${w.amount}`);
+  if(state.currentUserId === w.userId) showToast('✅ আপনার উইথড্র অনুমোদিত হয়েছে', 'success');
+}
+function adminReject(wid){
+  const w = state.withdraws.find(x=>x.id===wid); if(!w) return;
+  w.status = 'Rejected';
+  // refund
+  const u = state.users[w.userId]; if(u){ u.balance = +((u.balance||0) + Number(w.amount)).toFixed(2); }
+  saveState(); renderAdmin();
+  sendToAdmin(`❌ উইথড্র বাতিল\nID: ${w.id}\nUser: ${w.userId}\n৳ ${w.amount}`);
+  if(state.currentUserId === w.userId) showToast('❌ আপনার উইথড্র বাতিল করা হয়েছে (টাকা রিফান্ড হয়েছে)', 'error');
+}
 
-  // withdraws
-  const wt = document.getElementById('admin-withdraws-tbody');
-  wt.innerHTML = '';
-  state.withdraws.filter(w=> w.status === 'Pending').forEach(w=>{
-    const row = document.createElement('tr');
-    row.innerHTML = `<td>${w.id}</td><td>${w.userId}</td><td>${w.method}</td><td>${w.number}</td><td>৳ ${w.amount}</td>
-      <td>
-        <button onclick="adminApprove('${w.id}')" style="background:#10b981;color:#fff;padding:6px;border-radius:6px">Approve</button>
-        <button onclick="adminReject('${w.id}')" style="background:#ef4444;color:#fff;padding:6px;border-radius:6px;margin-left:6px">Reject</but
+/* ========== TELEGRAM NOTIFY ========== */
+function sendToAdmin(text){
+  // Try direct fetch; may be blocked by CORS in some browsers
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ chat_id: ADMIN_CHAT_ID, text })
+  }).then(res=>{
+    if(!res.ok){
+      console.warn('Telegram notify failed', res.status);
+      showToast('⚠️ টেলিগ্রাম নোটিফিকেশন পাঠানো যায়নি (CORS)। সার্ভার-প্রক্সি ব্যবহার করুন।', 'error', 6000);
+    }
+  }).catch(err=>{
+    console.warn('Telegram notify error', err);
+    showToast('⚠️ টেলিগ্রাম নোটিফিকেশন পাঠানো যায়নি (CORS)। সার্ভার-প্রক্সি ব্যবহার করুন।', 'error', 6000);
+  });
+}
+
+/* ========== REFER COPY ========== */
+document.getElementById('copy-refer').addEventListener('click', ()=> {
+  navigator.clipboard.writeText(document.getElementById('refer-link').value).then(()=> showToast('✅ রেফার লিংক কপি হয়েছে', 'success'));
+});
+
+/* ========== JOIN CONFIRM ========== */
+document.getElementById('confirmJoinBtn').addEventListener('click', ()=>{
+  setJoined(true);
+  showToast('✅ ধন্যবাদ! আপনি জয়েন করেছেন', 'success');
+  openTab('home');
+});
+
+/* ========== Render initial view ========== */
+renderHome(); renderAccount();
+if(joined_channel) openTab('home'); else openTab('join');
+
+</script>
+</body>
+</html>
