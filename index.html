@@ -1,293 +1,152 @@
-<!doctype html>
-<html lang="bn">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>💎 ADS EARNING BD TM — 10s Monetag • Min Withdraw 10</title>
-<script src="//libtl.com/sdk.js" data-zone="9803310" data-sdk="show_9803310"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BD TM MINI BOT</title>
 
-<style>
-  :root{ --bg:#0f1720; --card:#141821; --accent1:#ff9800; --accent2:#00bcd4; --glass: rgba(255,255,255,0.04);}
-  *{box-sizing:border-box}
-  body{font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#0b1220,#10141a);color:#fff;margin:0;padding:26px;display:flex;align-items:center;justify-content:center;min-height:100vh}
-  .wrap{width:420px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-  .title{display:inline-block;padding:12px 26px;border-radius:999px;background:linear-gradient(90deg,#ffdd55,#ff6a00);color:#111;font-weight:800;font-size:18px;box-shadow:0 6px 20px rgba(255,150,0,0.18);margin-bottom:12px}
-  .meta{font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:14px}
-  .circle{width:110px;height:110px;border-radius:999px;margin:8px auto;background:conic-gradient(var(--accent1) 0%, #333 0%);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;box-shadow:0 8px 30px rgba(0,0,0,0.6);margin-bottom:10px}
-  .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
-  button.btn{border:0;padding:12px 18px;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#061016;font-weight:800;cursor:pointer;min-width:160px;box-shadow:0 8px 26px rgba(0,0,0,0.5);transition:transform .14s ease, box-shadow .14s ease}
-  button.btn:active{transform:translateY(2px)}
-  button.ghost{background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));color:#fff;border:1px solid rgba(255,255,255,0.04)}
-  .small{font-size:13px;padding:8px 12px;min-width:120px}
-  .ad-box{display:none;background:linear-gradient(120deg,#e6f7ff,#d9fff4);color:#023; padding:12px;border-radius:12px;margin-top:12px; box-shadow: inset 0 0 18px rgba(0,0,0,0.06)}
-  .ad-timer{font-weight:900;font-size:20px;margin-top:8px}
-  .info-card{background:var(--glass);padding:12px;border-radius:12px;margin:12px 0;font-size:14px;color:rgba(255,255,255,0.9)}
-  label{display:block;font-size:13px;margin:8px 0 4px;color:rgba(255,255,255,0.9)}
-  input,select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:#0b1115;color:#fff}
-  .hidden{display:none}
-  .copyRow{display:flex;gap:8px;align-items:center}
-  .copyRow input{flex:1}
-  .note{font-size:12px;color:rgba(255,255,255,0.6);margin-top:8px}
-  footer{font-size:12px;color:rgba(255,255,255,0.45);margin-top:10px;text-align:center}
-</style>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Monetag SDK -->
+  <script src="//libtl.com/sdk.js" data-zone="9842278" data-sdk="show_9842278"></script>
 </head>
-<body>
+<body class="bg-gradient-to-r from-blue-900 to-purple-900 min-h-screen text-white flex flex-col items-center">
 
-<div class="wrap" role="main">
-  <div style="text-align:center">
-    <div class="title">✨ BD TM ADS EARNING ✨</div>
-    <div class="meta">💳 মিনিমাম উইথড্র: <strong>৳10</strong> • প্রতি এড: <strong>৳0.20</strong> • Monetag (5s)</div>
+  <!-- Header -->
+  <header class="w-full p-4 text-center bg-black bg-opacity-40 shadow-lg">
+    <h1 class="text-3xl font-bold">💎 BD TM MINI BOT</h1>
+    <p class="text-sm opacity-80">Earn by Watching Ads & Referring Friends</p>
+  </header>
+
+  <!-- Join Channel -->
+  <div class="mt-6">
+    <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank"
+       class="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-2xl shadow-lg font-semibold">
+       📢 Join Channel
+    </a>
   </div>
 
-  <div class="circle" id="progressCircle">0%</div>
+  <!-- Buttons Section -->
+  <div class="grid grid-cols-2 gap-6 mt-10 w-11/12 max-w-lg">
 
-  <div class="info-card" style="text-align:center">
-    Watched: <strong id="watchedCount">0</strong> &nbsp; • &nbsp;
-    Earned: ৳<strong id="earnedPoints">0.00</strong><br/>
-    Limit: <strong id="dailyLimit">110</strong> &nbsp; • &nbsp;
-    Remaining: <strong id="remainingAds">110</strong>
+    <!-- View Ad -->
+    <button onclick="showAd()" class="p-6 bg-blue-600 hover:bg-blue-700 rounded-2xl shadow-lg">
+      ▶ View Ad
+    </button>
+
+    <!-- Withdraw -->
+    <button onclick="openWithdraw()" class="p-6 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-2xl shadow-lg">
+      💳 Withdraw
+    </button>
+
+    <!-- History -->
+    <button onclick="openHistory()" class="p-6 bg-purple-600 hover:bg-purple-700 rounded-2xl shadow-lg">
+      📜 History
+    </button>
+
+    <!-- Refer -->
+    <button onclick="copyRefer()" class="p-6 bg-pink-600 hover:bg-pink-700 rounded-2xl shadow-lg">
+      🎁 Refer
+    </button>
   </div>
 
-  <div class="row" style="margin-bottom:6px">
-    <button class="btn" id="watchBtn">▶ Watch Ad</button>
-    <button class="btn" id="joinBtn">🔔 Join Channel</button>
+  <!-- Balance -->
+  <div id="balanceBox" class="mt-10 text-lg font-semibold">
+    Balance: <span id="balance">0.00</span> ৳
   </div>
 
-  <div class="row">
-    <button class="ghost small" id="balanceBtn">💰 Balance</button>
-    <button class="ghost small" id="withdrawToggle">📤 Withdraw</button>
-    <button class="ghost small" id="referShow">👥 Refer</button>
-  </div>
-
-  <div class="ad-box" id="adBox" aria-hidden="true">
-    <div>🎬 Monetag Ad তৈরি হচ্ছে— অনুগ্রহ করে অপেক্ষা করুন</div>
-    <div class="ad-timer" id="adTimer">10</div>
-    <div class="note">এড চলাকালীন অন্য ট্যাব বা পেজ থেকে বের হলে reward হবে না</div>
-  </div>
-
-  <div id="withdrawSection" class="info-card hidden" aria-hidden="true">
-    <h4 style="margin:0 0 8px">Withdraw Request</h4>
-    <label>Amount (৳) — Min ৳10</label>
-    <input id="withdrawAmount" type="number" min="10" placeholder="Enter amount (e.g. 50)" />
-    <label>Payment Method</label>
-    <select id="withdrawMethod">
-      <option>Bkash</option>
-      <option>Rocket</option>
-      <option>Mobile Recharge</option>
-    </select>
-    <label>Phone Number</label>
-    <input id="withdrawPhone" type="text" placeholder="01XXXXXXXXX" />
-    <label>Telegram Username</label>
-    <input id="withdrawTelegram" type="text" placeholder="@yourusername" />
-    <div style="margin-top:10px;text-align:right">
-      <button class="btn small" id="submitWithdraw">Submit</button>
+  <!-- Withdraw Modal -->
+  <div id="withdrawModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
+    <div class="bg-white text-black rounded-2xl p-6 w-80">
+      <h2 class="text-xl font-bold mb-4">Withdraw Request</h2>
+      <input id="bkashNumber" type="text" placeholder="Bkash Number"
+             class="w-full p-2 border rounded mb-3" />
+      <input id="amount" type="number" placeholder="Amount (min 10)"
+             class="w-full p-2 border rounded mb-3" />
+      <div class="flex justify-between">
+        <button onclick="submitWithdraw()" class="px-4 py-2 bg-green-600 text-white rounded-lg">Submit</button>
+        <button onclick="closeWithdraw()" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Cancel</button>
+      </div>
     </div>
   </div>
 
-  <div id="referSection" class="info-card hidden" aria-hidden="true">
-    <h4 style="margin:0 0 8px">Your Refer Link</h4>
-    <div class="copyRow">
-      <input id="referInput" readonly />
-      <button class="btn small" id="copyReferBtn">Copy</button>
+  <!-- History Modal -->
+  <div id="historyModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center">
+    <div class="bg-white text-black rounded-2xl p-6 w-96 max-h-[80vh] overflow-y-auto">
+      <h2 class="text-xl font-bold mb-4">Withdraw History</h2>
+      <ul id="historyList" class="space-y-2 text-sm"></ul>
+      <div class="flex justify-center mt-4">
+        <button onclick="closeHistory()" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Close</button>
+      </div>
     </div>
-    <div class="note">Share this link — refer এ পয়েন্ট মেলে</div>
   </div>
 
-  <footer>🕒 <span id="clock">--:--:--</span></footer>
-</div>
+  <script>
+    let balance = 0;
 
-<script>
-const DAILY_LIMIT = 110;
-const REWARD_PER_AD = 0.2;
-const WATCH_SECONDS = 10;
-const MONETAG_FUNCTION_NAME = 'show_9803310';
-const MONETAG_FALLBACK_URL = 'https://example.com/monetag-ad';
+    // Monetag Ad Show + 17s delay
+    function showAd() {
+      if (typeof show_9842278 === "function") {
+        show_9842278(); // Monetag Ad popup
 
-// ✅ তোমার Bot Token + Admin ID বসানো হলো
-const BOT_TOKEN = '8323970356:AAGC3ZzgvPp1pcK7fWkkmQn3hMkgOAw30sI';
-const ADMIN_CHAT_ID = '7691157254';
-
-/* Storage / State */
-const LS_KEY = 'bd_ads_state_v1';
-function loadState(){
-  const raw = localStorage.getItem(LS_KEY);
-  const today = (new Date()).toDateString();
-  if(!raw) {
-    const s = { watched:0, points:0.0, referCode:null, date: today };
-    localStorage.setItem(LS_KEY, JSON.stringify(s));
-    return s;
-  }
-  try {
-    const s = JSON.parse(raw);
-    if(s.date !== today){
-      s.watched = 0;
-      s.date = today;
-      localStorage.setItem(LS_KEY, JSON.stringify(s));
+        // Countdown 17 seconds
+        let counter = 17;
+        const interval = setInterval(() => {
+          console.log("⏳ Ad watching... " + counter + "s left");
+          counter--;
+          if (counter < 0) {
+            clearInterval(interval);
+            balance += 0.2;
+            document.getElementById("balance").innerText = balance.toFixed(2);
+            alert("✅ Ad watched! +0.20 ৳ added.");
+          }
+        }, 1000);
+      } else {
+        alert("❌ Ad not loaded yet.");
+      }
     }
-    return s;
-  } catch(e){
-    const s = { watched:0, points:0.0, referCode:null, date: today };
-    localStorage.setItem(LS_KEY, JSON.stringify(s));
-    return s;
-  }
-}
-function saveState(s){ localStorage.setItem(LS_KEY, JSON.stringify(s)); }
 
-let state = loadState();
-
-/* DOM */
-const watchedCountEl = document.getElementById('watchedCount');
-const earnedPointsEl = document.getElementById('earnedPoints');
-const remainingEl = document.getElementById('remainingAds');
-const dailyLimitEl = document.getElementById('dailyLimit');
-const progressCircle = document.getElementById('progressCircle');
-const watchBtn = document.getElementById('watchBtn');
-const adBox = document.getElementById('adBox');
-const adTimer = document.getElementById('adTimer');
-const withdrawToggle = document.getElementById('withdrawToggle');
-const withdrawSection = document.getElementById('withdrawSection');
-const submitWithdraw = document.getElementById('submitWithdraw');
-const referShow = document.getElementById('referShow');
-const referSection = document.getElementById('referSection');
-const referInput = document.getElementById('referInput');
-const copyReferBtn = document.getElementById('copyReferBtn');
-const joinBtn = document.getElementById('joinBtn');
-const balanceBtn = document.getElementById('balanceBtn');
-
-/* Render */
-function render(){
-  watchedCountEl.textContent = state.watched;
-  earnedPointsEl.textContent = Number(state.points).toFixed(2);
-  dailyLimitEl.textContent = DAILY_LIMIT;
-  remainingEl.textContent = Math.max(DAILY_LIMIT - state.watched, 0);
-  const pct = Math.round((state.watched / DAILY_LIMIT) * 100);
-  const pctSafe = Math.max(0, Math.min(100, pct));
-  progressCircle.style.background = `conic-gradient(${getGradientColor(pctSafe)} ${pctSafe}%, #333 ${pctSafe}%)`;
-  progressCircle.textContent = `${pctSafe}%`;
-  if(!state.referCode){
-    state.referCode = generateReferCode();
-    saveState(state);
-  }
-  referInput.value = `https://t.me/ads_earning_bd_tm_bot?start=${state.referCode}`;
-}
-function getGradientColor(pct){
-  if(pct < 25) return '#ff5722';
-  if(pct < 60) return '#ff9800';
-  return '#00bcd4';
-}
-function generateReferCode(){
-  const existing = localStorage.getItem('bd_user_ref_v1');
-  if(existing) return existing;
-  const code = 'r' + Date.now().toString(36) + Math.floor(Math.random()*9000+1000);
-  localStorage.setItem('bd_user_ref_v1', code);
-  return code;
-}
-render();
-
-/* Clock */
-setInterval(()=> {
-  document.getElementById('clock').textContent = new Date().toLocaleTimeString();
-},1000);
-
-/* Watch Ad Flow */
-let watching = false;
-watchBtn.addEventListener('click', async () => {
-  if(watching) return;
-  if(state.watched >= DAILY_LIMIT){ alert('⚠️ Daily Ads Limit Reached!'); return; }
-
-  if(typeof window[MONETAG_FUNCTION_NAME] === 'function'){
-    try{
-      watching = true;
-      adBox.style.display = 'block';
-      adTimer.textContent = WATCH_SECONDS;
-      watchBtn.disabled = true;
-      await window[MONETAG_FUNCTION_NAME]();
-      await runCountdownThenReward(WATCH_SECONDS);
-    }catch(err){
-      alert('❌ Ad failed to load. Try again.');
-      adBox.style.display = 'none';
-      watchBtn.disabled = false;
-      watching = false;
+    // Withdraw Modal
+    function openWithdraw() {
+      document.getElementById("withdrawModal").classList.remove("hidden");
     }
-  } else {
-    const newWin = window.open(MONETAG_FALLBACK_URL, '_blank');
-    if(!newWin){ alert('Popup blocked. Allow popups for this site.'); return; }
-    watching = true;
-    adBox.style.display = 'block';
-    adTimer.textContent = WATCH_SECONDS;
-    watchBtn.disabled = true;
-    try{ await runCountdownThenReward(WATCH_SECONDS); }
-    finally { try{ newWin.close(); }catch(e){} watching=false; }
-  }
-});
-
-function runCountdownThenReward(seconds){
-  return new Promise((resolve, reject) => {
-    let sec = seconds;
-    adTimer.textContent = sec;
-    const iv = setInterval(() => {
-      sec--;
-      adTimer.textContent = sec;
-      if(document.visibilityState === 'hidden'){
-        clearInterval(iv);
-        adBox.style.display='none';
-        watchBtn.disabled = false;
-        watching = false;
-        alert('⚠️ পেইজ ছেড়ে গিয়েছেন — রিওয়ার্ড ক্যানসেল!');
-        reject(new Error('hidden'));
+    function closeWithdraw() {
+      document.getElementById("withdrawModal").classList.add("hidden");
+    }
+    function submitWithdraw() {
+      const number = document.getElementById("bkashNumber").value;
+      const amount = parseFloat(document.getElementById("amount").value);
+      if (!number || amount < 10 || amount > balance) {
+        alert("⚠ Invalid request. Min 10 & within balance.");
         return;
       }
-      if(sec <= 0){
-        clearInterval(iv);
-        state.watched += 1;
-        state.points = Number(state.points) + Number(REWARD_PER_AD);
-        saveState(state);
-        render();
-        adBox.style.display='none';
-        watchBtn.disabled = false;
-        watching = false;
-        alert(`✅ ৳${REWARD_PER_AD.toFixed(2)} earned!`);
-        resolve();
-      }
-    }, 1000);
-  });
-}
+      balance -= amount;
+      document.getElementById("balance").innerText = balance.toFixed(2);
 
-/* Withdraw */
-withdrawToggle.addEventListener('click', ()=> {
-  withdrawSection.classList.toggle('hidden');
-});
-submitWithdraw.addEventListener('click', ()=> {
-  const amount = parseFloat(document.getElementById('withdrawAmount').value || 0);
-  const method = document.getElementById('withdrawMethod').value;
-  const phone = document.getElementById('withdrawPhone').value.trim();
-  const telegram = document.getElementById('withdrawTelegram').value.trim();
-  if(isNaN(amount) || amount < 10){ alert('⚠️ Min withdraw ৳10'); return; }
-  if(amount > state.points){ alert('⚠️ পর্যাপ্ত ব্যালান্স নেই'); return; }
-  state.points = Number(state.points) - Number(amount);
-  saveState(state); render();
-  const text = `💰 Withdraw Request\nAmount: ${amount} BDT\nMethod: ${method}\nPhone: ${phone}\nTelegram: ${telegram}`;
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(text)}`);
-  alert('✅ Withdraw request submitted!');
-  withdrawSection.classList.add('hidden');
-});
+      // History add
+      const li = document.createElement("li");
+      li.innerText = `৳${amount} to ${number} → Pending`;
+      document.getElementById("historyList").appendChild(li);
 
-/* Refer */
-referShow.addEventListener('click', ()=> {
-  referSection.classList.toggle('hidden');
-});
-copyReferBtn.addEventListener('click', async () => {
-  try{ await navigator.clipboard.writeText(referInput.value); alert('✅ Refer link copied!'); }
-  catch(e){ referInput.select(); document.execCommand('copy'); alert('✅ Copied (fallback)'); }
-});
+      closeWithdraw();
+    }
 
-/* Join & Balance */
-joinBtn.addEventListener('click', ()=> {
-  window.open('https://t.me/ADS_EARNING_BD_TM_CHANNEL', '_blank'); // 👈 এখানে তোমার চ্যানেল লিংক বসাও
-});
-balanceBtn.addEventListener('click', ()=> {
-  alert(`💰 Balance: ৳${Number(state.points).toFixed(2)}\nWatched: ${state.watched}`);
-});
-</script>
+    // History Modal
+    function openHistory() {
+      document.getElementById("historyModal").classList.remove("hidden");
+    }
+    function closeHistory() {
+      document.getElementById("historyModal").classList.add("hidden");
+    }
+
+    // Refer System (copy to clipboard)
+    function copyRefer() {
+      const referLink = "https://t.me/BD_TM_MINI_BOT";
+      navigator.clipboard.writeText(referLink).then(() => {
+        alert("✅ Refer link copied: " + referLink);
+      });
+    }
+  </script>
 </body>
-  </html>
+</html>
