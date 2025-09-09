@@ -5,202 +5,445 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>BD TM MINI BOT</title>
 
-  <!-- Tailwind CSS -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Monetag SDK -->
+  <!-- Monetag SDK (you already had this) -->
   <script src="//libtl.com/sdk.js" data-zone="9842278" data-sdk="show_9842278"></script>
 
   <style>
-    body { font-family: "Noto Sans Bengali", sans-serif; background:#0f172a; color:white; }
-    .glass { background: rgba(255,255,255,0.06); backdrop-filter: blur(10px); border-radius: 14px; padding:20px; margin-top:10px; }
-    .lighting { animation: glowColors 6s infinite; font-weight:600; }
-    @keyframes glowColors {
-      0%   { color:#34d399; text-shadow:0 0 6px #34d399; }
-      25%  { color:#60a5fa; text-shadow:0 0 8px #60a5fa; }
-      50%  { color:#a78bfa; text-shadow:0 0 10px #a78bfa; }
-      75%  { color:#fb7185; text-shadow:0 0 10px #fb7185; }
-      100% { color:#f59e0b; text-shadow:0 0 6px #f59e0b; }
+    /* Basic styles + lighting */
+    :root{
+      --glass: rgba(255,255,255,0.06);
+      --accent1:#34d399; --accent2:#60a5fa; --accent3:#a78bfa; --accent4:#fb7185; --accent5:#f59e0b;
     }
-    .bomb { position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); font-size:3rem; animation:bombAnim 1s ease-out forwards; }
-    @keyframes bombAnim {
-      0% {opacity:1; transform:translate(-50%,-50%) scale(.5);}
-      100% {opacity:0; transform:translate(-50%,-200%) scale(2);}
+    body{font-family: system-ui, "Noto Sans Bengali", Arial; background: linear-gradient(180deg,#071024,#120924); color:#fff; margin:0; padding-bottom:96px;}
+    .container{max-width:480px;margin:0 auto;padding:16px;}
+    .glass{background:var(--glass);backdrop-filter: blur(8px);border-radius:14px;padding:12px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+    .lighting{animation:glowColors 6s infinite}
+    @keyframes glowColors{
+      0%{color:var(--accent1); text-shadow:0 0 6px var(--accent1)}
+      25%{color:var(--accent2); text-shadow:0 0 8px var(--accent2)}
+      50%{color:var(--accent3); text-shadow:0 0 10px var(--accent3)}
+      75%{color:var(--accent4); text-shadow:0 0 10px var(--accent4)}
+      100%{color:var(--accent5); text-shadow:0 0 6px var(--accent5)}
     }
-    .nav-btn { flex:1; text-align:center; padding:8px; border-radius:12px; cursor:pointer; }
-    .tab { display:none; }
-    .tab.active { display:block; }
+
+    /* Toast */
+    .toast{
+      position:fixed; right:16px; bottom:110px; background:linear-gradient(90deg,#10b981,#06b6d4);
+      color:white; padding:10px 14px; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.4); z-index:9999;
+      opacity:0; transform:translateY(8px); transition:all .25s;
+    }
+    .toast.show{opacity:1; transform:translateY(0);}
+
+    /* Bomb */
+    .bomb{position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); font-size:3.2rem; z-index:9998; animation:bombAnim .9s ease-out forwards}
+    @keyframes bombAnim{0%{opacity:1; transform:translate(-50%,-50%) scale(.6)} 60%{transform:translate(-50%,-60%) scale(1.6)} 100%{opacity:0; transform:translate(-50%,-120%) scale(2.6)}}
+
+    /* Bottom nav */
+    .bottom-nav{position:fixed; left:12px; right:12px; bottom:12px; display:flex; gap:8px; background:rgba(0,0,0,0.28); padding:8px; border-radius:14px; align-items:center; justify-content:space-between; backdrop-filter: blur(6px); z-index:50}
+    .nav-btn{flex:1; text-align:center; padding:10px 6px; border-radius:12px; cursor:pointer; user-select:none}
+    .nav-btn .icon{font-size:18px; display:block}
+    .nav-btn.active{box-shadow:0 10px 30px rgba(124,58,237,0.18); transform:translateY(-4px);}
+
+    /* Tabs */
+    .tab{display:none}
+    .tab.show{display:block; animation:fade .28s}
+    @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+
+    /* small table */
+    table{width:100%; border-collapse:collapse}
+    table th, table td{padding:8px; border-bottom:1px solid rgba(255,255,255,0.04); text-align:left; font-size:13px}
+
+    /* responsive */
+    @media (max-width:420px){ .container{padding:12px} .nav-btn{padding:8px} }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
+  <div class="container">
 
-  <!-- Header -->
-  <header class="text-center p-4">
-    <h1 class="text-2xl font-bold lighting">💎 BD TM MINI BOT</h1>
-  </header>
+    <!-- Header -->
+    <header class="glass text-center mb-4">
+      <h1 class="text-2xl font-bold lighting">BD TM MINI BOT</h1>
+      <p class="text-sm mt-1">এড দেখে উপার্জন করুন — প্রতিদিন সর্বোচ্চ ১০০ এড</p>
+    </header>
 
-  <!-- Main -->
-  <main class="flex-1 p-4">
-    <!-- Join Channel -->
-    <section id="tab-join" class="tab active">
-      <div class="glass text-center">
-        <h2 class="text-xl font-bold">📢 আমাদের অফিসিয়াল চ্যানেল জয়েন করুন</h2>
-        <p class="mt-2 text-sm">বট ব্যবহার করতে আগে চ্যানেলে জয়েন করতে হবে।</p>
-        <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank"
-           class="block w-full py-2 mt-4 bg-green-500 rounded-lg">✅ চ্যানেল জয়েন করুন</a>
-        <button onclick="confirmJoin()" class="block w-full py-2 mt-2 bg-yellow-500 rounded-lg">আমি জয়েন করেছি</button>
+    <!-- Join Tab (default view until joined) -->
+    <section id="tab-join" class="tab show glass mb-4">
+      <h2 class="font-bold text-lg">📢 অফিসিয়াল চ্যানেলে জয়েন করুন</h2>
+      <p class="text-sm mt-2">বট ব্যবহার করতে আগে চ্যানেলে জয়েন করতে হবে।</p>
+      <a id="joinLink" href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank"
+         class="block mt-4 px-4 py-3 bg-green-500 rounded-lg text-center font-semibold">✅ চ্যানেল জয়েন করুন</a>
+      <button id="confirmJoinBtn" class="block mt-3 px-4 py-3 bg-yellow-500 rounded-lg w-full font-semibold">আমি জয়েন করেছি</button>
+      <p class="text-xs mt-2 text-gray-300">নোট: চ্যানেল লিংকটি আগের লিংক অনুযায়ী সেট করা আছে।</p>
+    </section>
+
+    <!-- HOME -->
+    <section id="tab-home" class="tab glass mb-4">
+      <div class="text-center">
+        <div class="text-sm lighting">বর্তমান ব্যালেন্স</div>
+        <div id="ui-balance" class="text-3xl font-bold mt-2 lighting">0.00 ৳</div>
+        <div class="mt-2 text-sm">আজ দেখা এড: <span id="ui-ads-count">0</span> / 100</div>
+      </div>
+      <div class="mt-4 flex gap-2">
+        <button id="goAdsBtn" class="w-1/2 px-3 py-2 bg-cyan-500 rounded-xl">▶ এড দেখুন</button>
+        <button id="goWithdrawBtn" class="w-1/2 px-3 py-2 bg-emerald-600 rounded-xl">💳 উইথড্র</button>
       </div>
     </section>
 
-    <!-- Home -->
-    <section id="tab-home" class="tab">
-      <div class="glass text-center">
-        <h2 class="text-xl font-bold">🏠 হোম</h2>
-        <button onclick="showAd()" class="w-full py-2 mt-4 bg-blue-500 rounded-lg">▶ বিজ্ঞাপন দেখুন</button>
-        <p id="user-points" class="mt-4 text-lg">💰 ব্যালেন্স: 0.00 ৳</p>
+    <!-- ADS -->
+    <section id="tab-ads" class="tab glass mb-4">
+      <div class="flex items-center justify-between">
+        <div class="font-semibold lighting">বিজ্ঞাপন দেখুন</div>
+        <div class="text-xs">Monetag ১৫s (ইভেন্ট) • রিওয়ার্ড ১৭s পরে</div>
       </div>
+      <div class="mt-6">
+        <button id="btn-watch" class="w-full py-3 bg-blue-600 rounded-xl lighting">▶ এখনই দেখতে শুরু করুন
+          <div class="text-xs mt-1">বাকি এড: <span id="ads-left">100</span></div>
+        </button>
+      </div>
+      <div id="ad-countdown" class="mt-4 text-sm"></div>
     </section>
 
-    <!-- Withdraw -->
-    <section id="tab-withdraw" class="tab">
-      <div class="glass">
-        <h2 class="text-xl font-bold">💳 উইথড্র</h2>
-        <select id="method" class="w-full mt-2 p-2 text-black rounded">
-          <option value="bkash">বিকাশ (মিন: 10৳)</option>
-          <option value="nagad">নগদ (মিন: 50৳)</option>
-          <option value="recharge">মোবাইল রিচার্জ (মিন: 20৳)</option>
+    <!-- WITHDRAW -->
+    <section id="tab-withdraw" class="tab glass mb-4">
+      <div class="font-semibold">💳 উইথড্র রিকোয়েস্ট</div>
+      <div class="text-xs mt-1">বিকাশ: মিন ১০৳ • নগদ: মিন ৫০৳ • রিচার্জ: মিন ২০৳</div>
+
+      <div class="mt-3">
+        <select id="withdraw-method" class="w-full p-2 rounded text-black">
+          <option value="bkash">বিকাশ</option>
+          <option value="nagad">নগদ</option>
+          <option value="recharge">মোবাইল রিচার্জ</option>
         </select>
-        <input id="number" class="w-full mt-2 p-2 text-black rounded" placeholder="নম্বর লিখুন">
-        <input id="amount" type="number" class="w-full mt-2 p-2 text-black rounded" placeholder="পরিমাণ">
-        <button onclick="withdraw()" class="w-full py-2 mt-3 bg-emerald-600 rounded-lg">রিকোয়েস্ট পাঠান</button>
-        <p class="text-xs mt-2">✅ রিকোয়েস্ট সাবমিট করলে এডমিনকে টেলিগ্রামে নোটিফিকেশন যাবে।</p>
+        <input id="withdraw-number" class="w-full p-2 mt-2 rounded" placeholder="নম্বর লিখুন (01XXXXXXXXX)" />
+        <input id="withdraw-amount" type="number" class="w-full p-2 mt-2 rounded" placeholder="টাকার পরিমাণ" />
+        <button id="submit-withdraw" class="w-full mt-3 py-2 bg-emerald-600 rounded-lg">রিকোয়েস্ট পাঠান</button>
+        <p class="text-xs mt-2 text-gray-300">রিকোয়েস্ট পাঠালে অ্যাডমিনকে টেলিগ্রামে মেসেজ যাবে এবং এখানে Pending হিসেবে দেখাবে</p>
       </div>
     </section>
 
-    <!-- History -->
-    <section id="tab-history" class="tab">
-      <div class="glass">
-        <h2 class="text-xl font-bold">📜 উইথড্র হিস্ট্রি</h2>
-        <ul id="history" class="mt-3 text-sm"></ul>
+    <!-- ACCOUNT -->
+    <section id="tab-account" class="tab glass mb-4">
+      <div class="font-semibold">👤 আমার একাউন্ট</div>
+      <div class="mt-2 text-sm">ইউজার আইডি: <span id="acc-id"></span></div>
+      <div class="mt-1 text-sm">ব্যালেন্স: <span id="acc-balance"></span> ৳</div>
+      <div class="mt-1 text-sm">আজকের এড: <span id="acc-ads-today"></span></div>
+      <div class="mt-1 text-sm">মোট এড (সাময়িক): <span id="acc-ads-total"></span></div>
+      <div class="mt-3">
+        <input id="refer-link" class="w-full p-2 rounded text-black" readonly value="https://t.me/BD_TM_MINI_BOT" />
+        <button id="copy-refer" class="w-full mt-2 py-2 bg-pink-600 rounded-lg">রেফার লিংক কপি করুন</button>
       </div>
     </section>
 
-    <!-- Admin -->
-    <section id="tab-admin" class="tab">
-      <div class="glass">
-        <h2 class="text-xl font-bold">⚙️ এডমিন প্যানেল</h2>
-        <input id="admin-pass" type="password" placeholder="পাসওয়ার্ড" class="w-full mt-2 p-2 text-black rounded">
-        <button onclick="adminLogin()" class="w-full py-2 mt-3 bg-yellow-500 rounded-lg">লগইন</button>
+    <!-- ADMIN -->
+    <section id="tab-admin" class="tab glass mb-4">
+      <div class="font-semibold lighting">⚙️ অ্যাডমিন প্যানেল</div>
+      <div id="admin-login-area" class="mt-3">
+        <input id="admin-pass" type="password" class="w-full p-2 rounded text-black" placeholder="এখানে পাসওয়ার্ড দিন" />
+        <button id="admin-login-btn" class="w-full mt-2 py-2 bg-yellow-500 rounded-lg">লগইন</button>
+      </div>
 
-        <div id="admin-panel" class="hidden mt-4">
-          <h3 class="font-bold">ইউজার তালিকা</h3>
-          <table class="w-full text-xs mt-2" border="1">
-            <thead><tr><th>ID</th><th>ব্যালেন্স</th><th>এড</th></tr></thead>
-            <tbody id="users"></tbody>
+      <div id="admin-area" class="hidden mt-4">
+        <div class="mb-3">
+          <div>👥 মোট ইউজার: <span id="admin-user-count">0</span></div>
+          <div>▶ মোট এড দেখা: <span id="admin-total-ads">0</span></div>
+          <div>💰 টোটাল ব্যালেন্স: <span id="admin-total-balance">0.00</span> ৳</div>
+        </div>
+
+        <div class="mt-2">
+          <div class="font-semibold">📋 ইউজার তালিকা</div>
+          <table class="mt-2">
+            <thead><tr><th>ID</th><th>ব্যালেন্স</th><th>আজকে</th><th>মোট</th></tr></thead>
+            <tbody id="admin-users-tbody"></tbody>
           </table>
-          <h3 class="font-bold mt-4">Pending Withdraw</h3>
-          <ul id="pending" class="text-sm"></ul>
+        </div>
+
+        <div class="mt-4">
+          <div class="font-semibold">💳 Pending Withdraw</div>
+          <table class="mt-2">
+            <thead><tr><th>ID</th><th>ইউজার</th><th>পদ্ধতি</th><th>নম্বর</th><th>টাকা</th><th>অ্যাকশন</th></tr></thead>
+            <tbody id="admin-withdraws-tbody"></tbody>
+          </table>
         </div>
       </div>
     </section>
-  </main>
 
-  <!-- Bottom nav -->
-  <nav class="flex justify-around p-2 bg-black/40">
-    <button class="nav-btn" onclick="openTab('home')">🏠 হোম</button>
-    <button class="nav-btn" onclick="openTab('withdraw')">💳 উইথড্র</button>
-    <button class="nav-btn" onclick="openTab('history')">📜 হিস্ট্রি</button>
-    <button class="nav-btn" onclick="openTab('admin')">⚙️ এডমিন</button>
-  </nav>
+  </div> <!-- container end -->
 
-  <div id="bomb"></div>
+  <!-- bottom nav -->
+  <div class="bottom-nav">
+    <div id="nav-home" class="nav-btn active" onclick="navOpen('home')"><span class="icon">🏠</span><span class="label" style="font-size:12px">হোম</span></div>
+    <div id="nav-ads" class="nav-btn" onclick="navOpen('ads')"><span class="icon">▶</span><span class="label" style="font-size:12px">এড</span></div>
+    <div id="nav-withdraw" class="nav-btn" onclick="navOpen('withdraw')"><span class="icon">💳</span><span class="label" style="font-size:12px">উইথড্র</span></div>
+    <div id="nav-account" class="nav-btn" onclick="navOpen('account')"><span class="icon">👤</span><span class="label" style="font-size:12px">একাউন্ট</span></div>
+    <div id="nav-admin" class="nav-btn" onclick="navOpen('admin')"><span class="icon">⚙️</span><span class="label" style="font-size:12px">এডমিন</span></div>
+  </div>
 
-  <script>
-    const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
-    const ADMIN_CHAT_ID = "7691157254";
-    const ADMIN_PASS = "Sharif000";
-    const AD_TIME = 17;
-    const MIN_BKASH = 10, MIN_NAGAD = 50, MIN_RECHARGE = 20;
+  <!-- toast + bomb root -->
+  <div id="toast-root" class="toast"></div>
+  <div id="bomb-root"></div>
 
-    let balance = 0, history = [], joined = false, users = {};
+<script>
+/* ========== CONFIG ========== */
+/* Use the Bot Token and Admin Chat ID you provided earlier.
+   NOTE: Browser -> Telegram API calls may be blocked by CORS in some browsers.
+   If telegram messages don't go through, use a small server-side proxy (I can give code).
+*/
+const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
+const ADMIN_CHAT_ID = "7691157254";
+const ADMIN_PASSWORD = "Sharif000";
 
-    function confirmJoin(){ joined=true; openTab('home'); }
+const DAILY_LIMIT = 100;
+const AD_REWARD = 0.20;
+const AD_MONETAG_SECONDS = 15; // Monetag ad length (information)
+const REWARD_SECONDS = 17;     // reward delivered after 17s
 
-    function openTab(tab){
-      if(!joined && tab!=='join'){ alert("⚠️ আগে চ্যানেলে জয়েন করুন!"); return; }
-      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-      document.getElementById("tab-"+tab).classList.add("active");
-      if(tab==="history") renderHistory();
-      if(tab==="admin") renderAdmin();
+const STORAGE_KEY = "bdtm_state_v4";
+
+/* ========== STATE ========== */
+let state = {
+  users: {},         // userId -> { id, balance, adsToday, adsTotal, lastAdDate }
+  withdraws: [],     // { id, userId, method, number, amount, status, ts }
+  currentUserId: null
+};
+
+/* ========== UTIL ========== */
+function uid(){ return 'u' + Date.now().toString(36) + Math.floor(Math.random()*9000+1000).toString(36); }
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+
+function loadState(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw){ try{ state = JSON.parse(raw); } catch(e){ console.warn(e); } }
+  if(!state.currentUserId){
+    const id = uid();
+    state.currentUserId = id;
+    state.users[id] = { id, balance:0, adsToday:0, adsTotal:0, lastAdDate: todayKey() };
+    saveState();
+  }
+  // ensure each user has fields
+  Object.values(state.users).forEach(u=>{
+    if(typeof u.balance === 'undefined') u.balance = 0;
+    if(typeof u.adsToday === 'undefined') u.adsToday = 0;
+    if(typeof u.adsTotal === 'undefined') u.adsTotal = 0;
+    if(!u.lastAdDate) u.lastAdDate = todayKey();
+  });
+}
+function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function currentUser(){ return state.users[state.currentUserId]; }
+
+/* reset user's adsToday if date changed */
+function ensureDailyResetForUser(u){
+  const tk = todayKey();
+  if(u.lastAdDate !== tk){
+    u.adsToday = 0;
+    u.lastAdDate = tk;
+  }
+}
+
+/* ========== UI HELPERS ========== */
+function showToast(msg, type="info", ms=3500){
+  const root = document.getElementById('toast-root');
+  root.innerText = msg;
+  root.className = 'toast show';
+  if(type === 'success') root.style.background = 'linear-gradient(90deg,#10b981,#06b6d4)';
+  else if(type === 'error') root.style.background = 'linear-gradient(90deg,#ef4444,#f97316)';
+  else root.style.background = 'linear-gradient(90deg,#2563eb,#06b6d4)';
+  setTimeout(()=>{ root.className = 'toast'; }, ms);
+}
+function showBomb(){
+  const r = document.getElementById('bomb-root');
+  const el = document.createElement('div'); el.className = 'bomb'; el.innerText = '💣💥';
+  r.appendChild(el); setTimeout(()=>el.remove(), 900);
+}
+
+/* ========== NAV & JOIN CHECK ========== */
+let joined_channel = (localStorage.getItem('bdtm_joined') === 'yes');
+
+function setJoined(val){
+  joined_channel = val;
+  localStorage.setItem('bdtm_joined', val ? 'yes' : 'no');
+}
+
+/* open a tab by key (home, ads, withdraw, account, admin, join) */
+function navOpen(key){
+  // require join for everything except 'join'
+  if(!joined_channel && key !== 'join'){
+    showToast('⚠️ আগে অফিসিয়াল চ্যানেলে জয়েন করুন', 'error');
+    openTab('join'); return;
+  }
+  openTab(key);
+}
+
+function openTab(key){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('show'));
+  const id = key === 'home' ? 'tab-home' : key === 'ads' ? 'tab-ads' : key === 'withdraw' ? 'tab-withdraw' : key === 'account' ? 'tab-account' : key === 'admin' ? 'tab-admin' : key === 'join' ? 'tab-join' : null;
+  if(!id) return;
+  document.getElementById(id).classList.add('show');
+  // nav active styles
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const navId = key === 'home' ? 'nav-home' : key === 'ads' ? 'nav-ads' : key === 'withdraw' ? 'nav-withdraw' : key === 'account' ? 'nav-account' : key === 'admin' ? 'nav-admin' : null;
+  if(navId) document.getElementById(navId).classList.add('active');
+
+  // render dynamic if needed
+  renderHome();
+  if(key === 'account') renderAccount();
+  if(key === 'admin') renderAdmin();
+}
+
+/* ========== INIT USER & RENDER ========== */
+loadState();
+ensureDailyResetForUser(currentUser());
+saveState();
+
+function renderHome(){
+  const u = currentUser();
+  ensureDailyResetForUser(u);
+  document.getElementById('ui-balance').innerText = (u.balance||0).toFixed(2) + ' ৳';
+  document.getElementById('ui-ads-count').innerText = (u.adsToday||0);
+  document.getElementById('ads-left').innerText = Math.max(0, DAILY_LIMIT - (u.adsToday||0));
+}
+
+/* ========== AD FLOW ========== */
+let adRunning = false;
+
+function adsRemainingForUser(){
+  const u = currentUser();
+  ensureDailyResetForUser(u);
+  return Math.max(0, DAILY_LIMIT - (u.adsToday||0));
+}
+
+document.getElementById('btn-watch').addEventListener('click', startAdFlow);
+document.getElementById('goAdsBtn').addEventListener('click', ()=> navOpen('ads'));
+document.getElementById('goWithdrawBtn').addEventListener('click', ()=> navOpen('withdraw'));
+
+function startAdFlow(){
+  const u = currentUser();
+  ensureDailyResetForUser(u);
+  if(adRunning) return;
+  if(adsRemainingForUser() <= 0){ showToast('⚠️ আজকের 100 এড শেষ হয়েছে', 'error'); return; }
+
+  // Call Monetag - Monetag handles its own timing (15s)
+  if(typeof show_9842278 === 'function'){
+    try { show_9842278(); } catch(e){ console.warn('Monetag invocation error', e); }
+  } else {
+    // If SDK not present, we still simulate; Monetag popup may require live hosting
+    console.warn('Monetag SDK not available - simulating');
+  }
+
+  adRunning = true;
+  let left = REWARD_SECONDS;
+  const countdownEl = document.getElementById('ad-countdown');
+  const btn = document.getElementById('btn-watch');
+  btn.disabled = true; btn.style.opacity = '0.7';
+  countdownEl.innerText = `⏳ ${left} সেকেন্ড চলছে...`;
+
+  const tick = setInterval(()=>{
+    left--;
+    if(left > 0){
+      countdownEl.innerText = `⏳ ${left} সেকেন্ড চলছে...`;
+      return;
     }
+    clearInterval(tick);
+    adRunning = false;
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    // Reward user
+    u.balance = +( (u.balance || 0) + AD_REWARD ).toFixed(2);
+    u.adsToday = (u.adsToday || 0) + 1;
+    u.adsTotal = (u.adsTotal || 0) + 1;
+    u.lastAdDate = todayKey();
+    saveState();
+    renderHome();
 
-    function showAd(){
-      let sec = AD_TIME;
-      const btn = event.target;
-      btn.disabled = true; btn.innerText="⏳ বিজ্ঞাপন চলছে "+sec+"s";
-      let timer = setInterval(()=>{
-        sec--;
-        btn.innerText="⏳ বিজ্ঞাপন চলছে "+sec+"s";
-        if(sec<=0){
-          clearInterval(timer);
-          balance+=0.20;
-          document.getElementById("user-points").innerText="💰 ব্যালেন্স: "+balance.toFixed(2)+" ৳";
-          bomb();
-          btn.disabled=false; btn.innerText="▶ বিজ্ঞাপন দেখুন";
-        }
-      },1000);
-    }
+    showBomb();
+    showToast(`✅ +${AD_REWARD.toFixed(2)} ৳ যোগ হয়েছে!`, 'success');
+    countdownEl.innerText = '✅ বিজ্ঞাপন শেষ!';
 
-    function bomb(){
-      let b=document.getElementById("bomb");
-      b.innerHTML="<div class='bomb'>💣💥</div>";
-      setTimeout(()=>b.innerHTML="",1000);
-    }
+    // (optional) Notify admin that user watched ad - commented out to avoid spam
+    // sendToAdmin(`📢 বিজ্ঞাপন দেখা:\nইউজার: ${u.id}\nআজ এড: ${u.adsToday}\nব্যালেন্স: ${u.balance.toFixed(2)} ৳`);
+  }, 1000);
+}
 
-    function withdraw(){
-      const m=document.getElementById("method").value;
-      const num=document.getElementById("number").value;
-      const amt=parseFloat(document.getElementById("amount").value);
-      if(!num||isNaN(amt)){ alert("⚠️ সঠিক তথ্য দিন"); return; }
-      if(m==="bkash"&&amt<MIN_BKASH){ alert("⚠️ মিনিমাম 10৳"); return; }
-      if(m==="nagad"&&amt<MIN_NAGAD){ alert("⚠️ মিনিমাম 50৳"); return; }
-      if(m==="recharge"&&amt<MIN_RECHARGE){ alert("⚠️ মিনিমাম 20৳"); return; }
-      if(amt>balance){ alert("⚠️ পর্যাপ্ত ব্যালেন্স নেই"); return; }
-      balance-=amt;
-      history.push({m,num,amt,status:"Pending"});
-      sendToAdmin(`📩 নতুন উইথড্র রিকোয়েস্ট\nপদ্ধতি: ${m}\nনম্বর: ${num}\nপরিমাণ: ${amt}৳`);
-      renderHistory();
-      document.getElementById("user-points").innerText="💰 ব্যালেন্স: "+balance.toFixed(2)+" ৳";
-    }
+/* ========== WITHDRAW FLOW ========== */
+document.getElementById('submit-withdraw').addEventListener('click', submitWithdraw);
 
-    function renderHistory(){
-      const h=document.getElementById("history");
-      h.innerHTML="";
-      history.forEach(r=>{
-        h.innerHTML+=`<li>${r.m} → ${r.num} : ${r.amt}৳ [${r.status}]</li>`;
-      });
-    }
+const MIN = { bkash:10, nagad:50, recharge:20 };
 
-    function adminLogin(){
-      const pass=document.getElementById("admin-pass").value;
-      if(pass===ADMIN_PASS){
-        document.getElementById("admin-panel").classList.remove("hidden");
-      } else alert("❌ ভুল পাসওয়ার্ড");
-    }
+function submitWithdraw(){
+  if(!joined_channel){ showToast('⚠️ আগে চ্যানেলে জয়েন করুন', 'error'); openTab('join'); return; }
+  const method = document.getElementById('withdraw-method').value;
+  const number = document.getElementById('withdraw-number').value.trim();
+  const amount = parseFloat(document.getElementById('withdraw-amount').value);
 
-    function renderAdmin(){
-      let u=document.getElementById("users");
-      u.innerHTML=`<tr><td>USER-1</td><td>${balance.toFixed(2)}৳</td><td>${history.length}</td></tr>`;
-      let p=document.getElementById("pending");
-      p.innerHTML="";
-      history.filter(r=>r.status==="Pending").forEach(r=>{
-        p.innerHTML+=`<li>${r.m} ${r.num} ${r.amt}৳</li>`;
-      });
-    }
+  if(!number || isNaN(amount) || amount <= 0){ showToast('⚠️ সঠিক নম্বর ও পরিমাণ দিন', 'error'); return; }
 
-    function sendToAdmin(msg){
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(msg)}`);
-    }
-  </script>
-</body>
-</html>
+  const min = method === 'bkash' ? MIN.bkash : method === 'nagad' ? MIN.nagad : MIN.recharge;
+  if(amount < min){ showToast(`⚠️ ${method === 'bkash' ? 'বিকাশ' : method === 'nagad' ? 'নগদ' : 'রিচার্জ'} মিন ${min}৳`, 'error'); return; }
+
+  const u = currentUser();
+  if(amount > (u.balance || 0)){ showToast('⚠️ পর্যাপ্ত ব্যালেন্স নেই', 'error'); return; }
+
+  // Deduct immediately and store pending withdraw
+  u.balance = +(u.balance - amount).toFixed(2);
+  const req = { id: 'W' + Date.now().toString(36), userId: u.id, method, number, amount, status:'Pending', ts: new Date().toISOString() };
+  state.withdraws.push(req);
+  saveState();
+  renderHome();
+  renderHistory();
+  renderAdmin();
+
+  // Notify user + admin
+  showToast('📤 আপনার রিকোয়েস্ট অ্যাডমিনের কাছে পাঠানো হয়েছে', 'info');
+
+  // Telegram notify admin (may be CORS-blocked in some browsers)
+  const adminMessage = `💳 নতুন উইথড্র রিকোয়েস্ট\nID: ${req.id}\nUser: ${u.id}\nপদ্ধতি: ${method}\nপরিমাণ: ৳${amount}\nনম্বর: ${number}`;
+  sendToAdmin(adminMessage);
+}
+
+/* render user's history list (simple) */
+function renderHistory(){
+  // show on account page or history area (we don't have separate history page here)
+  // We'll populate admin + account views; user pending list via account page not implemented separately
+  // For simplicity, account shows totals; history table available for admin.
+}
+
+/* ========== ADMIN PANEL ========== */
+document.getElementById('admin-login-btn').addEventListener('click', adminLogin);
+
+function adminLogin(){
+  const pass = document.getElementById('admin-pass').value;
+  if(pass !== ADMIN_PASSWORD){ showToast('❌ ভুল পাসওয়ার্ড', 'error'); return; }
+  document.getElementById('admin-login-area').classList.add('hidden');
+  document.getElementById('admin-area').classList.remove('hidden');
+  renderAdmin();
+  showToast('✅ অ্যাডমিন লগইন সফল', 'success');
+}
+
+function renderAdmin(){
+  const tbody = document.getElementById('admin-users-tbody');
+  tbody.innerHTML = '';
+  let totalUsers = 0, totalAds = 0, totalBalance = 0;
+  Object.values(state.users).forEach(u=>{
+    ensureDailyResetForUser(u);
+    totalUsers++;
+    totalAds += (u.adsTotal || 0);
+    totalBalance += Number(u.balance || 0);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${u.id}</td><td>${(u.balance||0).toFixed(2)}৳</td><td>${u.adsToday||0}</td><td>${u.adsTotal||0}</td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('admin-user-count').innerText = totalUsers;
+  document.getElementById('admin-total-ads').innerText = totalAds;
+  document.getElementById('admin-total-balance').innerText = totalBalance.toFixed(2);
+
+  // withdraws
+  const wt = document.getElementById('admin-withdraws-tbody');
+  wt.innerHTML = '';
+  state.withdraws.filter(w=> w.status === 'Pending').forEach(w=>{
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${w.id}</td><td>${w.userId}</td><td>${w.method}</td><td>${w.number}</td><td>৳ ${w.amount}</td>
+      <td>
+        <button onclick="adminApprove('${w.id}')" style="background:#10b981;color:#fff;padding:6px;border-radius:6px">Approve</button>
+        <button onclick="adminReject('${w.id}')" style="background:#ef4444;color:#fff;padding:6px;border-radius:6px;margin-left:6px">Reject</but
