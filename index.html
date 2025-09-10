@@ -10,7 +10,7 @@
   <script src="//libtl.com/sdk.js" data-zone="9842278" data-sdk="show_9842278"></script>
 
   <style>
-    body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
+    body { font-family: ui-sans-serif, system-ui; }
     .glass { background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); backdrop-filter: blur(12px); border-radius:16px; }
     .tab { display:none; }
     .tab.show { display:block; }
@@ -18,8 +18,8 @@
     .navbtn { width:100%; padding:10px 8px; border-radius:12px; font-weight:700; }
     .badge{padding:2px 6px;border-radius:6px;font-size:.8rem}
     .badge.pending{background:#fbbf24;color:#000}
-    .badge.success{background:#4ade80;color:#000}
-    .badge.failed{background:#f87171;color:#000}
+    .badge.approved{background:#4ade80;color:#000}
+    .badge.rejected{background:#f87171;color:#000}
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-[#0b1120] via-[#1e1b4b] to-[#2b0b3a] text-white pb-32">
@@ -28,7 +28,7 @@
   <div class="glass p-4 max-w-xl mx-auto">
     <h1 class="text-3xl font-extrabold">💎 BD TM MINI BOT</h1>
     <p class="opacity-80 text-sm">এড দেখে আয় করুন • রেফার করে বোনাস পান</p>
-    <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="text-emerald-400 underline text-sm">📢 আমাদের অফিসিয়াল চ্যানেলে জয়েন করুন</a>
+    <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="mt-2 inline-block text-emerald-400 underline">📢 আমাদের টেলিগ্রাম চ্যানেল</a>
   </div>
 </header>
 
@@ -57,8 +57,8 @@
         <button onclick="openTab('withdraw')" class="px-4 py-2 bg-green-600 rounded-xl font-semibold">💳 উইথড্র</button>
         <div class="text-sm mt-3">
           🔗 <b>রেফার লিংক:</b><br/>
-          <span id="refLink" class="break-all text-emerald-400"></span><br/>
-          <button onclick="copyRef()" class="mt-2 px-3 py-1 bg-white/20 rounded">📋 কপি করুন</button>
+          <span id="refLink" class="break-all text-emerald-400"></span>
+          <button onclick="copyRef()" class="ml-2 text-xs bg-emerald-600 px-2 py-1 rounded">Copy</button>
         </div>
       </div>
     </div>
@@ -79,9 +79,9 @@
       <h2 class="text-xl font-bold">💳 টাকা উত্তোলন</h2>
       <div class="space-y-3 mt-3">
         <select id="method" class="w-full p-3 rounded text-black">
-          <option value="bkash">বিকাশ</option>
-          <option value="nagad">নগদ</option>
-          <option value="recharge">রিচার্জ</option>
+          <option value="bkash">বিকাশ (Min 10)</option>
+          <option value="nagad">নগদ (Min 50)</option>
+          <option value="recharge">রিচার্জ (Min 20)</option>
         </select>
         <input id="number" class="w-full p-3 rounded text-black" placeholder="নম্বর" />
         <input id="amount" type="number" class="w-full p-3 rounded text-black" placeholder="পরিমাণ" />
@@ -149,6 +149,10 @@ async function sendTelegram(text){
     });
   }catch(e){console.log("TG error",e);}
 }
+function copyRef(){
+  navigator.clipboard.writeText(document.getElementById("refLink").innerText);
+  alert("রেফার লিংক কপি করা হয়েছে ✅");
+}
 function updateHistoryUI(){
   const box=document.getElementById("withdrawHistory");
   box.innerHTML="";
@@ -166,14 +170,13 @@ function updateAdminUI(){
   SESSION.requests.forEach(r=>{
     const li=document.createElement("li");
     li.className="glass p-2";
-    li.innerHTML=`<b>${r.username}</b> (${r.tgId})<br/>৳${r.amount} → ${r.method} (${r.number})<br/><span class="badge pending">Pending</span>`;
+    li.innerHTML=`<b>${r.username}</b> (${r.tgId})<br/>৳${r.amount} → ${r.method} (${r.number})<br/>
+      <span class="badge ${r.status.toLowerCase()}">${r.status}</span>
+      ${r.status==="Pending" ? `<br/>
+        <button onclick="approveReq(${r.id})" class="px-2 py-1 bg-emerald-600 rounded mt-1">Approve</button>
+        <button onclick="rejectReq(${r.id})" class="px-2 py-1 bg-rose-600 rounded mt-1">Reject</button>` : ""}`;
     box.appendChild(li);
   });
-}
-function copyRef(){
-  const text=document.getElementById("refLink").innerText;
-  navigator.clipboard.writeText(text);
-  alert("✅ রেফার লিংক কপি হয়েছে!");
 }
 
 // === LOGIN ===
@@ -187,7 +190,7 @@ function register(){
   checkReferral();
   document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
   document.getElementById("ui-ads").innerText=0;
-  document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${username}`;
+  document.getElementById("refLink").innerText="https://t.me/"+BOT_USERNAME+"?ref="+username;
   openTab("home");
 }
 
@@ -217,7 +220,7 @@ function completeAd(){
   saveSession();
   document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
   document.getElementById("ui-ads").innerText=SESSION.ads;
-  sendTelegram(`▶ ${SESSION.username} (${SESSION.tgId}) একটি এড সম্পূর্ণ করেছে। Balance: ৳${fmt(SESSION.balance)}`);
+  sendTelegram(`👁 ${SESSION.username} (${SESSION.tgId}) একটি এড দেখেছে। মোট: ${SESSION.ads}`);
   alert("✅ +0.20 ৳ যোগ হয়েছে!");
 }
 
@@ -227,6 +230,12 @@ function withdraw(){
   const number=document.getElementById("number").value.trim();
   const amount=parseFloat(document.getElementById("amount").value);
   if(!number||!amount) return alert("সব তথ্য দিন");
+
+  // Min check
+  if(method==="bkash" && amount<10) return alert("বিকাশ মিনিমাম 10 টাকা!");
+  if(method==="nagad" && amount<50) return alert("নগদ মিনিমাম 50 টাকা!");
+  if(method==="recharge" && amount<20) return alert("রিচার্জ মিনিমাম 20 টাকা!");
+
   if(amount>SESSION.balance) return alert("ব্যালেন্স যথেষ্ট নেই");
 
   SESSION.balance-=amount;
@@ -246,13 +255,21 @@ function adminLogin(){
   document.getElementById("adminPanel").classList.remove("hidden");
   updateAdminUI();
 }
+function approveReq(id){
+  const r=SESSION.requests.find(x=>x.id===id);
+  if(r){r.status="Approved";saveSession();updateAdminUI();updateHistoryUI();sendTelegram(`✅ Approved\n${r.username} (${r.tgId}) ৳${r.amount}`);}
+}
+function rejectReq(id){
+  const r=SESSION.requests.find(x=>x.id===id);
+  if(r){r.status="Rejected";SESSION.balance+=r.amount;saveSession();updateAdminUI();updateHistoryUI();sendTelegram(`❌ Rejected\n${r.username} (${r.tgId}) ৳${r.amount} ফেরত দেওয়া হলো`);}
+}
 
 // === INIT ===
 window.onload=()=>{
   if(SESSION.username){
     document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
     document.getElementById("ui-ads").innerText=SESSION.ads;
-    document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${SESSION.username}`;
+    document.getElementById("refLink").innerText="https://t.me/"+BOT_USERNAME+"?ref="+SESSION.username;
     updateHistoryUI();updateAdminUI();openTab("home");
   }else openTab("login");
 };
