@@ -1,263 +1,245 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>BD TM MINI BOT</title>
-
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Monetag -->
+
+  <!-- Monetag SDK -->
   <script src="//libtl.com/sdk.js" data-zone="9842278" data-sdk="show_9842278"></script>
 
   <style>
-    body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
-    .glass { background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius:16px; }
-    .lighting { animation: glow 8s infinite alternate ease-in-out; }
-    @keyframes glow {
-      0% { color:#60a5fa; text-shadow:0 0 10px #60a5fa; }
-      25% { color:#a78bfa; text-shadow:0 0 12px #a78bfa; }
-      50% { color:#34d399; text-shadow:0 0 12px #34d399; }
-      75% { color:#f59e0b; text-shadow:0 0 14px #f59e0b; }
-      100%{ color:#fb7185; text-shadow:0 0 16px #fb7185; }
+    body{font-family:ui-sans-serif,system-ui}
+    .glass{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(12px);border-radius:16px}
+    .lighting{animation:glow 6s infinite alternate ease-in-out}
+    @keyframes glow{
+      0%{color:#60a5fa;text-shadow:0 0 10px #60a5fa}
+      25%{color:#a78bfa;text-shadow:0 0 12px #a78bfa}
+      50%{color:#34d399;text-shadow:0 0 12px #34d399}
+      75%{color:#f59e0b;text-shadow:0 0 14px #f59e0b}
+      100%{color:#fb7185;text-shadow:0 0 16px #fb7185}
     }
-    .bottom { position:fixed; left:0; right:0; bottom:0; padding:10px; background:rgba(0,0,0,0.25); backdrop-filter:blur(8px); }
-    .navbtn { width:100%; padding:10px 8px; border-radius:14px; font-weight:700; }
-    .emoji { position:fixed; font-size:2rem; opacity:.12; user-select:none; pointer-events:none; animation:float 24s linear infinite; }
-    .emoji.e2{ left:25%; animation-duration:28s; }
-    .emoji.e3{ left:55%; animation-duration:20s; }
-    .emoji.e4{ left:80%; animation-duration:26s; }
-    @keyframes float { 0%{ transform:translateY(110vh) rotate(0) } 100%{ transform:translateY(-20vh) rotate(360deg) } }
-    .bomb { position:fixed; left:50%; top:45%; transform:translate(-50%,-50%); font-size:3rem; z-index:40; animation:bomb 1s ease forwards; }
-    @keyframes bomb { 0%{ opacity:0; transform:translate(-50%,-50%) scale(.8) } 50%{ opacity:1; transform:translate(-50%,-55%) scale(1.6) } 100%{ opacity:0; transform:translate(-50%,-80%) scale(2.4) } }
-    .tab { display:none; opacity:0; transform:translateY(8px); transition:all .3s; }
-    .tab.show { display:block; opacity:1; transform:translateY(0); }
+    .bottom{position:fixed;left:0;right:0;bottom:0;padding:10px;background:rgba(0,0,0,.25);backdrop-filter:blur(8px)}
+    .navbtn{width:100%;padding:10px 8px;border-radius:14px;font-weight:700}
+    .tab{display:none;opacity:0;transform:translateY(8px);transition:all .3s}
+    .tab.show{display:block;opacity:1;transform:translateY(0)}
+    .badge{padding:2px 6px;border-radius:8px;font-size:12px}
+    .pending{background:#fbbf24;color:black}
+    .approved{background:#10b981}
+    .rejected{background:#ef4444}
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-[#091535] via-[#0b1120] to-[#2b0b3a] text-white pb-28">
 
-  <div class="emoji">😍</div><div class="emoji e2">🤖</div><div class="emoji e3">😂</div><div class="emoji e4">😎</div>
+<header class="p-5 text-center">
+  <div class="glass p-4 max-w-xl mx-auto">
+    <h1 class="text-3xl font-extrabold lighting">💎 BD TM MINI BOT</h1>
+    <p class="opacity-80 text-sm">এড দেখে আয় করুন • উইথড্র নিন • এডমিন কন্ট্রোল</p>
+  </div>
+</header>
 
-  <header class="p-5 text-center">
-    <div class="glass p-4 max-w-xl mx-auto">
-      <h1 class="text-3xl font-extrabold lighting">💎 BD TM MINI BOT</h1>
-      <p class="opacity-80 text-sm">এড দেখে আয় করুন • রেফার করে বোনাস পান</p>
+<main class="px-4 max-w-xl mx-auto space-y-4">
+  <!-- Login -->
+  <section id="tab-login" class="tab show">
+    <div class="glass p-5">
+      <h2 class="text-xl font-bold lighting">🔐 লগইন</h2>
+      <p class="text-sm opacity-80 mt-1">Username ও Telegram Numeric ID দিন।</p>
+      <div class="mt-4 space-y-3">
+        <input id="username" class="w-full p-3 rounded text-black" placeholder="Username (without @)"/>
+        <input id="tgId" class="w-full p-3 rounded text-black" placeholder="Numeric Telegram ID"/>
+        <button onclick="register()" class="w-full py-3 bg-emerald-600 rounded-lg font-semibold">🚀 শুরু করুন</button>
+      </div>
     </div>
-  </header>
+  </section>
 
-  <main class="px-4 max-w-xl mx-auto space-y-4">
-    <!-- Login/Register -->
-    <section id="tab-login" class="tab show">
-      <div class="glass p-5">
-        <h2 class="text-xl font-bold lighting">🔐 একাউন্ট চালু করুন</h2>
-        <p class="text-sm opacity-80 mt-1">নিচে আপনার টেলিগ্রাম Username ও Numeric ID দিন। (ID পেতে @userinfobot)</p>
-        <div class="mt-4 space-y-3">
-          <input id="username" class="w-full p-3 rounded text-black" placeholder="Username (without @)" />
-          <input id="tgId" class="w-full p-3 rounded text-black" placeholder="Numeric Telegram ID" />
-          <button onclick="register()" class="w-full py-3 bg-emerald-600 rounded-lg font-semibold">🚀 শুরু করুন</button>
-          <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="block text-center underline text-sm mt-1">📢 আগে আমাদের চ্যানেলে জয়েন করুন</a>
-        </div>
+  <!-- Home -->
+  <section id="tab-home" class="tab">
+    <div class="glass p-5 text-center">
+      <div class="lighting">বর্তমান ব্যালেন্স</div>
+      <div class="text-4xl font-extrabold mt-1"><span id="ui-balance">0.00</span> ৳</div>
+      <div class="mt-2 text-sm opacity-80">আজ দেখা: <span id="ui-ads">0</span> / 100</div>
+      <div class="mt-3 flex justify-center gap-2">
+        <button onclick="openTab('ads')" class="px-4 py-2 bg-blue-600 rounded-xl font-semibold">▶ এড দেখুন</button>
+        <button onclick="openTab('withdraw')" class="px-4 py-2 bg-green-600 rounded-xl font-semibold">💳 উইথড্র</button>
       </div>
-    </section>
-
-    <!-- Home -->
-    <section id="tab-home" class="tab">
-      <div class="glass p-5 text-center">
-        <div class="lighting">বর্তমান ব্যালেন্স</div>
-        <div class="text-4xl font-extrabold mt-1"><span id="ui-balance">0.00</span> ৳</div>
-        <div class="mt-2 text-sm opacity-80">আজ দেখা: <span id="ui-ads">0</span> / 100</div>
-        <div class="mt-3 flex justify-center gap-2">
-          <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="px-4 py-2 bg-green-600 rounded-xl font-semibold">📢 চ্যানেলে জয়েন</a>
-          <button onclick="openTab('ads')" class="px-4 py-2 bg-blue-600 rounded-xl font-semibold">▶ এড দেখুন</button>
-        </div>
-        <div id="joinStatus" class="text-xs opacity-70 mt-2"></div>
-      </div>
-    </section>
-
-    <!-- Ads -->
-    <section id="tab-ads" class="tab">
-      <div class="glass p-5 text-center">
-        <div class="flex justify-between">
-          <div class="font-semibold lighting">বিজ্ঞাপন</div>
-          <div class="text-sm opacity-80">১৫ সেকেন্ড + ১৭ সেকেন্ডে পেমেন্ট</div>
-        </div>
-        <div class="mt-4">
-          <button id="btn-start-ad" onclick="startAd()" class="w-full py-3 bg-blue-600 rounded-xl font-bold">▶ এখনই দেখুন</button>
-        </div>
-        <div id="adTimer" class="mt-3 text-sm opacity-80"></div>
-      </div>
-    </section>
-
-    <!-- Withdraw -->
-    <section id="tab-withdraw" class="tab">
-      <div class="glass p-5">
-        <h2 class="text-xl font-bold lighting">💳 টাকা উত্তোলন</h2>
-        <div class="text-xs opacity-80 mb-2">বিকাশ ১০৳ • নগদ ৫০৳ • রিচার্জ ২০৳</div>
-        <div class="space-y-3">
-          <select id="method" class="w-full p-3 rounded text-black">
-            <option value="bkash">বিকাশ</option>
-            <option value="nagad">নগদ</option>
-            <option value="recharge">মোবাইল রিচার্জ</option>
-          </select>
-          <input id="number" class="w-full p-3 rounded text-black" placeholder="নম্বর" />
-          <input id="amount" type="number" class="w-full p-3 rounded text-black" placeholder="পরিমাণ" />
-          <button onclick="withdraw()" class="w-full py-3 bg-emerald-600 rounded-xl font-semibold">📩 রিকোয়েস্ট পাঠান</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- History -->
-    <section id="tab-history" class="tab">
-      <div class="glass p-5">
-        <h2 class="text-xl font-bold lighting">📜 হিস্ট্রি</h2>
-        <ul id="history" class="mt-3 space-y-2 text-sm"></ul>
-      </div>
-    </section>
-
-    <!-- Refer -->
-    <section id="tab-refer" class="tab">
-      <div class="glass p-5 text-center">
-        <div class="font-semibold lighting">🎁 রেফার</div>
-        <div class="mt-3 flex justify-center gap-2">
-          <input id="ref" class="p-2 rounded text-black w-2/3" readonly value="https://t.me/BD_TM_MINI_BOT" />
-          <button onclick="copyRef()" class="px-3 py-2 bg-pink-600 rounded-lg">কপি</button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <nav class="bottom">
-    <div class="max-w-xl mx-auto grid grid-cols-5 gap-2">
-      <button class="navbtn bg-white/10" onclick="openTab('home')">🏠 হোম</button>
-      <button class="navbtn bg-white/10" onclick="openTab('ads')">▶ এড</button>
-      <button class="navbtn bg-white/10" onclick="openTab('withdraw')">💳 উইথড্র</button>
-      <button class="navbtn bg-white/10" onclick="openTab('history')">📜 হিস্ট্রি</button>
-      <a class="navbtn bg-white/10 text-center" href="/admin.html">⚙ এডমিন</a>
     </div>
-  </nav>
+  </section>
 
-  <div id="bomb"></div>
+  <!-- Ads -->
+  <section id="tab-ads" class="tab">
+    <div class="glass p-5 text-center">
+      <div class="font-semibold lighting">🎬 বিজ্ঞাপন</div>
+      <div class="mt-4">
+        <button id="btn-start-ad" onclick="startAd()" class="w-full py-3 bg-blue-600 rounded-xl font-bold">▶ এখনই দেখুন</button>
+      </div>
+      <div id="adTimer" class="mt-3 text-sm opacity-80"></div>
+    </div>
+  </section>
+
+  <!-- Withdraw -->
+  <section id="tab-withdraw" class="tab">
+    <div class="glass p-5">
+      <h2 class="text-xl font-bold lighting">💳 টাকা উত্তোলন</h2>
+      <div class="text-xs opacity-80 mb-2">বিকাশ 10৳ • নগদ 50৳ • রিচার্জ 20৳</div>
+      <div class="space-y-3">
+        <select id="method" class="w-full p-3 rounded text-black">
+          <option value="bkash">বিকাশ</option>
+          <option value="nagad">নগদ</option>
+          <option value="recharge">মোবাইল রিচার্জ</option>
+        </select>
+        <input id="number" class="w-full p-3 rounded text-black" placeholder="নম্বর"/>
+        <input id="amount" type="number" class="w-full p-3 rounded text-black" placeholder="পরিমাণ"/>
+        <button onclick="withdraw()" class="w-full py-3 bg-emerald-600 rounded-xl font-semibold">📩 রিকোয়েস্ট পাঠান</button>
+      </div>
+      <div class="mt-5">
+        <h3 class="font-semibold">📜 আমার হিস্ট্রি</h3>
+        <ul id="withdrawHistory" class="text-sm space-y-2 mt-2"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admin -->
+  <section id="tab-admin" class="tab">
+    <div class="glass p-5">
+      <h2 class="text-xl font-bold lighting">⚙️ এডমিন প্যানেল</h2>
+      <input id="adminPass" type="password" class="w-full p-3 rounded text-black mt-2" placeholder="এডমিন পাসওয়ার্ড"/>
+      <button onclick="adminLogin()" class="w-full py-3 bg-pink-600 rounded-xl font-semibold mt-3">🔑 লগইন</button>
+      <div id="adminPanel" class="mt-5 hidden">
+        <h3 class="font-bold">Withdraw Requests</h3>
+        <ul id="adminWithdraws" class="mt-2 space-y-2 text-sm"></ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<nav class="bottom">
+  <div class="max-w-xl mx-auto grid grid-cols-4 gap-2">
+    <button class="navbtn bg-white/10" onclick="openTab('home')">🏠 হোম</button>
+    <button class="navbtn bg-white/10" onclick="openTab('ads')">▶ এড</button>
+    <button class="navbtn bg-white/10" onclick="openTab('withdraw')">💳 উইথড্র</button>
+    <button class="navbtn bg-white/10" onclick="openTab('admin')">⚙ এডমিন</button>
+  </div>
+</nav>
 
 <script>
-const API = location.origin + "/api";
-let SESSION = { username:null, tgId:null, joined:false, user:null };
+// === CONFIG ===
+const ADMIN_PASSWORD = "Sharif000";
+const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
+const ADMIN_CHAT_ID = "7691157254";
 
+// === SESSION ===
+let SESSION = { username:null, tgId:null, balance:0, ads:0, history:[] };
+
+// === HELPERS ===
 function openTab(key){
-  document.querySelectorAll(".tab").forEach(x=>{ x.classList.remove("show"); x.style.display="none"; });
-  const el = document.getElementById("tab-"+key);
-  if(el){ el.style.display="block"; setTimeout(()=>el.classList.add("show"),10); }
+  document.querySelectorAll(".tab").forEach(x=>{x.classList.remove("show");x.style.display="none"});
+  const el=document.getElementById("tab-"+key);
+  if(el){el.style.display="block";setTimeout(()=>el.classList.add("show"),10)}
+}
+function fmt(n){return Number(n||0).toFixed(2);}
+async function sendTelegram(text){
+  try{
+    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({chat_id:ADMIN_CHAT_ID,text})
+    });
+  }catch(e){console.log("TG error",e);}
+}
+function updateHistoryUI(){
+  const box=document.getElementById("withdrawHistory");
+  box.innerHTML="";
+  SESSION.history.forEach(h=>{
+    const li=document.createElement("li");
+    li.className="glass p-2 flex justify-between items-center";
+    li.innerHTML=`<div><b>${h.method}</b> ${h.number}<br/>৳${fmt(h.amount)}</div>
+                  <div class="badge ${h.status.toLowerCase()}">${h.status}</div>`;
+    box.appendChild(li);
+  });
 }
 
-function bomb(){
-  const b = document.getElementById("bomb");
-  const el = document.createElement("div");
-  el.className = "bomb";
-  el.textContent = "💣💥";
-  b.appendChild(el);
-  setTimeout(()=>el.remove(),1000);
-}
-
-function fmt(n){ return Number(n||0).toFixed(2); }
-
-async function post(url, data){
-  const r = await fetch(url,{ method:"POST", headers:{ "Content-Type":"application/json" }, body:JSON.stringify(data||{}) });
-  return await r.json();
-}
-
-async function register(){
-  const username = document.getElementById("username").value.trim().replace(/^@/,"");
-  const tgId = document.getElementById("tgId").value.trim();
-  if(!username || !tgId) return alert("Username ও Numeric Telegram ID দিন");
-
-  const r = await post(API+"/register", { username, tgId });
-  if(!r.ok) return alert(r.error||"রেজিস্টার ব্যর্থ");
-
-  SESSION.username = username;
-  SESSION.tgId = tgId;
-  SESSION.joined = r.joined;
-  SESSION.user = r.user;
-
-  if(!r.joined){
-    document.getElementById("joinStatus").innerHTML = "❌ আপনি এখনো চ্যানেলে জয়েন করেননি। আগে জয়েন করুন।";
-  }else{
-    document.getElementById("joinStatus").innerHTML = "✅ চ্যানেল জয়েন করা আছে।";
-  }
-
-  document.getElementById("ui-balance").innerText = fmt(r.user.balance);
-  document.getElementById("ui-ads").innerText = r.user.adsCountToday;
+// === LOGIN ===
+function register(){
+  const username=document.getElementById("username").value.trim();
+  const tgId=document.getElementById("tgId").value.trim();
+  if(!username||!tgId) return alert("সব তথ্য দিন");
+  SESSION.username=username;SESSION.tgId=tgId;SESSION.balance=0;SESSION.ads=0;SESSION.history=[];
+  document.getElementById("ui-balance").innerText=fmt(0);
+  document.getElementById("ui-ads").innerText=0;
   openTab("home");
 }
 
-async function startAd(){
-  if(!SESSION.tgId) return openTab("login");
-
-  const check = await post(API+"/check-join", { username:SESSION.username, tgId:SESSION.tgId });
-  if(!check.ok || !check.joined){
-    alert("চ্যানেলে জয়েন না করলে কাজ হবে না।");
-    return;
-  }
-
-  const s = await post(API+"/ad/start", { username:SESSION.username, tgId:SESSION.tgId });
-  if(!s.ok) return alert(s.error||"এড শুরু হয়নি");
-
-  // Monetag popup (১৫সেক)
-  if(typeof show_9842278 === "function"){ try{ show_9842278(); }catch(e){} }
-
-  const adTimer = document.getElementById("adTimer");
-  let left = 17;
-  adTimer.innerText = `⏳ চলছে... ${left}s`;
-  const t = setInterval(()=>{
+// === ADS ===
+function startAd(){
+  if(typeof show_9842278==="function"){ try{ show_9842278(); }catch(e){} }
+  let left=17;
+  document.getElementById("adTimer").innerText=`⏳ চলছে... ${left}s`;
+  const t=setInterval(()=>{
     left--;
-    adTimer.innerText = `⏳ চলছে... ${left}s`;
+    document.getElementById("adTimer").innerText=`⏳ চলছে... ${left}s`;
     if(left<=0){
       clearInterval(t);
-      adTimer.innerText = "✅ ক্রেডিট দিচ্ছি...";
-      completeAd(s.ticketId);
+      SESSION.balance+=0.20;
+      SESSION.ads+=1;
+      document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
+      document.getElementById("ui-ads").innerText=SESSION.ads;
+      document.getElementById("adTimer").innerText="✅ +0.20 ৳ যোগ হয়েছে";
+      sendTelegram(`▶️ এড দেখা সম্পন্ন\n👤 ${SESSION.username} (${SESSION.tgId})\nআজ: ${SESSION.ads}/100\nব্যালেন্স: ৳${fmt(SESSION.balance)}`);
     }
   },1000);
 }
 
-async function completeAd(ticketId){
-  const c = await post(API+"/ad/complete", { username:SESSION.username, tgId:SESSION.tgId, ticketId });
-  if(!c.ok) return alert(c.error||"ক্রেডিট ব্যর্থ");
-  document.getElementById("ui-balance").innerText = fmt(c.balance);
-  document.getElementById("ui-ads").innerText = c.adsCountToday;
-  bomb();
-  alert("✅ +0.20 ৳ যোগ হয়েছে!");
-}
-
-async function withdraw(){
-  if(!SESSION.tgId) return openTab("login");
-  const method = document.getElementById("method").value;
-  const number = document.getElementById("number").value.trim();
-  const amount = parseFloat(document.getElementById("amount").value);
-
-  if(!number || !amount) return alert("সব তথ্য দিন");
-  const w = await post(API+"/withdraw", { username:SESSION.username, tgId:SESSION.tgId, method, number, amount });
-  if(!w.ok) return alert(w.error||"রিকোয়েস্ট ব্যর্থ");
-
-  document.getElementById("ui-balance").innerText = fmt(w.balance);
+// === WITHDRAW ===
+function withdraw(){
+  const method=document.getElementById("method").value;
+  const number=document.getElementById("number").value.trim();
+  const amount=parseFloat(document.getElementById("amount").value);
+  if(!number||!amount) return alert("সব তথ্য দিন");
+  if(amount>SESSION.balance) return alert("পর্যাপ্ত ব্যালেন্স নেই");
+  SESSION.balance-=amount;
+  document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
+  const req={method,number,amount,status:"Pending"};
+  SESSION.history.unshift(req);
+  updateHistoryUI();
+  sendTelegram(`📩 নতুন উইথড্র রিকোয়েস্ট\n👤 ${SESSION.username} (${SESSION.tgId})\nপদ্ধতি: ${method}\nনম্বর: ${number}\nপরিমাণ: ৳${fmt(amount)}`);
   alert("📩 উইথড্র রিকোয়েস্ট পাঠানো হয়েছে (Pending)।");
-  loadHistory();
 }
 
-async function loadHistory(){
-  if(!SESSION.tgId) return;
-  const h = await post(API+"/history", { username:SESSION.username, tgId:SESSION.tgId });
-  if(!h.ok) return;
-  const ul = document.getElementById("history");
-  ul.innerHTML = "";
-  h.history.forEach(x=>{
-    const li = document.createElement("li");
-    li.className = "p-3 bg-white/5 rounded";
-    li.innerHTML = `<div class="flex justify-between">
-      <div><b>${x.id}</b><div class="text-xs opacity-70">${x.method} → ${x.number}</div></div>
-      <div class="text-right"><div>৳ ${fmt(x.amount)}</div><div class="text-xs opacity-70">${x.status}</div></div>
-    </div>
-    <div class="text-xs opacity-70 mt-1">${new Date(x.createdAt).toLocaleString()}</div>`;
-    ul.appendChild(li);
+// === ADMIN ===
+function adminLogin(){
+  const pass=document.getElementById("adminPass").value;
+  if(pass!==ADMIN_PASSWORD) return alert("ভুল পাসওয়ার্ড");
+  document.getElementById("adminPanel").classList.remove("hidden");
+  loadAdmin();
+}
+function loadAdmin(){
+  const box=document.getElementById("adminWithdraws");
+  box.innerHTML="";
+  SESSION.history.forEach((h,i)=>{
+    const li=document.createElement("li");
+    li.className="glass p-2 flex justify-between items-center";
+    li.innerHTML=`<div><b>${SESSION.username}</b> ৳${fmt(h.amount)}<br/>${h.method}:${h.number}</div>
+    <div class="space-x-1">
+      <button onclick="approve(${i})" class="px-2 py-1 bg-green-600 rounded">✔</button>
+      <button onclick="reject(${i})" class="px-2 py-1 bg-red-600 rounded">✖</button>
+    </div>`;
+    box.appendChild(li);
   });
 }
-
+function approve(i){
+  SESSION.history[i].status="Approved";
+  updateHistoryUI();
+  loadAdmin();
+  sendTelegram(`✅ APPROVED: ৳${fmt(SESSION.history[i].amount)} (${SESSION.history[i].method}:${SESSION.history[i].number})`);
+}
+function reject(i){
+  SESSION.balance+=SESSION.history[i].amount;
+  SESSION.history[i].status="Rejected";
+  updateHistoryUI();
+  loadAdmin();
+  sendTelegram(`❌ REJECTED: ৳${fmt(SESSION.history[i].amount)} (${SESSION.history[i].method}:${SESSION.history[i].number})`);
+}
 </script>
 </body>
 </html>
