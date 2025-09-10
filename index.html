@@ -7,7 +7,14 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body{font-family:system-ui;background:#0b1120;color:#fff}
+    body{font-family:system-ui;min-height:100vh;color:#fff;animation:bgAnim 10s infinite alternate;}
+    @keyframes bgAnim {
+      0% {background:#0b1120;}
+      25% {background:#1e1b4b;}
+      50% {background:#2b0b3a;}
+      75% {background:#4b1e40;}
+      100% {background:#0b1120;}
+    }
     .glass{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:12px}
     .tab{display:none}.tab.show{display:block}
     .badge{padding:2px 6px;border-radius:6px;font-size:.8rem}
@@ -37,12 +44,20 @@
     <div class="text-sm">বর্তমান ব্যালেন্স</div>
     <div class="text-3xl font-bold"><span id="ui-balance">0.00</span> ৳</div>
     <div class="text-sm mt-2">আজ দেখা এড: <span id="ui-ads">0</span></div>
+    <button onclick="openTab('ads')" class="w-full py-2 bg-blue-600 mt-3 rounded">▶ এড দেখুন</button>
     <button onclick="openTab('withdraw')" class="w-full py-2 bg-green-600 mt-3 rounded">💳 উইথড্র</button>
     <div class="mt-3 text-sm">
       🔗 রেফার লিংক:<br/>
       <span id="refLink" class="text-emerald-400"></span>
       <button onclick="copyRef()" class="bg-gray-700 px-2 rounded text-xs ml-2">কপি</button>
     </div>
+  </section>
+
+  <!-- Ads -->
+  <section id="tab-ads" class="tab glass p-4 text-center">
+    <h2 class="text-xl font-semibold">📺 বিজ্ঞাপন</h2>
+    <button onclick="startAd()" id="adBtn" class="w-full py-2 bg-blue-600 mt-3 rounded font-bold">▶ এখনই দেখুন</button>
+    <div id="adTimer" class="mt-3 text-sm opacity-80"></div>
   </section>
 
   <!-- Withdraw -->
@@ -74,31 +89,26 @@
         <h3 class="font-semibold">উইথড্র রিকোয়েস্ট</h3>
         <ul id="adminRequests" class="mt-2 space-y-2 text-sm"></ul>
       </div>
-      <div>
-        <h3 class="font-semibold">ইউজার লিস্ট</h3>
-        <ul id="userList" class="mt-2 space-y-2 text-sm"></ul>
-      </div>
     </div>
   </section>
 </main>
 
-<nav class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur p-2 grid grid-cols-4 gap-2">
+<nav class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur p-2 grid grid-cols-5 gap-2">
   <button onclick="openTab('home')" class="py-2 rounded bg-white/10">🏠</button>
+  <button onclick="openTab('ads')" class="py-2 rounded bg-white/10">▶</button>
   <button onclick="openTab('withdraw')" class="py-2 rounded bg-white/10">💳</button>
   <button onclick="openTab('history')" class="py-2 rounded bg-white/10">📜</button>
   <button onclick="openTab('admin')" class="py-2 rounded bg-white/10">⚙</button>
 </nav>
 
 <script>
-const ADMIN_PASSWORD="SRY SHARIF"; // নতুন পাসওয়ার্ড
+const ADMIN_PASSWORD="SRY SHARIF";
 const BOT_TOKEN="8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
 const ADMIN_CHAT_ID="7691157254";
 const BOT_USERNAME="@BD_TM_MINI_BOT";
 
 let SESSION=JSON.parse(localStorage.getItem("session"))||{username:null,tgId:null,balance:0,ads:0,history:[],requests:[]};
-let USERS=JSON.parse(localStorage.getItem("users"))||[];
-
-function saveSession(){localStorage.setItem("session",JSON.stringify(SESSION));if(SESSION.username){const i=USERS.findIndex(u=>u.username===SESSION.username);if(i>=0)USERS[i]=SESSION;else USERS.push(SESSION);localStorage.setItem("users",JSON.stringify(USERS));}}
+function saveSession(){localStorage.setItem("session",JSON.stringify(SESSION));}
 function openTab(k){document.querySelectorAll(".tab").forEach(x=>x.classList.remove("show"));document.getElementById("tab-"+k).classList.add("show");}
 function fmt(n){return Number(n||0).toFixed(2);}
 function copyRef(){navigator.clipboard.writeText(document.getElementById("refLink").innerText);alert("✅ কপি হয়েছে");}
@@ -111,8 +121,30 @@ function register(){
   SESSION.username=u;SESSION.tgId=id;SESSION.balance=0;SESSION.ads=0;SESSION.history=[];SESSION.requests=[];
   saveSession();
   document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
+  document.getElementById("ui-ads").innerText=SESSION.ads;
   document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${u}`;
   openTab("home");
+}
+
+function startAd(){
+  if(!SESSION.username)return openTab("login");
+  let left=10;
+  const btn=document.getElementById("adBtn");
+  const timer=document.getElementById("adTimer");
+  btn.disabled=true;
+  timer.innerText=`⏳ ${left}s অপেক্ষা করুন`;
+  const t=setInterval(()=>{
+    left--;timer.innerText=`⏳ ${left}s অপেক্ষা করুন`;
+    if(left<=0){clearInterval(t);btn.disabled=false;completeAd();timer.innerText="✅ এড সম্পূর্ণ";}
+  },1000);
+}
+function completeAd(){
+  SESSION.balance+=0.20;SESSION.ads++;
+  saveSession();
+  document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
+  document.getElementById("ui-ads").innerText=SESSION.ads;
+  sendTelegram(`👁 ${SESSION.username} একটি এড দেখেছে\nমোট এড: ${SESSION.ads}\nব্যালেন্স: ৳${fmt(SESSION.balance)}`);
+  alert("✅ +0.20 ৳ যোগ হয়েছে");
 }
 
 function withdraw(){
@@ -124,13 +156,11 @@ function withdraw(){
   if(m==="bkash"&&amt<10)return alert("Min 10");
   if(m==="nagad"&&amt<50)return alert("Min 50");
   if(m==="recharge"&&amt<20)return alert("Min 20");
-
   SESSION.balance-=amt;
   const r={id:Date.now(),username:SESSION.username,tgId:SESSION.tgId,method:m,number:num,amount:amt,status:"Pending"};
-  SESSION.history.push(r);
-  SESSION.requests.push(r);
-  saveSession();updateUI();
-  sendTelegram(`💳 নতুন উইথড্র\n👤 User: ${SESSION.username}\n🆔 ID: ${SESSION.tgId}\n📺 Ads: ${SESSION.ads}\n💰 Balance: ৳${fmt(SESSION.balance)}\nMethod: ${m}\nNumber: ${num}\nAmount: ৳${amt}`);
+  SESSION.history.push(r);SESSION.requests.push(r);
+  saveSession();updateUI();updateAdmin();
+  sendTelegram(`💳 নতুন উইথড্র\nUser: ${SESSION.username}\nMethod: ${m}\nNumber: ${num}\nAmount: ৳${amt}`);
   alert("📩 পাঠানো হয়েছে");
 }
 
@@ -142,51 +172,17 @@ function updateUI(){
     h.innerHTML+=`<li class="glass p-2 flex justify-between"><div>${r.method} → ${r.number}<br/>৳${fmt(r.amount)}</div><div class="badge ${r.status.toLowerCase()}">${r.status}</div></li>`;
   });
 }
-
 function updateAdmin(){
   const reqBox=document.getElementById("adminRequests");reqBox.innerHTML="";
   SESSION.requests.forEach(r=>{
     reqBox.innerHTML+=`<li class="glass p-2"><b>${r.username}</b> (${r.tgId})<br/>৳${r.amount} → ${r.method} (${r.number})<br/><span class="badge ${r.status.toLowerCase()}">${r.status}</span><br/><button onclick="approve(${r.id})" class="bg-emerald-600 px-2 rounded text-xs">Approve</button> <button onclick="reject(${r.id})" class="bg-red-600 px-2 rounded text-xs">Reject</button></li>`;
   });
-  const uBox=document.getElementById("userList");uBox.innerHTML="";
-  USERS.forEach(u=>{
-    uBox.innerHTML+=`<li class="glass p-2"><b>${u.username}</b> (${u.tgId})<br/>ব্যালেন্স: ৳${fmt(u.balance)} • এড: ${u.ads}</li>`;
-  });
 }
+function approve(id){const r=SESSION.requests.find(x=>x.id===id);if(r){r.status="Success";SESSION.history.find(x=>x.id===id).status="Success";saveSession();updateUI();updateAdmin();sendTelegram(`✅ Approve\nUser: ${r.username}\n৳${r.amount} পাঠানো হলো`);}}
+function reject(id){const r=SESSION.requests.find(x=>x.id===id);if(r){r.status="Failed";SESSION.balance+=r.amount;SESSION.history.find(x=>x.id===id).status="Failed";saveSession();updateUI();updateAdmin();sendTelegram(`❌ Reject\nUser: ${r.username}\n৳${r.amount} ফেরত`);}}
+function adminLogin(){if(document.getElementById("adminPass").value!==ADMIN_PASSWORD)return alert("ভুল পাসওয়ার্ড");document.getElementById("adminPanel").classList.remove("hidden");updateAdmin();}
 
-function approve(id){
-  const r=SESSION.requests.find(x=>x.id===id);
-  if(r){
-    r.status="Success";
-    SESSION.history.find(x=>x.id===id).status="Success";
-    saveSession();updateUI();updateAdmin();
-    sendTelegram(`✅ Approve\n👤 User: ${r.username}\n৳${r.amount} পাঠানো হলো`);
-  }
-}
-function reject(id){
-  const r=SESSION.requests.find(x=>x.id===id);
-  if(r){
-    r.status="Failed";
-    SESSION.balance+=r.amount;
-    SESSION.history.find(x=>x.id===id).status="Failed";
-    saveSession();updateUI();updateAdmin();
-    sendTelegram(`❌ Reject\n👤 User: ${r.username}\n৳${r.amount} ফেরত`);
-  }
-}
-
-function adminLogin(){
-  if(document.getElementById("adminPass").value!==ADMIN_PASSWORD)return alert("ভুল");
-  document.getElementById("adminPanel").classList.remove("hidden");
-  updateAdmin();
-}
-
-window.onload=()=>{
-  if(SESSION.username){
-    document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
-    document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${SESSION.username}`;
-    updateUI();openTab("home");
-  }
-};
+window.onload=()=>{if(SESSION.username){document.getElementById("ui-balance").innerText=fmt(SESSION.balance);document.getElementById("ui-ads").innerText=SESSION.ads;document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${SESSION.username}`;updateUI();openTab("home");}};
 </script>
 </body>
 </html>
