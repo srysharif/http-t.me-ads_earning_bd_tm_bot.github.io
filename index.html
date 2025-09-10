@@ -28,22 +28,13 @@
   <div class="glass p-4 max-w-xl mx-auto">
     <h1 class="text-3xl font-extrabold">💎 BD TM MINI BOT</h1>
     <p class="opacity-80 text-sm">এড দেখে আয় করুন • রেফার করে বোনাস পান</p>
+    <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="text-emerald-400 underline text-sm">📢 আমাদের অফিসিয়াল চ্যানেলে জয়েন করুন</a>
   </div>
 </header>
 
 <main class="px-4 max-w-xl mx-auto space-y-4">
-  <!-- Force Join -->
-  <section id="tab-join" class="tab show">
-    <div class="glass p-5 text-center">
-      <h2 class="text-xl font-bold">📢 আমাদের চ্যানেলে জয়েন করুন</h2>
-      <p class="text-sm opacity-80 mt-1">অ্যাপ ব্যবহার করতে প্রথমে অফিসিয়াল চ্যানেল জয়েন করতে হবে।</p>
-      <a href="https://t.me/+AyH__NZXyP5mYzI1" target="_blank" class="block w-full py-3 mt-4 bg-emerald-600 rounded-lg font-semibold">👉 চ্যানেল জয়েন করুন</a>
-      <button onclick="joined()" class="w-full py-3 bg-blue-600 rounded-lg font-semibold mt-3">✅ জয়েন করেছি</button>
-    </div>
-  </section>
-
   <!-- Login/Register -->
-  <section id="tab-login" class="tab">
+  <section id="tab-login" class="tab show">
     <div class="glass p-5">
       <h2 class="text-xl font-bold">🔐 একাউন্ট চালু করুন</h2>
       <p class="text-sm opacity-80 mt-1">Username (without @) ও Telegram Numeric ID দিন।</p>
@@ -66,7 +57,8 @@
         <button onclick="openTab('withdraw')" class="px-4 py-2 bg-green-600 rounded-xl font-semibold">💳 উইথড্র</button>
         <div class="text-sm mt-3">
           🔗 <b>রেফার লিংক:</b><br/>
-          <span id="refLink" class="break-all text-emerald-400"></span>
+          <span id="refLink" class="break-all text-emerald-400"></span><br/>
+          <button onclick="copyRef()" class="mt-2 px-3 py-1 bg-white/20 rounded">📋 কপি করুন</button>
         </div>
       </div>
     </div>
@@ -135,15 +127,14 @@
 const ADMIN_PASSWORD = "Sharif000";
 const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
 const ADMIN_CHAT_ID = "7691157254";
-const CHANNEL_LINK = "https://t.me/+AyH__NZXyP5mYzI1"; // 🔗 আপনার আগের চ্যানেল
+const BOT_USERNAME = "BD_TM_MINI_BOT";
 
 // === SESSION ===
-let SESSION = JSON.parse(localStorage.getItem("session")) || { joined:false, username:null, tgId:null, balance:0, ads:0, history:[], requests:[], referred:false };
+let SESSION = JSON.parse(localStorage.getItem("session")) || { username:null, tgId:null, balance:0, ads:0, history:[], requests:[], referred:false };
 function saveSession(){ localStorage.setItem("session", JSON.stringify(SESSION)); }
 
 // === HELPERS ===
 function openTab(key){
-  if(!SESSION.joined && key!=="join"){ return openTab("join"); }
   document.querySelectorAll(".tab").forEach(x=>{x.classList.remove("show");x.style.display="none"});
   const el=document.getElementById("tab-"+key);
   if(el){el.style.display="block";el.classList.add("show")}
@@ -179,12 +170,10 @@ function updateAdminUI(){
     box.appendChild(li);
   });
 }
-
-// === JOIN CHECK ===
-function joined(){
-  SESSION.joined=true;
-  saveSession();
-  openTab("login");
+function copyRef(){
+  const text=document.getElementById("refLink").innerText;
+  navigator.clipboard.writeText(text);
+  alert("✅ রেফার লিংক কপি হয়েছে!");
 }
 
 // === LOGIN ===
@@ -198,7 +187,7 @@ function register(){
   checkReferral();
   document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
   document.getElementById("ui-ads").innerText=0;
-  document.getElementById("refLink").innerText=window.location.origin+window.location.pathname+"?ref="+username;
+  document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${username}`;
   openTab("home");
 }
 
@@ -228,6 +217,7 @@ function completeAd(){
   saveSession();
   document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
   document.getElementById("ui-ads").innerText=SESSION.ads;
+  sendTelegram(`▶ ${SESSION.username} (${SESSION.tgId}) একটি এড সম্পূর্ণ করেছে। Balance: ৳${fmt(SESSION.balance)}`);
   alert("✅ +0.20 ৳ যোগ হয়েছে!");
 }
 
@@ -259,11 +249,10 @@ function adminLogin(){
 
 // === INIT ===
 window.onload=()=>{
-  if(!SESSION.joined){return openTab("join");}
   if(SESSION.username){
     document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
     document.getElementById("ui-ads").innerText=SESSION.ads;
-    document.getElementById("refLink").innerText=window.location.origin+window.location.pathname+"?ref="+SESSION.username;
+    document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${SESSION.username}`;
     updateHistoryUI();updateAdminUI();openTab("home");
   }else openTab("login");
 };
