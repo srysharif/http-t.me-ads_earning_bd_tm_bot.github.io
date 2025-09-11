@@ -11,7 +11,6 @@
       background: linear-gradient(135deg,#0f172a,#1e293b,#0f172a);
       color:#fff;min-height:100vh;
       font-weight:bold;font-style:italic;
-      text-transform:uppercase;
     }
     .glass {
       background: rgba(255,255,255,0.08);
@@ -22,14 +21,14 @@
     }
     .tab{display:none}.tab.show{display:block}
     .glow-text {
-      font-weight:bold;font-style:italic;text-transform:uppercase;
+      font-weight:bold;font-style:italic;
       text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff;
     }
     .glow-btn {
       background: linear-gradient(90deg,#ff0080,#7928ca,#2af598);
       background-size:200% 200%;
       animation: glow 3s linear infinite;
-      font-weight:bold;font-style:italic;text-transform:uppercase;
+      font-weight:bold;font-style:italic;
       font-size:1.1rem;border-radius:12px;padding:10px
     }
     @keyframes glow {
@@ -46,66 +45,66 @@
 <body class="pb-32">
 
 <header class="p-4 text-center glass m-3">
-  <h1 class="text-2xl glow-text">💎 𝐒𝐇𝐀𝐑𝐈𝐅 𝐁𝐃 𝐓𝐌 𝐂𝐎𝐌𝐌𝐔𝐍𝐈𝐓𝐘</h1>
-  <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="text-emerald-400 underline text-sm glow-text">📢 𝐉𝐎𝐈𝐍 𝐂𝐇𝐀𝐍𝐍𝐄𝐋</a>
+  <h1 class="text-2xl glow-text">💎 𝗦𝗛𝗔𝗥𝗜𝗙 𝗕𝗗 𝗧𝗠 𝗖𝗢𝗠𝗠𝗨𝗡𝗜𝗧𝗬</h1>
+  <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="text-emerald-400 underline text-sm glow-text">📢 *𝗝𝗢𝗜𝗡 𝗖𝗛𝗔𝗡𝗡𝗘𝗟*</a>
 </header>
 
 <main class="max-w-xl mx-auto px-3 space-y-4">
 
-  <!-- LOGIN -->
+  <!-- Login -->
   <section id="tab-login" class="tab show glass p-4">
-    <h2 class="text-xl glow-text">🔐 𝐋𝐎𝐆𝐈𝐍</h2>
-    <input id="username" class="w-full p-2 mt-2 rounded text-black font-bold italic uppercase" placeholder="✍ ENTER USERNAME"/>
-    <button onclick="register()" class="w-full py-2 glow-btn mt-3">🚀 𝐒𝐓𝐀𝐑𝐓</button>
+    <h2 class="text-xl glow-text">🔐 *𝗟𝗢𝗚𝗜𝗡*</h2>
+    <input id="username" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="✍ ENTER USERNAME"/>
+    <button onclick="register()" class="w-full py-2 glow-btn mt-3">🚀 *𝗦𝗧𝗔𝗥𝗧*</button>
   </section>
 
-  <!-- HOME -->
+  <!-- Home -->
   <section id="tab-home" class="tab glass p-4 text-center">
-    <div class="text-sm glow-text">💰 𝐂𝐔𝐑𝐑𝐄𝐍𝐓 𝐁𝐀𝐋𝐀𝐍𝐂𝐄</div>
+    <div class="text-sm glow-text">💰 *𝗖𝗨𝗥𝗥𝗘𝗡𝗧 𝗕𝗔𝗟𝗔𝗡𝗖𝗘*</div>
     <div class="text-3xl glow-text"><span id="ui-balance">0.00</span> ৳</div>
-    <div class="text-sm mt-2 glow-text">🎬 𝐓𝐎𝐃𝐀𝐘’𝐒 𝐀𝐃𝐒: <span id="ui-ads">0</span>/<span id="ui-limit">200</span></div>
-    <div id="timerBox" class="text-lg font-bold text-emerald-400 mt-2 hidden glow-text">⏳ <span id="timer">17</span> 𝐒𝐄𝐂</div>
-    <button onclick="watchAd()" class="w-full py-2 mt-3 glow-btn">🎬 𝐖𝐀𝐓𝐂𝐇 𝐀𝐃</button>
-    <button onclick="openTab('withdraw')" class="w-full py-2 bg-green-600 mt-3 rounded glow-text">💳 𝐖𝐈𝐓𝐇𝐃𝐑𝐀𝐖</button>
+    <div class="text-sm mt-2 glow-text">🎬 *𝗧𝗢𝗗𝗔𝗬’𝗦 𝗔𝗗𝗦*: <span id="ui-ads">0</span>/<span id="ui-limit">200</span></div>
+    <div id="timerBox" class="text-lg font-bold text-emerald-400 mt-2 hidden glow-text">⏳ <span id="timer">17</span> 𝗦𝗘𝗖</div>
+    <button onclick="watchAd()" class="w-full py-2 mt-3 glow-btn">🎬 *𝗪𝗔𝗧𝗖𝗛 𝗔𝗗*</button>
+    <button onclick="openTab('withdraw')" class="w-full py-2 bg-green-600 mt-3 rounded glow-text">💳 *𝗪𝗜𝗧𝗛𝗗𝗥𝗔𝗪*</button>
     <div class="mt-3 text-sm glow-text">
-      🔗 𝐑𝐄𝐅𝐄𝐑 𝐋𝐈𝐍𝐊:<br/>
+      🔗 *𝗥𝗘𝗙𝗘𝗥 𝗟𝗜𝗡𝗞*:<br/>
       <span id="refLink" class="text-emerald-400"></span>
-      <button onclick="copyRef()" class="bg-gray-700 px-2 rounded text-xs ml-2">📋 𝐂𝐎𝐏𝐘</button>
+      <button onclick="copyRef()" class="bg-gray-700 px-2 rounded text-xs ml-2">📋 *𝗖𝗢𝗣𝗬*</button>
     </div>
   </section>
 
-  <!-- WITHDRAW -->
+  <!-- Withdraw -->
   <section id="tab-withdraw" class="tab glass p-4">
-    <h2 class="text-xl glow-text">💳 𝐖𝐈𝐓𝐇𝐃𝐑𝐀𝐖</h2>
-    <select id="method" class="w-full p-2 mt-2 rounded text-black font-bold italic uppercase">
+    <h2 class="text-xl glow-text">💳 *𝗪𝗜𝗧𝗛𝗗𝗥𝗔𝗪*</h2>
+    <select id="method" class="w-full p-2 mt-2 rounded text-black font-bold italic">
       <option value="bkash">📱 BKASH (MINIMUM 10)</option>
       <option value="nagad">📱 NAGAD (MINIMUM 50)</option>
       <option value="recharge">📱 RECHARGE (MINIMUM 20)</option>
     </select>
-    <input id="number" class="w-full p-2 mt-2 rounded text-black font-bold italic uppercase" placeholder="📞 NUMBER"/>
-    <input id="amount" type="number" class="w-full p-2 mt-2 rounded text-black font-bold italic uppercase" placeholder="💰 AMOUNT"/>
-    <button onclick="withdraw()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">📩 𝐒𝐄𝐍𝐃 𝐑𝐄𝐐𝐔𝐄𝐒𝐓</button>
+    <input id="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="📞 NUMBER"/>
+    <input id="amount" type="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="💰 AMOUNT"/>
+    <button onclick="withdraw()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">📩 *𝗦𝗘𝗡𝗗 𝗥𝗘𝗤𝗨𝗘𝗦𝗧*</button>
   </section>
 
-  <!-- HISTORY -->
+  <!-- History -->
   <section id="tab-history" class="tab glass p-4">
-    <h2 class="text-xl glow-text">📜 𝐇𝐈𝐒𝐓𝐎𝐑𝐘</h2>
+    <h2 class="text-xl glow-text">📜 *𝗛𝗜𝗦𝗧𝗢𝗥𝗬*</h2>
     <ul id="withdrawHistory" class="mt-2 space-y-2 text-sm"></ul>
   </section>
 
-  <!-- ADMIN -->
+  <!-- Admin -->
   <section id="tab-admin" class="tab glass p-4">
-    <h2 class="text-xl glow-text">⚙ 𝐀𝐃𝐌𝐈𝐍 𝐏𝐀𝐍𝐄𝐋</h2>
-    <input id="adminPass" type="password" class="w-full p-2 mt-2 rounded text-black font-bold italic uppercase" placeholder="🔑 ADMIN PASS"/>
-    <button onclick="adminLogin()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">🔓 𝐋𝐎𝐆𝐈𝐍</button>
+    <h2 class="text-xl glow-text">⚙ *𝗔𝗗𝗠𝗜𝗡 𝗣𝗔𝗡𝗘𝗟*</h2>
+    <input id="adminPass" type="password" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="🔑 ADMIN PASS"/>
+    <button onclick="adminLogin()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">🔓 *𝗟𝗢𝗚𝗜𝗡*</button>
     <div id="adminPanel" class="hidden mt-4 space-y-4">
-      <h3 class="font-semibold glow-text">📩 𝐖𝐈𝐓𝐇𝐃𝐑𝐀𝐖 𝐑𝐄𝐐𝐔𝐄𝐒𝐓𝐒</h3>
+      <h3 class="font-semibold glow-text">📩 *𝗪𝗜𝗧𝗛𝗗𝗥𝗔𝗪 𝗥𝗘𝗤𝗨𝗘𝗦𝗧𝗦*</h3>
       <ul id="adminRequests" class="mt-2 space-y-2 text-sm"></ul>
     </div>
   </section>
 </main>
 
-<!-- BOTTOM NAV -->
+<!-- Bottom Nav -->
 <nav class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur p-2 grid grid-cols-4 gap-2">
   <button onclick="openTab('home')" class="py-2 rounded bg-white/10 glow-text">🏠</button>
   <button onclick="openTab('withdraw')" class="py-2 rounded bg-white/10 glow-text">💳</button>
@@ -117,14 +116,14 @@
 const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
 const ADMIN_ID = "7691157254";
 const CHANNEL_ID = "-1002830661384";
-const BOT_USERNAME = "@BD_TM_MINI_BOT";
+const BOT_USERNAME = "BD_TM_MINI_BOT";
 
 let user = {};
 let balance = 0;
 let adsToday = 0;
 const limit = 200;
 
-// LOAD
+// Load saved
 if(localStorage.user){user=JSON.parse(localStorage.user);}
 if(localStorage.balance) balance=parseFloat(localStorage.balance);
 if(localStorage.adsToday){adsToday=parseInt(localStorage.adsToday);}
@@ -137,6 +136,12 @@ function register(){
   localStorage.user=JSON.stringify(user);
   document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${name}`;
   openTab("home");
+}
+
+function copyRef(){
+  let link=document.getElementById("refLink").innerText;
+  navigator.clipboard.writeText(link);
+  alert("📋 REFER LINK COPIED!");
 }
 
 function openTab(id){
@@ -175,21 +180,25 @@ function startTimer(){
       localStorage.balance=balance;
       localStorage.adsToday=adsToday;
       updateUI();
-      sendChannel(`🎬 *NEW AD WATCHED*%0A👤 *USER*: @${user.name}%0A🤖 *BOT*: [${BOT_USERNAME}](https://t.me/${BOT_USERNAME.replace('@','')})%0A🕒 *TIME*: _${new Date().toLocaleTimeString()}_%0A📊 *TOTAL ADS*: *${adsToday}*`);
+      sendAdNotification(user.name, adsToday);
       alert("✨ +0.20 ADDED SUCCESSFULLY!");
     }
     t--;
   },1000);
 }
 
-function sendChannel(msg){
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&text=${msg}&parse_mode=Markdown`);
-}
-function sendAdmin(msg){
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_ID}&text=${msg}&parse_mode=Markdown`);
+function sendAdNotification(username, ads){
+  const msg = 
+`🎬 *𝗡𝗘𝗪 𝗔𝗗 𝗪𝗔𝗧𝗖𝗛𝗘𝗗*  
+👤 *𝗨𝗦𝗘𝗥*: _${username}_  
+🤖 *𝗕𝗢𝗧*: [@${BOT_USERNAME}](https://t.me/${BOT_USERNAME})  
+🕒 *𝗧𝗜𝗠𝗘*: _${new Date().toLocaleTimeString()}_  
+📊 *𝗧𝗢𝗧𝗔𝗟 𝗔𝗗𝗦*: *${ads}*`;
+
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
 }
 
-// WITHDRAW
+// Withdraw
 function withdraw(){
   let amt=parseFloat(document.getElementById("amount").value);
   let num=document.getElementById("number").value.trim();
@@ -203,7 +212,19 @@ function withdraw(){
   let list=JSON.parse(localStorage.requests||"[]");
   list.push(req);localStorage.requests=JSON.stringify(list);
   loadHistory();
-  sendAdmin(`📩 *WITHDRAW REQUEST*%0A👤 *USER*: @${req.user}%0A💳 *METHOD*: ${req.method}%0A📞 *NUMBER*: ${req.number}%0A💰 *AMOUNT*: ${req.amount}৳%0A🕒 *TIME*: _${req.time}_`);
+  sendWithdrawNotification(req);
+}
+
+function sendWithdrawNotification(req){
+  const msg =
+`📩 *𝗪𝗜𝗧𝗛𝗗𝗥𝗔𝗪 𝗥𝗘𝗤𝗨𝗘𝗦𝗧*  
+👤 *𝗨𝗦𝗘𝗥*: _${req.user}_  
+💳 *𝗠𝗘𝗧𝗛𝗢𝗗*: *${req.method}*  
+📞 *𝗡𝗨𝗠𝗕𝗘𝗥*: *${req.number}*  
+💰 *𝗔𝗠𝗢𝗨𝗡𝗧*: *${req.amount}৳*  
+🕒 *𝗧𝗜𝗠𝗘*: _${req.time}_`;
+
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_ID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
 }
 
 function loadHistory(){
@@ -211,12 +232,12 @@ function loadHistory(){
   let ul=document.getElementById("withdrawHistory");
   ul.innerHTML="";
   list.forEach(r=>{
-    ul.innerHTML+=`<li>${r.time} - ${r.amount}৳ (${r.method}) <span class="badge ${r.status}">${r.status}</span></li>`;
+    ul.innerHTML+=`<li>${r.time} - ${r.amount}৳ (${r.method.toUpperCase()}) <span class="badge ${r.status}">${r.status.toUpperCase()}</span></li>`;
   });
 }
 loadHistory();
 
-// ADMIN
+// Admin
 function adminLogin(){
   if(document.getElementById("adminPass").value==="018"){
     document.getElementById("adminPanel").classList.remove("hidden");
@@ -229,7 +250,7 @@ function loadRequests(){
   let ul=document.getElementById("adminRequests");
   ul.innerHTML="";
   list.forEach((r,i)=>{
-    ul.innerHTML+=`<li>👤 ${r.user} | 💰 ${r.amount}৳ (${r.method}) <span class="badge ${r.status}">${r.status}</span>
+    ul.innerHTML+=`<li>👤 ${r.user} | 💰 ${r.amount}৳ (${r.method.toUpperCase()}) <span class="badge ${r.status}">${r.status.toUpperCase()}</span>
       ${r.status==="pending"?`
         <button onclick="approve(${i})" class="bg-green-500 px-2">✅</button>
         <button onclick="reject(${i})" class="bg-red-500 px-2">❌</button>`:""}
@@ -243,7 +264,6 @@ function approve(i){
   if(list[i].status!=="pending") return;
   list[i].status="success";
   localStorage.requests=JSON.stringify(list);
-  sendAdmin("✅ *WITHDRAW APPROVED*: @"+list[i].user);
   loadRequests();loadHistory();
 }
 function reject(i){
@@ -251,7 +271,6 @@ function reject(i){
   if(list[i].status!=="pending") return;
   list[i].status="failed";
   localStorage.requests=JSON.stringify(list);
-  sendAdmin("❌ *WITHDRAW REJECTED*: @"+list[i].user);
   loadRequests();loadHistory();
 }
 function delReq(i){
@@ -265,7 +284,7 @@ function banUser(name){
   alert(name+" 🚫 BANNED!");
 }
 
-// RESET DAILY ADS
+// Reset daily ads
 let today=new Date().toDateString();
 if(localStorage.lastDay!==today){
   adsToday=0;
