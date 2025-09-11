@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>💎 𝐒𝐇𝐀𝐑𝐈𝐅 𝐁𝐃 𝐓𝐌 𝐂𝐎𝐌𝐌𝐔𝐍𝐈𝐓𝐘</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src='//libtl.com/sdk.js' data-zone='9803310' data-sdk='show_9803310'></script>
+  <script src="//libtl.com/sdk.js" data-zone="9803310" data-sdk="show_9803310"></script>
   <style>
     body{background:linear-gradient(135deg,#0f172a,#1e293b,#0f172a);color:#fff;min-height:100vh;font-weight:bold;font-style:italic}
     .glass{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(12px);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
@@ -17,9 +17,17 @@
     .glow-text{font-weight:bold;text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff;font-style:italic}
     .glow-btn{background:linear-gradient(90deg,#ff0080,#7928ca,#2af598);background-size:200% 200%;animation:glow 3s linear infinite;font-weight:bold;font-style:italic;font-size:1.1rem;border-radius:12px;padding:10px}
     @keyframes glow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    /* Popup */
+    #popup{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#10b981;color:#000;
+      padding:10px 20px;border-radius:12px;font-weight:bold;box-shadow:0 0 15px #10b981;
+      display:none;z-index:999;animation:fadeIn 0.5s;}
+    @keyframes fadeIn{from{opacity:0;top:0}to{opacity:1;top:20px}}
   </style>
 </head>
 <body class="pb-32">
+
+<!-- Popup -->
+<div id="popup">✅ +0.20৳ যোগ হয়েছে!</div>
 
 <header class="p-4 text-center glass m-3">
   <h1 class="text-2xl glow-text">💎 𝐒𝐇𝐀𝐑𝐈𝐅 𝐁𝐃 𝐓𝐌 𝐂𝐎𝐌𝐌𝐔𝐍𝐈𝐓𝐘</h1>
@@ -40,21 +48,25 @@
     <div class="text-sm glow-text">𝐕𝐚𝐫𝐭𝐦𝐚𝐧 𝐁𝐚𝐥𝐚𝐧𝐜𝐞</div>
     <div class="text-3xl glow-text"><span id="ui-balance">0.00</span> ৳</div>
     <div class="text-sm mt-2 glow-text">𝐀𝐣 𝐝𝐞𝐤𝐡𝐚 𝐀𝐝: <span id="ui-ads">0</span>/<span id="ui-limit">200</span></div>
-
-    <div id="timerBox1" class="text-lg font-bold text-emerald-400 mt-2 hidden glow-text">⏳ <span id="timer1">15</span> 𝐒𝐞𝐜𝐨𝐧𝐝</div>
-    <div id="timerBox2" class="text-lg font-bold text-pink-400 mt-2 hidden glow-text">⏳ <span id="timer2">17</span> 𝐒𝐞𝐜𝐨𝐧𝐝</div>
-
+    <div id="timerBox" class="text-lg font-bold text-emerald-400 mt-2 hidden glow-text">
+      ⏳ <span id="timer1">15</span>s | <span id="timer2">17</span>s
+    </div>
     <button onclick="watchAd()" class="w-full py-2 mt-3 glow-btn">🎬 𝐀𝐝 𝐃𝐞𝐤𝐡𝐮𝐧</button>
     <button onclick="openTab('withdraw')" class="w-full py-2 bg-green-600 mt-3 rounded glow-text">💳 𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰</button>
+    <div class="mt-3 text-sm glow-text">
+      🔗 𝐑𝐞𝐟𝐚𝐫 𝐋𝐢𝐧𝐤:<br/>
+      <span id="refLink" class="text-emerald-400"></span>
+      <button onclick="copyRef()" class="bg-gray-700 px-2 rounded text-xs ml-2">𝐂𝐨𝐩𝐲</button>
+    </div>
   </section>
 
   <!-- Withdraw -->
   <section id="tab-withdraw" class="tab glass p-4">
     <h2 class="text-xl glow-text">💳 𝐓𝐚𝐤𝐚 𝐔𝐭𝐭𝐨𝐥𝐨𝐧</h2>
     <select id="method" class="w-full p-2 mt-2 rounded text-black font-bold italic">
-      <option value="bkash">𝐁𝐢𝐤𝐚𝐬𝐡 (Minimum 10)</option>
-      <option value="nagad">𝐍𝐚𝐠𝐚𝐝 (Minimum 50)</option>
-      <option value="recharge">𝐑𝐞𝐜𝐡𝐚𝐫𝐠𝐞 (Minimum 20)</option>
+      <option value="bkash">𝐁𝐢𝐤𝐚𝐬𝐡 (Min 10)</option>
+      <option value="nagad">𝐍𝐚𝐠𝐚𝐝 (Min 50)</option>
+      <option value="recharge">𝐑𝐞𝐜𝐡𝐚𝐫𝐠𝐞 (Min 20)</option>
     </select>
     <input id="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐍𝐮𝐦𝐛𝐞𝐫"/>
     <input id="amount" type="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐏𝐨𝐫𝐢𝐦𝐚𝐧"/>
@@ -73,19 +85,12 @@
     <input id="adminPass" type="password" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐀𝐝𝐦𝐢𝐧 𝐏𝐚𝐬𝐬"/>
     <button onclick="adminLogin()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">𝐋𝐨𝐠𝐢𝐧</button>
     <div id="adminPanel" class="hidden mt-4 space-y-4">
-      <div>
-        <h3 class="font-semibold glow-text">𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰 𝐑𝐞𝐪𝐮𝐞𝐬𝐭</h3>
-        <ul id="adminRequests" class="mt-2 space-y-2 text-sm"></ul>
-      </div>
-      <div>
-        <h3 class="font-semibold glow-text">𝐔𝐬𝐞𝐫 𝐋𝐢𝐬𝐭</h3>
-        <ul id="userList" class="mt-2 space-y-2 text-sm"></ul>
-      </div>
+      <h3 class="font-semibold glow-text">𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰 𝐑𝐞𝐪𝐮𝐞𝐬𝐭</h3>
+      <ul id="adminRequests" class="mt-2 space-y-2 text-sm"></ul>
     </div>
   </section>
 </main>
 
-<!-- Bottom Nav -->
 <nav class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur p-2 grid grid-cols-4 gap-2">
   <button onclick="openTab('home')" class="py-2 rounded bg-white/10 glow-text">🏠</button>
   <button onclick="openTab('withdraw')" class="py-2 rounded bg-white/10 glow-text">💳</button>
@@ -97,131 +102,142 @@
 const BOT_TOKEN="8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
 const ADMIN_ID="7691157254";
 const CHANNEL_ID="-1002830661384";
-const BOT_USERNAME="@BD_TM_MINI_BOT";
+const ADMIN_PASSWORD="018";
 
-let user=null;
-let balance=0;
-let adsToday=0;
-const limit=200;
+let user=null,balance=0,adsToday=0,limit=200;
+if(localStorage.user)user=JSON.parse(localStorage.user);
+if(localStorage.balance)balance=parseFloat(localStorage.balance);
+if(localStorage.adsToday)adsToday=parseInt(localStorage.adsToday);
 
-// Load saved
-if(localStorage.user) user=localStorage.user;
-if(localStorage.balance) balance=parseFloat(localStorage.balance);
-if(localStorage.adsToday) adsToday=parseInt(localStorage.adsToday);
-updateUI();
-
-// Register
 function register(){
   const name=document.getElementById("username").value.trim();
-  if(!name){alert("⚠ ইউজারনেম দিতে হবে");return;}
-  user=name;
-  localStorage.user=user;
-  localStorage.balance=balance;
-  openTab("home");
-  updateUI();
+  if(!name)return alert("⚠ ইউজারনেম দিন");
+  user={name};localStorage.user=JSON.stringify(user);
+  document.getElementById("refLink").innerText="https://t.me/BD_TM_MINI_BOT?start="+name;
+  openTab("home");updateUI();
 }
 
-// Switch Tabs
 function openTab(id){
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("show"));
   document.getElementById("tab-"+id).classList.add("show");
 }
 
-// Update UI
 function updateUI(){
   document.getElementById("ui-balance").innerText=balance.toFixed(2);
   document.getElementById("ui-ads").innerText=adsToday;
   document.getElementById("ui-limit").innerText=limit;
 }
 
-// Watch Ad
+function showPopup(msg){
+  const p=document.getElementById("popup");
+  p.innerText=msg;p.style.display="block";
+  setTimeout(()=>{p.style.display="none";},3000);
+}
+
 function watchAd(){
-  if(!user){alert("⚠ প্রথমে ইউজারনেম দিন");return;}
-  if(adsToday>=limit){alert("⚠ আজকের লিমিট শেষ");return;}
+  if(!user)return alert("⚠ প্রথমে লগইন করুন");
+  if(adsToday>=limit)return alert("⚠ আজকের লিমিট শেষ");
   if(typeof show_9803310==="function"){show_9803310();}
   startTimers();
 }
 
-// Two Timers
 function startTimers(){
   let t1=15,t2=17;
-  document.getElementById("timerBox1").classList.remove("hidden");
-  document.getElementById("timerBox2").classList.remove("hidden");
-  const el1=document.getElementById("timer1");
-  const el2=document.getElementById("timer2");
-
+  document.getElementById("timerBox").classList.remove("hidden");
   const iv=setInterval(()=>{
-    el1.innerText=t1;
-    el2.innerText=t2;
-
-    if(t1<=0 && t2<=0){
+    document.getElementById("timer1").innerText=t1;
+    document.getElementById("timer2").innerText=t2;
+    if(t1<=0&&t2<=0){
       clearInterval(iv);
-      adsToday++;
-      balance+=0.20;
-      localStorage.balance=balance;
-      localStorage.adsToday=adsToday;
+      document.getElementById("timerBox").classList.add("hidden");
+      adsToday++;balance+=0.20;
+      localStorage.balance=balance;localStorage.adsToday=adsToday;
       updateUI();
-
-      // Send notification
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&text=${encodeURIComponent("🎬 "+user+" ("+BOT_USERNAME+") এড সম্পন্ন করেছে\n⏳ সময়: "+new Date().toLocaleTimeString()+"\n💰 ব্যালেন্স: ৳"+balance.toFixed(2))}`);
-
-      document.getElementById("timerBox1").classList.add("hidden");
-      document.getElementById("timerBox2").classList.add("hidden");
+      let msg=`✅ ${user.name} এড দেখেছে\n💰 +0.20৳ | ${new Date().toLocaleTimeString()}`;
+      sendTelegram(msg,CHANNEL_ID);
+      showPopup(msg);
     }
-    t1--;t2--;
+    if(t1>0)t1--;if(t2>0)t2--;
   },1000);
 }
 
-// Withdraw
+function copyRef(){
+  navigator.clipboard.writeText(document.getElementById("refLink").innerText);
+  alert("✅ কপি হয়েছে");
+}
+
 function withdraw(){
   let amt=parseFloat(document.getElementById("amount").value);
   let num=document.getElementById("number").value.trim();
   let m=document.getElementById("method").value;
-  if(!amt||!num){alert("⚠ পূর্ণ করুন");return;}
-  if(amt>balance){alert("⚠ পর্যাপ্ত টাকা নেই");return;}
-  balance-=amt;
-  updateUI();
-  localStorage.balance=balance;
-  let req={user:user,method:m,number:num,amount:amt,time:new Date().toLocaleString(),status:"pending"};
-  let list=JSON.parse(localStorage.requests||"[]");
-  list.push(req);localStorage.requests=JSON.stringify(list);
-  document.getElementById("withdrawHistory").innerHTML+=`<li>${req.time} - ${amt}৳ (${m}) <span class="badge pending">Pending</span></li>`;
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_ID}&text=🆕 Withdraw: ${req.user} ${amt}৳`);
+  if(!amt||!num)return alert("⚠ পূর্ণ করুন");
+  if(amt>balance)return alert("⚠ পর্যাপ্ত টাকা নেই");
+  balance-=amt;updateUI();localStorage.balance=balance;
+  let req={id:Date.now(),user:user.name,method:m,number:num,amount:amt,time:new Date().toLocaleString(),status:"Pending"};
+  let list=JSON.parse(localStorage.requests||"[]");list.push(req);
+  localStorage.requests=JSON.stringify(list);renderHistory();
+  sendTelegram(`🆕 Withdraw\n👤 ${user.name}\n৳${amt} → ${m} (${num})`,ADMIN_ID);
 }
 
-// Admin Login
+function renderHistory(){
+  let list=JSON.parse(localStorage.requests||"[]");
+  let ul=document.getElementById("withdrawHistory");ul.innerHTML="";
+  list.forEach(r=>{
+    ul.innerHTML+=`<li class="glass p-2">${r.time} - ${r.amount}৳ (${r.method})
+    <span class="badge ${r.status.toLowerCase()}">${r.status}</span></li>`;
+  });
+}
+
 function adminLogin(){
-  if(document.getElementById("adminPass").value==="1234"){
-    document.getElementById("adminPanel").classList.remove("hidden");
-    let list=JSON.parse(localStorage.requests||"[]");
-    let ul=document.getElementById("adminRequests");
-    ul.innerHTML="";
-    list.forEach((r,i)=>{
-      ul.innerHTML+=`<li>${r.user} ${r.amount}৳ (${r.method}) 
-      <button onclick="approve(${i})" class="bg-green-500 px-2">OK</button>
-      <button onclick="reject(${i})" class="bg-red-500 px-2">X</button></li>`;
-    });
-  }
+  if(document.getElementById("adminPass").value!==ADMIN_PASSWORD)return alert("ভুল পাসওয়ার্ড");
+  document.getElementById("adminPanel").classList.remove("hidden");
+  renderAdmin();
+}
+function renderAdmin(){
+  let list=JSON.parse(localStorage.requests||"[]");
+  let ul=document.getElementById("adminRequests");ul.innerHTML="";
+  list.forEach((r,i)=>{
+    ul.innerHTML+=`<li class="glass p-2">${r.user} → ${r.amount}৳ (${r.method})
+    <span class="badge ${r.status.toLowerCase()}">${r.status}</span><br/>
+    ${r.status==="Pending"?`
+      <button onclick="approve(${i})" class="bg-green-600 px-2 rounded">Approve</button>
+      <button onclick="reject(${i})" class="bg-red-600 px-2 rounded">Reject</button>`:""}
+    <button onclick="delReq(${i})" class="bg-gray-600 px-2 rounded">Delete</button>
+    </li>`;
+  });
 }
 function approve(i){
   let list=JSON.parse(localStorage.requests||"[]");
-  list[i].status="success";
-  localStorage.requests=JSON.stringify(list);
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&text=✅ Withdraw Approved: ${list[i].user}`);
+  if(list[i].status!=="Pending")return;
+  list[i].status="Success";localStorage.requests=JSON.stringify(list);
+  renderHistory();renderAdmin();
+  sendTelegram(`✅ Approve: ${list[i].user} ৳${list[i].amount}`,ADMIN_ID);
 }
 function reject(i){
   let list=JSON.parse(localStorage.requests||"[]");
-  list[i].status="failed";
+  if(list[i].status!=="Pending")return;
+  list[i].status="Failed";balance+=list[i].amount;
+  localStorage.balance=balance;updateUI();
   localStorage.requests=JSON.stringify(list);
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&text=❌ Withdraw Rejected: ${list[i].user}`);
+  renderHistory();renderAdmin();
+  sendTelegram(`❌ Reject: ${list[i].user} ৳${list[i].amount}`,ADMIN_ID);
+}
+function delReq(i){
+  let list=JSON.parse(localStorage.requests||"[]");
+  list.splice(i,1);localStorage.requests=JSON.stringify(list);
+  renderHistory();renderAdmin();
 }
 
-// Reset daily ads
+async function sendTelegram(text,cid){
+  try{await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:cid,text})});}catch(e){}
+}
+
+renderHistory();updateUI();
+
+// Daily Reset
 let today=new Date().toDateString();
 if(localStorage.lastDay!==today){
-  adsToday=0;
-  localStorage.adsToday=0;
-  localStorage.lastDay=today;
+  adsToday=0;localStorage.adsToday=0;localStorage.lastDay=today;
   updateUI();
 }
 </script>
