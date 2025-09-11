@@ -11,13 +11,33 @@
       background: linear-gradient(135deg,#0f172a,#1e293b,#0f172a);
       color:#fff;min-height:100vh;
       font-weight:bold;font-style:italic;
+      text-transform:uppercase;
     }
-    .glass {background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(12px);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.5);}
+    .glass {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
     .tab{display:none}.tab.show{display:block}
-    .glow-text {font-weight:bold;font-style:italic;text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff;}
-    .glow-btn {background:linear-gradient(90deg,#ff0080,#7928ca,#2af598);background-size:200% 200%;animation:glow 3s linear infinite;font-weight:bold;font-style:italic;font-size:1.1rem;border-radius:12px;padding:10px}
-    @keyframes glow {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    .badge{padding:2px 8px;border-radius:6px;font-size:.8rem;font-weight:bold;font-style:italic}
+    .glow-text {
+      font-weight:bold;font-style:italic;text-transform:uppercase;
+      text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff;
+    }
+    .glow-btn {
+      background: linear-gradient(90deg,#ff0080,#7928ca,#2af598);
+      background-size:200% 200%;
+      animation: glow 3s linear infinite;
+      font-weight:bold;font-style:italic;text-transform:uppercase;
+      font-size:1.1rem;border-radius:12px;padding:10px
+    }
+    @keyframes glow {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    .badge{padding:2px 8px;border-radius:6px;font-size:.8rem;font-weight:bold}
     .badge.pending{background:#fbbf24;color:#000}
     .badge.success{background:#4ade80;color:#000}
     .badge.failed{background:#f87171;color:#000}
@@ -27,65 +47,65 @@
 
 <header class="p-4 text-center glass m-3">
   <h1 class="text-2xl glow-text">💎 𝐒𝐇𝐀𝐑𝐈𝐅 𝐁𝐃 𝐓𝐌 𝐂𝐎𝐌𝐌𝐔𝐍𝐈𝐓𝐘</h1>
-  <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="text-emerald-400 underline text-sm glow-text">📢 𝐉𝐨𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥</a>
+  <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="text-emerald-400 underline text-sm glow-text">📢 𝐉𝐎𝐈𝐍 𝐂𝐇𝐀𝐍𝐍𝐄𝐋</a>
 </header>
 
 <main class="max-w-xl mx-auto px-3 space-y-4">
 
-  <!-- Login -->
+  <!-- LOGIN -->
   <section id="tab-login" class="tab show glass p-4">
-    <h2 class="text-xl glow-text">🔐 𝐋𝐨𝐠𝐢𝐧</h2>
-    <input id="username" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="✍ 𝐄𝐧𝐭𝐞𝐫 𝐔𝐬𝐞𝐫𝐧𝐚𝐦𝐞"/>
-    <button onclick="register()" class="w-full py-2 glow-btn mt-3">🚀 𝐒𝐭𝐚𝐫𝐭</button>
+    <h2 class="text-xl glow-text">🔐 𝐋𝐎𝐆𝐈𝐍</h2>
+    <input id="username" class="w-full p-2 mt-2 rounded text-black font-bold italic uppercase" placeholder="✍ ENTER USERNAME"/>
+    <button onclick="register()" class="w-full py-2 glow-btn mt-3">🚀 𝐒𝐓𝐀𝐑𝐓</button>
   </section>
 
-  <!-- Home -->
+  <!-- HOME -->
   <section id="tab-home" class="tab glass p-4 text-center">
-    <div class="text-sm glow-text">💰 𝐂𝐮𝐫𝐫𝐞𝐧𝐭 𝐁𝐚𝐥𝐚𝐧𝐜𝐞</div>
+    <div class="text-sm glow-text">💰 𝐂𝐔𝐑𝐑𝐄𝐍𝐓 𝐁𝐀𝐋𝐀𝐍𝐂𝐄</div>
     <div class="text-3xl glow-text"><span id="ui-balance">0.00</span> ৳</div>
-    <div class="text-sm mt-2 glow-text">🎬 𝐓𝐨𝐝𝐚𝐲’𝐬 𝐀𝐝𝐬: <span id="ui-ads">0</span>/<span id="ui-limit">200</span></div>
-    <div id="timerBox" class="text-lg font-bold text-emerald-400 mt-2 hidden glow-text">⏳ <span id="timer">17</span> 𝐒𝐞𝐜</div>
-    <button onclick="watchAd()" class="w-full py-2 mt-3 glow-btn">🎬 𝐖𝐚𝐭𝐜𝐡 𝐀𝐝</button>
-    <button onclick="openTab('withdraw')" class="w-full py-2 bg-green-600 mt-3 rounded glow-text">💳 𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰</button>
+    <div class="text-sm mt-2 glow-text">🎬 𝐓𝐎𝐃𝐀𝐘’𝐒 𝐀𝐃𝐒: <span id="ui-ads">0</span>/<span id="ui-limit">200</span></div>
+    <div id="timerBox" class="text-lg font-bold text-emerald-400 mt-2 hidden glow-text">⏳ <span id="timer">17</span> 𝐒𝐄𝐂</div>
+    <button onclick="watchAd()" class="w-full py-2 mt-3 glow-btn">🎬 𝐖𝐀𝐓𝐂𝐇 𝐀𝐃</button>
+    <button onclick="openTab('withdraw')" class="w-full py-2 bg-green-600 mt-3 rounded glow-text">💳 𝐖𝐈𝐓𝐇𝐃𝐑𝐀𝐖</button>
     <div class="mt-3 text-sm glow-text">
-      🔗 𝐑𝐞𝐟𝐞𝐫 𝐋𝐢𝐧𝐤:<br/>
+      🔗 𝐑𝐄𝐅𝐄𝐑 𝐋𝐈𝐍𝐊:<br/>
       <span id="refLink" class="text-emerald-400"></span>
-      <button onclick="copyRef()" class="bg-gray-700 px-2 rounded text-xs ml-2">📋 𝐂𝐨𝐩𝐲</button>
+      <button onclick="copyRef()" class="bg-gray-700 px-2 rounded text-xs ml-2">📋 𝐂𝐎𝐏𝐘</button>
     </div>
   </section>
 
-  <!-- Withdraw -->
+  <!-- WITHDRAW -->
   <section id="tab-withdraw" class="tab glass p-4">
-    <h2 class="text-xl glow-text">💳 𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰</h2>
-    <select id="method" class="w-full p-2 mt-2 rounded text-black font-bold italic">
-      <option value="bkash">📱 Bkash (𝐌𝐢𝐧𝐢𝐦𝐮𝐦 10)</option>
-      <option value="nagad">📱 Nagad (𝐌𝐢𝐧𝐢𝐦𝐮𝐦 50)</option>
-      <option value="recharge">📱 Recharge (𝐌𝐢𝐧𝐢𝐦𝐮𝐦 20)</option>
+    <h2 class="text-xl glow-text">💳 𝐖𝐈𝐓𝐇𝐃𝐑𝐀𝐖</h2>
+    <select id="method" class="w-full p-2 mt-2 rounded text-black font-bold italic uppercase">
+      <option value="bkash">📱 BKASH (MINIMUM 10)</option>
+      <option value="nagad">📱 NAGAD (MINIMUM 50)</option>
+      <option value="recharge">📱 RECHARGE (MINIMUM 20)</option>
     </select>
-    <input id="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="📞 𝐍𝐮𝐦𝐛𝐞𝐫"/>
-    <input id="amount" type="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="💰 𝐀𝐦𝐨𝐮𝐧𝐭"/>
-    <button onclick="withdraw()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">📩 𝐒𝐞𝐧𝐝 𝐑𝐞𝐪𝐮𝐞𝐬𝐭</button>
+    <input id="number" class="w-full p-2 mt-2 rounded text-black font-bold italic uppercase" placeholder="📞 NUMBER"/>
+    <input id="amount" type="number" class="w-full p-2 mt-2 rounded text-black font-bold italic uppercase" placeholder="💰 AMOUNT"/>
+    <button onclick="withdraw()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">📩 𝐒𝐄𝐍𝐃 𝐑𝐄𝐐𝐔𝐄𝐒𝐓</button>
   </section>
 
-  <!-- History -->
+  <!-- HISTORY -->
   <section id="tab-history" class="tab glass p-4">
-    <h2 class="text-xl glow-text">📜 𝐇𝐢𝐬𝐭𝐨𝐫𝐲</h2>
+    <h2 class="text-xl glow-text">📜 𝐇𝐈𝐒𝐓𝐎𝐑𝐘</h2>
     <ul id="withdrawHistory" class="mt-2 space-y-2 text-sm"></ul>
   </section>
 
-  <!-- Admin -->
+  <!-- ADMIN -->
   <section id="tab-admin" class="tab glass p-4">
-    <h2 class="text-xl glow-text">⚙ 𝐀𝐝𝐦𝐢𝐧 𝐏𝐚𝐧𝐞𝐥</h2>
-    <input id="adminPass" type="password" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="🔑 𝐀𝐝𝐦𝐢𝐧 𝐏𝐚𝐬𝐬"/>
-    <button onclick="adminLogin()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">🔓 𝐋𝐨𝐠𝐢𝐧</button>
+    <h2 class="text-xl glow-text">⚙ 𝐀𝐃𝐌𝐈𝐍 𝐏𝐀𝐍𝐄𝐋</h2>
+    <input id="adminPass" type="password" class="w-full p-2 mt-2 rounded text-black font-bold italic uppercase" placeholder="🔑 ADMIN PASS"/>
+    <button onclick="adminLogin()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">🔓 𝐋𝐎𝐆𝐈𝐍</button>
     <div id="adminPanel" class="hidden mt-4 space-y-4">
-      <h3 class="font-semibold glow-text">📩 𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰 𝐑𝐞𝐪𝐮𝐞𝐬𝐭𝐬</h3>
+      <h3 class="font-semibold glow-text">📩 𝐖𝐈𝐓𝐇𝐃𝐑𝐀𝐖 𝐑𝐄𝐐𝐔𝐄𝐒𝐓𝐒</h3>
       <ul id="adminRequests" class="mt-2 space-y-2 text-sm"></ul>
     </div>
   </section>
 </main>
 
-<!-- Bottom Nav -->
+<!-- BOTTOM NAV -->
 <nav class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur p-2 grid grid-cols-4 gap-2">
   <button onclick="openTab('home')" class="py-2 rounded bg-white/10 glow-text">🏠</button>
   <button onclick="openTab('withdraw')" class="py-2 rounded bg-white/10 glow-text">💳</button>
@@ -97,13 +117,14 @@
 const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
 const ADMIN_ID = "7691157254";
 const CHANNEL_ID = "-1002830661384";
-const BOT_USERNAME = "BD_TM_MINI_BOT";
+const BOT_USERNAME = "@BD_TM_MINI_BOT";
 
 let user = {};
 let balance = 0;
 let adsToday = 0;
 const limit = 200;
 
+// LOAD
 if(localStorage.user){user=JSON.parse(localStorage.user);}
 if(localStorage.balance) balance=parseFloat(localStorage.balance);
 if(localStorage.adsToday){adsToday=parseInt(localStorage.adsToday);}
@@ -111,16 +132,11 @@ updateUI();
 
 function register(){
   const name=document.getElementById("username").value.trim();
-  if(!name){alert("⚠ 𝐔𝐬𝐞𝐫𝐧𝐚𝐦𝐞 𝐑𝐞𝐪𝐮𝐢𝐫𝐞𝐝!");return;}
+  if(!name){alert("⚠ USERNAME REQUIRED!");return;}
   user={name,joined:true};
   localStorage.user=JSON.stringify(user);
   document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${name}`;
   openTab("home");
-}
-
-function copyRef(){
-  navigator.clipboard.writeText(document.getElementById("refLink").innerText);
-  alert("📋 𝐑𝐞𝐟𝐞𝐫 𝐋𝐢𝐧𝐤 𝐂𝐨𝐩𝐢𝐞𝐝!");
 }
 
 function openTab(id){
@@ -135,13 +151,13 @@ function updateUI(){
 }
 
 function watchAd(){
-  if(!user.name){alert("⚠ 𝐔𝐬𝐞𝐫𝐧𝐚𝐦𝐞 𝐑𝐞𝐪𝐮𝐢𝐫𝐞𝐝!");return;}
-  if(adsToday>=limit){alert("⚠ 𝐃𝐚𝐢𝐥𝐲 𝐋𝐢𝐦𝐢𝐭 𝐑𝐞𝐚𝐜𝐡𝐞𝐝!");return;}
+  if(!user.name){alert("⚠ USERNAME REQUIRED!");return;}
+  if(adsToday>=limit){alert("⚠ DAILY LIMIT REACHED!");return;}
   if(typeof show_9803310==="function"){
     show_9803310();
     startTimer();
   } else {
-    alert("⚠ 𝐀𝐝 𝐍𝐨𝐭 𝐋𝐨𝐚𝐝𝐞𝐝!");
+    alert("⚠ AD NOT LOADED!");
   }
 }
 
@@ -159,24 +175,27 @@ function startTimer(){
       localStorage.balance=balance;
       localStorage.adsToday=adsToday;
       updateUI();
-      sendNotification(`🎬 *New Ad Watched*%0A👤 *User*: _${user.name}_%0A🤖 *Bot*: @${BOT_USERNAME}%0A🕒 *Time*: _${new Date().toLocaleTimeString()}_%0A📊 *Total Ads*: *${adsToday}*`);
-      alert("✨ +0.20 Added Successfully!");
+      sendChannel(`🎬 *NEW AD WATCHED*%0A👤 *USER*: @${user.name}%0A🤖 *BOT*: [${BOT_USERNAME}](https://t.me/${BOT_USERNAME.replace('@','')})%0A🕒 *TIME*: _${new Date().toLocaleTimeString()}_%0A📊 *TOTAL ADS*: *${adsToday}*`);
+      alert("✨ +0.20 ADDED SUCCESSFULLY!");
     }
     t--;
   },1000);
 }
 
-function sendNotification(msg){
+function sendChannel(msg){
   fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&text=${msg}&parse_mode=Markdown`);
+}
+function sendAdmin(msg){
   fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_ID}&text=${msg}&parse_mode=Markdown`);
 }
 
+// WITHDRAW
 function withdraw(){
   let amt=parseFloat(document.getElementById("amount").value);
   let num=document.getElementById("number").value.trim();
   let m=document.getElementById("method").value;
-  if(!amt||!num){alert("⚠ 𝐅𝐢𝐥𝐥 𝐀𝐥𝐥 𝐅𝐢𝐞𝐥𝐝𝐬");return;}
-  if(amt>balance){alert("⚠ 𝐍𝐨𝐭 𝐄𝐧𝐨𝐮𝐠𝐡 𝐁𝐚𝐥𝐚𝐧𝐜𝐞");return;}
+  if(!amt||!num){alert("⚠ FILL ALL FIELDS");return;}
+  if(amt>balance){alert("⚠ NOT ENOUGH BALANCE");return;}
   balance-=amt;
   updateUI();
   localStorage.balance=balance;
@@ -184,7 +203,7 @@ function withdraw(){
   let list=JSON.parse(localStorage.requests||"[]");
   list.push(req);localStorage.requests=JSON.stringify(list);
   loadHistory();
-  sendNotification(`📩 *Withdraw Request*%0A👤 *User*: _${req.user}_%0A🤖 *Bot*: @${BOT_USERNAME}%0A💳 *Method*: ${req.method}%0A📞 *Number*: ${req.number}%0A💰 *Amount*: ${req.amount}৳%0A🕒 *Time*: _${req.time}_`);
+  sendAdmin(`📩 *WITHDRAW REQUEST*%0A👤 *USER*: @${req.user}%0A💳 *METHOD*: ${req.method}%0A📞 *NUMBER*: ${req.number}%0A💰 *AMOUNT*: ${req.amount}৳%0A🕒 *TIME*: _${req.time}_`);
 }
 
 function loadHistory(){
@@ -197,6 +216,7 @@ function loadHistory(){
 }
 loadHistory();
 
+// ADMIN
 function adminLogin(){
   if(document.getElementById("adminPass").value==="018"){
     document.getElementById("adminPanel").classList.remove("hidden");
@@ -223,7 +243,7 @@ function approve(i){
   if(list[i].status!=="pending") return;
   list[i].status="success";
   localStorage.requests=JSON.stringify(list);
-  sendNotification("✅ *Withdraw Approved*%0A👤 *User*: _"+list[i].user+"_%0A🤖 *Bot*: @"+BOT_USERNAME);
+  sendAdmin("✅ *WITHDRAW APPROVED*: @"+list[i].user);
   loadRequests();loadHistory();
 }
 function reject(i){
@@ -231,7 +251,7 @@ function reject(i){
   if(list[i].status!=="pending") return;
   list[i].status="failed";
   localStorage.requests=JSON.stringify(list);
-  sendNotification("❌ *Withdraw Rejected*%0A👤 *User*: _"+list[i].user+"_%0A🤖 *Bot*: @"+BOT_USERNAME);
+  sendAdmin("❌ *WITHDRAW REJECTED*: @"+list[i].user);
   loadRequests();loadHistory();
 }
 function delReq(i){
@@ -242,9 +262,10 @@ function delReq(i){
 }
 function banUser(name){
   localStorage.banned=JSON.stringify([...(JSON.parse(localStorage.banned||"[]")),name]);
-  alert(name+" 🚫 Banned!");
+  alert(name+" 🚫 BANNED!");
 }
 
+// RESET DAILY ADS
 let today=new Date().toDateString();
 if(localStorage.lastDay!==today){
   adsToday=0;
