@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="bn">
+<!DOCTYPE html>
+<html lang="bn">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -6,30 +7,50 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src='//libtl.com/sdk.js' data-zone='9803310' data-sdk='show_9803310'></script>
   <style>
-    body{background:linear-gradient(135deg,#0f172a,#1e293b,#0f172a);color:#fff;min-height:100vh;font-weight:bold;font-style:italic}
-    .glass{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(12px);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
+    body {
+      background: linear-gradient(135deg,#0f172a,#1e293b,#0f172a);
+      color: #fff;
+      min-height: 100vh;
+      font-weight: 900;   /* সব বোল্ড */
+      font-style: italic; /* সব ইটালিক */
+    }
+    input, select, button {
+      font-weight: 900;
+      font-style: italic;
+    }
+    .glass {background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(12px);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
     .tab{display:none}.tab.show{display:block}
-    .badge{padding:2px 8px;border-radius:6px;font-size:.8rem;font-weight:bold}
+    .badge{padding:2px 8px;border-radius:6px;font-size:.8rem}
     .badge.pending{background:#fbbf24;color:#000}
     .badge.success{background:#4ade80;color:#000}
     .badge.failed{background:#f87171;color:#000}
-    .glow-text{font-weight:bold;text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff;font-style:italic}
-    .glow-btn{background:linear-gradient(90deg,#ff0080,#7928ca,#2af598);background-size:200% 200%;animation:glow 3s linear infinite;font-weight:bold;font-style:italic;font-size:1.1rem;border-radius:12px;padding:10px}
+    .glow-text{text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff;}
+    .glow-btn{background:linear-gradient(90deg,#ff0080,#7928ca,#2af598);background-size:200% 200%;animation:glow 3s linear infinite;font-size:1.1rem;border-radius:12px;padding:10px}
     @keyframes glow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
   </style>
 </head>
-<body class="pb-32"><header class="p-4 text-center glass m-3">
+<body class="pb-32">
+
+<header class="p-4 text-center glass m-3">
   <h1 class="text-2xl glow-text">💎 𝐒𝐇𝐀𝐑𝐈𝐅 𝐁𝐃 𝐓𝐌 𝐂𝐎𝐌𝐌𝐔𝐍𝐈𝐓𝐘</h1>
   <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="text-emerald-400 underline text-sm glow-text">📢 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐉𝐨𝐢𝐧 𝐊𝐨𝐫𝐨𝐧</a>
-</header><main class="max-w-xl mx-auto px-3 space-y-4">  <!-- Login -->  <section id="tab-login" class="tab show glass p-4">
+</header>
+
+<main class="max-w-xl mx-auto px-3 space-y-4">
+
+  <!-- Login -->
+  <section id="tab-login" class="tab show glass p-4">
     <h2 class="text-xl glow-text">🔐 𝐋𝐨𝐠𝐢𝐧</h2>
-    <input id="username" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="Username"/>
+    <input id="username" class="w-full p-2 mt-2 rounded text-black" placeholder="Username"/>
     <button onclick="register()" class="w-full py-2 glow-btn mt-3">🚀 𝐒𝐮𝐫𝐮 𝐊𝐨𝐫𝐮𝐧</button>
-  </section>  <!-- Home -->  <section id="tab-home" class="tab glass p-4 text-center">
+  </section>
+
+  <!-- Home -->
+  <section id="tab-home" class="tab glass p-4 text-center">
     <div class="text-sm glow-text">𝐕𝐚𝐫𝐭𝐦𝐚𝐧 𝐁𝐚𝐥𝐚𝐧𝐜𝐞</div>
     <div class="text-3xl glow-text"><span id="ui-balance">0.00</span> ৳</div>
     <div class="text-sm mt-2 glow-text">𝐀𝐣 𝐝𝐞𝐤𝐡𝐚 𝐀𝐝: <span id="ui-ads">0</span>/<span id="ui-limit">200</span></div>
-    <div id="timerBox" class="text-lg font-bold text-emerald-400 mt-2 hidden glow-text">⏳ <span id="timer">17</span> 𝐒𝐞𝐜</div>
+    <div id="timerBox" class="text-lg text-emerald-400 mt-2 hidden glow-text">⏳ <span id="timer">17</span> 𝐒𝐞𝐜</div>
     <button onclick="watchAd()" class="w-full py-2 mt-3 glow-btn">🎬 𝐀𝐝 𝐃𝐞𝐤𝐡𝐮𝐧</button>
     <button onclick="openTab('withdraw')" class="w-full py-2 bg-green-600 mt-3 rounded glow-text">💳 𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰</button>
     <div class="mt-3 text-sm glow-text">
@@ -37,22 +58,31 @@
       <span id="refLink" class="text-emerald-400"></span>
       <button onclick="copyRef()" class="bg-gray-700 px-2 rounded text-xs ml-2">𝐂𝐨𝐩𝐲</button>
     </div>
-  </section>  <!-- Withdraw -->  <section id="tab-withdraw" class="tab glass p-4">
+  </section>
+
+  <!-- Withdraw -->
+  <section id="tab-withdraw" class="tab glass p-4">
     <h2 class="text-xl glow-text">💳 𝐓𝐚𝐤𝐚 𝐔𝐭𝐭𝐨𝐥𝐨𝐧</h2>
-    <select id="method" class="w-full p-2 mt-2 rounded text-black font-bold italic">
+    <select id="method" class="w-full p-2 mt-2 rounded text-black">
       <option value="bkash">𝐁𝐢𝐤𝐚𝐬𝐡 (Min 10)</option>
       <option value="nagad">𝐍𝐚𝐠𝐚𝐝 (Min 50)</option>
       <option value="recharge">𝐑𝐞𝐜𝐡𝐚𝐫𝐠𝐞 (Min 20)</option>
     </select>
-    <input id="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐍𝐮𝐦𝐛𝐞𝐫"/>
-    <input id="amount" type="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐏𝐨𝐫𝐢𝐦𝐚𝐧"/>
+    <input id="number" class="w-full p-2 mt-2 rounded text-black" placeholder="𝐍𝐮𝐦𝐛𝐞𝐫"/>
+    <input id="amount" type="number" class="w-full p-2 mt-2 rounded text-black" placeholder="𝐏𝐨𝐫𝐢𝐦𝐚𝐧"/>
     <button onclick="withdraw()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">📩 𝐑𝐞𝐪𝐮𝐞𝐬𝐭 𝐏𝐚𝐭𝐡𝐚𝐧</button>
-  </section>  <!-- History -->  <section id="tab-history" class="tab glass p-4">
+  </section>
+
+  <!-- History -->
+  <section id="tab-history" class="tab glass p-4">
     <h2 class="text-xl glow-text">📜 𝐇𝐢𝐬𝐭𝐨𝐫𝐲</h2>
     <ul id="withdrawHistory" class="mt-2 space-y-2 text-sm"></ul>
-  </section>  <!-- Admin -->  <section id="tab-admin" class="tab glass p-4">
+  </section>
+
+  <!-- Admin -->
+  <section id="tab-admin" class="tab glass p-4">
     <h2 class="text-xl glow-text">⚙ 𝐀𝐝𝐦𝐢𝐧 𝐏𝐚𝐧𝐞𝐥</h2>
-    <input id="adminPass" type="password" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐀𝐝𝐦𝐢𝐧 𝐏𝐚𝐬𝐬"/>
+    <input id="adminPass" type="password" class="w-full p-2 mt-2 rounded text-black" placeholder="𝐀𝐝𝐦𝐢𝐧 𝐏𝐚𝐬𝐬"/>
     <button onclick="adminLogin()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">𝐋𝐨𝐠𝐢𝐧</button>
     <div id="adminPanel" class="hidden mt-4 space-y-4">
       <div>
@@ -61,12 +91,17 @@
       </div>
     </div>
   </section>
-</main><!-- Bottom Nav --><nav class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur p-2 grid grid-cols-4 gap-2">
+</main>
+
+<!-- Bottom Nav -->
+<nav class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur p-2 grid grid-cols-4 gap-2">
   <button onclick="openTab('home')" class="py-2 rounded bg-white/10 glow-text">🏠</button>
   <button onclick="openTab('withdraw')" class="py-2 rounded bg-white/10 glow-text">💳</button>
   <button onclick="openTab('history')" class="py-2 rounded bg-white/10 glow-text">📜</button>
   <button onclick="openTab('admin')" class="py-2 rounded bg-white/10 glow-text">⚙</button>
-</nav><script>
+</nav>
+
+<script>
 const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
 const ADMIN_ID = "7691157254";
 const CHANNEL_ID = "-1002830661384";
@@ -106,12 +141,8 @@ function watchAd(){
   if(!user.name){alert("⚠ প্রথমে ইউজারনেম সেট করুন");return;}
   if(adsToday>=limit){alert("⚠ আজকের লিমিট শেষ");return;}
   if(typeof show_9803310==="function"){
-    show_9803310().then(()=>{
-      startTimer();
-    });
-  } else {
-    startTimer();
-  }
+    show_9803310().then(()=>{startTimer();});
+  } else {alert("⚠ এড লোড হয়নি");}
 }
 
 function startTimer(){
@@ -128,16 +159,18 @@ function startTimer(){
       localStorage.balance=balance;
       localStorage.adsToday=adsToday;
       updateUI();
-      sendNotification(user.name, adsToday);
-      alert("✨ Balance Added Successfully!");
+      sendNotification(`🎬 *𝐍𝐨𝐭𝐮𝐧 𝐀𝐝 𝐃𝐞𝐤𝐡𝐚 𝐇𝐨𝐢𝐜𝐡𝐞*  
+👤 𝐔𝐬𝐞𝐫: _${user.name}_  
+🤖 𝐁𝐨𝐭: ${BOT_USERNAME}  
+🕒 𝐓𝐢𝐦𝐞: _${new Date().toLocaleTimeString()}_  
+📊 𝐌𝐨𝐭 𝐀𝐝 𝐃𝐞𝐤𝐡𝐚: *${adsToday}*`);
     }
     t--;
   },1000);
 }
 
-function sendNotification(username,count){
-  let msg = `🎬 *𝐍𝐨𝐭𝐮𝐧 𝐀𝐝 𝐃𝐞𝐤𝐡𝐚 𝐇𝐨𝐢𝐜𝐡𝐞*\n👤 𝐔𝐬𝐞𝐫: _${username}_\n🤖 𝐁𝐨𝐭: ${BOT_USERNAME}\n🕒 𝐓𝐢𝐦𝐞: _${new Date().toLocaleTimeString()}_\n📊 𝐌𝐨𝐭 𝐀𝐝 𝐃𝐞𝐤𝐡𝐚: *${count}*`;
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
+function sendNotification(msg){
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&parse_mode=Markdown&text=${encodeURIComponent(msg)}`);
 }
 
 function copyRef(){
@@ -145,7 +178,6 @@ function copyRef(){
   alert("✅ কপি হয়েছে");
 }
 
-// Withdraw
 function withdraw(){
   let amt=parseFloat(document.getElementById("amount").value);
   let num=document.getElementById("number").value.trim();
@@ -172,7 +204,6 @@ function loadHistory(){
 }
 loadHistory();
 
-// Admin Panel
 function adminLogin(){
   if(document.getElementById("adminPass").value==="018"){
     document.getElementById("adminPanel").classList.remove("hidden");
@@ -201,7 +232,7 @@ function approve(i){
   if(list[i].status!=="pending") return;
   list[i].status="success";
   localStorage.requests=JSON.stringify(list);
-  sendNotification(list[i].user, adsToday);
+  sendNotification("✅ Withdraw Approved: "+list[i].user);
   loadRequests();loadHistory();
 }
 function reject(i){
@@ -209,6 +240,7 @@ function reject(i){
   if(list[i].status!=="pending") return;
   list[i].status="failed";
   localStorage.requests=JSON.stringify(list);
+  sendNotification("❌ Withdraw Rejected: "+list[i].user);
   loadRequests();loadHistory();
 }
 function delReq(i){
@@ -222,7 +254,6 @@ function banUser(name){
   alert(name+" Banned");
 }
 
-// Reset daily ads
 let today=new Date().toDateString();
 if(localStorage.lastDay!==today){
   adsToday=0;
@@ -230,5 +261,6 @@ if(localStorage.lastDay!==today){
   localStorage.lastDay=today;
   updateUI();
 }
-</script></body>
+</script>
+</body>
 </html>
