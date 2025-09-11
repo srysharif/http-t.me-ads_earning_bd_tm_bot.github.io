@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="bn">
+<!DOCTYPE html><html lang="bn">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -19,39 +18,26 @@
     @keyframes glow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
   </style>
 </head>
-<body class="pb-32">
-
-<header class="p-4 text-center glass m-3">
+<body class="pb-32"><header class="p-4 text-center glass m-3">
   <h1 class="text-2xl glow-text">💎 𝐒𝐇𝐀𝐑𝐈𝐅 𝐁𝐃 𝐓𝐌 𝐂𝐎𝐌𝐌𝐔𝐍𝐈𝐓𝐘</h1>
   <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="text-emerald-400 underline text-sm glow-text">📢 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐉𝐨𝐢𝐧 𝐊𝐨𝐫𝐨𝐧</a>
-</header>
-
-<main class="max-w-xl mx-auto px-3 space-y-4">
-
-  <!-- Login -->
-  <section id="tab-login" class="tab show glass p-4">
+</header><main class="max-w-xl mx-auto px-3 space-y-4">  <!-- Login -->  <section id="tab-login" class="tab show glass p-4">
     <h2 class="text-xl glow-text">🔐 𝐋𝐨𝐠𝐢𝐧</h2>
     <input id="username" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="Username"/>
     <button onclick="register()" class="w-full py-2 glow-btn mt-3">🚀 𝐒𝐮𝐫𝐮 𝐊𝐨𝐫𝐮𝐧</button>
-  </section>
-
-  <!-- Home -->
-  <section id="tab-home" class="tab glass p-4 text-center">
-    <div class="text-sm glow-text">💰 𝐕𝐚𝐫𝐭𝐦𝐚𝐧 𝐁𝐚𝐥𝐚𝐧𝐜𝐞</div>
+  </section>  <!-- Home -->  <section id="tab-home" class="tab glass p-4 text-center">
+    <div class="text-sm glow-text">𝐕𝐚𝐫𝐭𝐦𝐚𝐧 𝐁𝐚𝐥𝐚𝐧𝐜𝐞</div>
     <div class="text-3xl glow-text"><span id="ui-balance">0.00</span> ৳</div>
-    <div class="text-sm mt-2 glow-text">🎯 𝐀𝐣 𝐝𝐞𝐤𝐡𝐚 𝐀𝐝: <span id="ui-ads">0</span>/<span id="ui-limit">200</span></div>
+    <div class="text-sm mt-2 glow-text">𝐀𝐣 𝐝𝐞𝐤𝐡𝐚 𝐀𝐝: <span id="ui-ads">0</span>/<span id="ui-limit">200</span></div>
     <div id="timerBox" class="text-lg font-bold text-emerald-400 mt-2 hidden glow-text">⏳ <span id="timer">17</span> 𝐒𝐞𝐜</div>
     <button onclick="watchAd()" class="w-full py-2 mt-3 glow-btn">🎬 𝐀𝐝 𝐃𝐞𝐤𝐡𝐮𝐧</button>
     <button onclick="openTab('withdraw')" class="w-full py-2 bg-green-600 mt-3 rounded glow-text">💳 𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰</button>
     <div class="mt-3 text-sm glow-text">
       🔗 𝐑𝐞𝐟𝐚𝐫 𝐋𝐢𝐧𝐤:<br/>
       <span id="refLink" class="text-emerald-400"></span>
-      <button onclick="copyRef()" class="bg-gray-700 px-2 rounded text-xs ml-2">📋 𝐂𝐨𝐩𝐲</button>
+      <button onclick="copyRef()" class="bg-gray-700 px-2 rounded text-xs ml-2">𝐂𝐨𝐩𝐲</button>
     </div>
-  </section>
-
-  <!-- Withdraw -->
-  <section id="tab-withdraw" class="tab glass p-4">
+  </section>  <!-- Withdraw -->  <section id="tab-withdraw" class="tab glass p-4">
     <h2 class="text-xl glow-text">💳 𝐓𝐚𝐤𝐚 𝐔𝐭𝐭𝐨𝐥𝐨𝐧</h2>
     <select id="method" class="w-full p-2 mt-2 rounded text-black font-bold italic">
       <option value="bkash">𝐁𝐢𝐤𝐚𝐬𝐡 (Min 10)</option>
@@ -61,38 +47,26 @@
     <input id="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐍𝐮𝐦𝐛𝐞𝐫"/>
     <input id="amount" type="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐏𝐨𝐫𝐢𝐦𝐚𝐧"/>
     <button onclick="withdraw()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">📩 𝐑𝐞𝐪𝐮𝐞𝐬𝐭 𝐏𝐚𝐭𝐡𝐚𝐧</button>
-  </section>
-
-  <!-- History -->
-  <section id="tab-history" class="tab glass p-4">
+  </section>  <!-- History -->  <section id="tab-history" class="tab glass p-4">
     <h2 class="text-xl glow-text">📜 𝐇𝐢𝐬𝐭𝐨𝐫𝐲</h2>
     <ul id="withdrawHistory" class="mt-2 space-y-2 text-sm"></ul>
-  </section>
-
-  <!-- Admin -->
-  <section id="tab-admin" class="tab glass p-4">
+  </section>  <!-- Admin -->  <section id="tab-admin" class="tab glass p-4">
     <h2 class="text-xl glow-text">⚙ 𝐀𝐝𝐦𝐢𝐧 𝐏𝐚𝐧𝐞𝐥</h2>
     <input id="adminPass" type="password" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐀𝐝𝐦𝐢𝐧 𝐏𝐚𝐬𝐬"/>
-    <button onclick="adminLogin()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">🔑 𝐋𝐨𝐠𝐢𝐧</button>
+    <button onclick="adminLogin()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">𝐋𝐨𝐠𝐢𝐧</button>
     <div id="adminPanel" class="hidden mt-4 space-y-4">
-      <input id="searchUser" onkeyup="searchUser()" class="w-full p-2 rounded text-black font-bold italic" placeholder="🔍 ইউজার খুঁজুন"/>
       <div>
-        <h3 class="font-semibold glow-text">📩 𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰 𝐑𝐞𝐪𝐮𝐞𝐬𝐭</h3>
+        <h3 class="font-semibold glow-text">𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰 𝐑𝐞𝐪𝐮𝐞𝐬𝐭</h3>
         <ul id="adminRequests" class="mt-2 space-y-2 text-sm"></ul>
       </div>
     </div>
   </section>
-</main>
-
-<!-- Bottom Nav -->
-<nav class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur p-2 grid grid-cols-4 gap-2">
+</main><!-- Bottom Nav --><nav class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur p-2 grid grid-cols-4 gap-2">
   <button onclick="openTab('home')" class="py-2 rounded bg-white/10 glow-text">🏠</button>
   <button onclick="openTab('withdraw')" class="py-2 rounded bg-white/10 glow-text">💳</button>
   <button onclick="openTab('history')" class="py-2 rounded bg-white/10 glow-text">📜</button>
   <button onclick="openTab('admin')" class="py-2 rounded bg-white/10 glow-text">⚙</button>
-</nav>
-
-<script>
+</nav><script>
 const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
 const ADMIN_ID = "7691157254";
 const CHANNEL_ID = "-1002830661384";
@@ -103,7 +77,6 @@ let balance = 0;
 let adsToday = 0;
 const limit = 200;
 
-// Load saved
 if(localStorage.user){user=JSON.parse(localStorage.user);}
 if(localStorage.balance) balance=parseFloat(localStorage.balance);
 if(localStorage.adsToday){adsToday=parseInt(localStorage.adsToday);}
@@ -114,7 +87,7 @@ function register(){
   if(!name){alert("⚠ ইউজারনেম দিন");return;}
   user={name,joined:true};
   localStorage.user=JSON.stringify(user);
-  document.getElementById("refLink").innerText=location.origin+"?ref="+name;
+  document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${name}`;
   openTab("home");
 }
 
@@ -134,36 +107,37 @@ function watchAd(){
   if(adsToday>=limit){alert("⚠ আজকের লিমিট শেষ");return;}
   if(typeof show_9803310==="function"){
     show_9803310().then(()=>{
-      startTimer(17,"timerBox","timer");
+      startTimer();
     });
   } else {
-    alert("⚠ এড লোড হয়নি");
+    startTimer();
   }
 }
 
-function startTimer(sec,boxId,timerId){
-  let t=sec;
-  document.getElementById(boxId).classList.remove("hidden");
-  const timerEl=document.getElementById(timerId);
+function startTimer(){
+  let t=17;
+  document.getElementById("timerBox").classList.remove("hidden");
+  const timerEl=document.getElementById("timer");
   const iv=setInterval(()=>{
     timerEl.innerText=t;
     if(t<=0){
       clearInterval(iv);
-      document.getElementById(boxId).classList.add("hidden");
+      document.getElementById("timerBox").classList.add("hidden");
       adsToday++;
       balance+=0.20;
       localStorage.balance=balance;
       localStorage.adsToday=adsToday;
       updateUI();
-      sendNotification(`🎬 *𝐍𝐨𝐭𝐮𝐧 𝐀𝐝 𝐃𝐞𝐤𝐡𝐚 𝐇𝐨𝐢𝐜𝐡𝐞*\n👤 𝐘𝐮𝐣𝐚𝐫: _${user.name}_\n🤖 𝐁𝐨𝐭: *${BOT_USERNAME}*\n🕒 𝐓𝐢𝐦𝐞: _${new Date().toLocaleTimeString()}_\n📊 𝐌𝐨𝐭 𝐀𝐝 𝐃𝐞𝐤𝐡𝐚: *${adsToday}*`);
+      sendNotification(user.name, adsToday);
       alert("✨ Balance Added Successfully!");
     }
     t--;
   },1000);
 }
 
-function sendNotification(msg){
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&parse_mode=Markdown&text=${encodeURIComponent(msg)}`);
+function sendNotification(username,count){
+  let msg = `🎬 *𝐍𝐨𝐭𝐮𝐧 𝐀𝐝 𝐃𝐞𝐤𝐡𝐚 𝐇𝐨𝐢𝐜𝐡𝐞*\n👤 𝐔𝐬𝐞𝐫: _${username}_\n🤖 𝐁𝐨𝐭: ${BOT_USERNAME}\n🕒 𝐓𝐢𝐦𝐞: _${new Date().toLocaleTimeString()}_\n📊 𝐌𝐨𝐭 𝐀𝐝 𝐃𝐞𝐤𝐡𝐚: *${count}*`;
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
 }
 
 function copyRef(){
@@ -206,25 +180,20 @@ function adminLogin(){
   }
 }
 
-function loadRequests(filter=""){
+function loadRequests(){
   let list=JSON.parse(localStorage.requests||"[]");
   let ul=document.getElementById("adminRequests");
   ul.innerHTML="";
-  list.filter(r=>r.user.includes(filter)).forEach((r,i)=>{
+  list.forEach((r,i)=>{
     ul.innerHTML+=`<li>${r.user} ${r.amount}৳ (${r.method}) 
       <span class="badge ${r.status}">${r.status}</span>
       ${r.status==="pending"?`
-        <button onclick="approve(${i})" class="bg-green-500 px-2">✅</button>
-        <button onclick="reject(${i})" class="bg-red-500 px-2">❌</button>`:""}
-      <button onclick="delReq(${i})" class="bg-gray-500 px-2">🗑</button>
-      <button onclick="banUser('${r.user}')" class="bg-pink-500 px-2">🚫</button>
+        <button onclick="approve(${i})" class="bg-green-500 px-2">OK</button>
+        <button onclick="reject(${i})" class="bg-red-500 px-2">X</button>`:""}
+      <button onclick="delReq(${i})" class="bg-gray-500 px-2">Del</button>
+      <button onclick="banUser('${r.user}')" class="bg-pink-500 px-2">Ban</button>
     </li>`;
   });
-}
-
-function searchUser(){
-  let val=document.getElementById("searchUser").value.trim();
-  loadRequests(val);
 }
 
 function approve(i){
@@ -232,7 +201,7 @@ function approve(i){
   if(list[i].status!=="pending") return;
   list[i].status="success";
   localStorage.requests=JSON.stringify(list);
-  sendNotification("✅ Withdraw Approved: "+list[i].user);
+  sendNotification(list[i].user, adsToday);
   loadRequests();loadHistory();
 }
 function reject(i){
@@ -240,7 +209,6 @@ function reject(i){
   if(list[i].status!=="pending") return;
   list[i].status="failed";
   localStorage.requests=JSON.stringify(list);
-  sendNotification("❌ Withdraw Rejected: "+list[i].user);
   loadRequests();loadHistory();
 }
 function delReq(i){
@@ -251,7 +219,7 @@ function delReq(i){
 }
 function banUser(name){
   localStorage.banned=JSON.stringify([...(JSON.parse(localStorage.banned||"[]")),name]);
-  alert(name+" 🚫 Banned");
+  alert(name+" Banned");
 }
 
 // Reset daily ads
@@ -262,6 +230,5 @@ if(localStorage.lastDay!==today){
   localStorage.lastDay=today;
   updateUI();
 }
-</script>
-</body>
+</script></body>
 </html>
