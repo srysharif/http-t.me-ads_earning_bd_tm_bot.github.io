@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="bn">
+<!DOCTYPE html><html lang="bn">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -19,24 +18,14 @@
     @keyframes glow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
   </style>
 </head>
-<body class="pb-32">
-
-<header class="p-4 text-center glass m-3">
+<body class="pb-32"><header class="p-4 text-center glass m-3">
   <h1 class="text-2xl glow-text">💎 𝐒𝐇𝐀𝐑𝐈𝐅 𝐁𝐃 𝐓𝐌 𝐂𝐎𝐌𝐌𝐔𝐍𝐈𝐓𝐘</h1>
   <a href="https://t.me/ADS_EARNING_BD_TM_CHANNEL" target="_blank" class="text-emerald-400 underline text-sm glow-text">📢 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐉𝐨𝐢𝐧 𝐊𝐨𝐫𝐨𝐧</a>
-</header>
-
-<main class="max-w-xl mx-auto px-3 space-y-4">
-
-  <!-- Login -->
-  <section id="tab-login" class="tab show glass p-4">
+</header><main class="max-w-xl mx-auto px-3 space-y-4">  <!-- Login -->  <section id="tab-login" class="tab show glass p-4">
     <h2 class="text-xl glow-text">🔐 𝐋𝐨𝐠𝐢𝐧</h2>
     <input id="username" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="Username"/>
     <button onclick="register()" class="w-full py-2 glow-btn mt-3">🚀 𝐒𝐮𝐫𝐮 𝐊𝐨𝐫𝐮𝐧</button>
-  </section>
-
-  <!-- Home -->
-  <section id="tab-home" class="tab glass p-4 text-center">
+  </section>  <!-- Home -->  <section id="tab-home" class="tab glass p-4 text-center">
     <div class="text-sm glow-text">𝐕𝐚𝐫𝐭𝐦𝐚𝐧 𝐁𝐚𝐥𝐚𝐧𝐜𝐞</div>
     <div class="text-3xl glow-text"><span id="ui-balance">0.00</span> ৳</div>
     <div class="text-sm mt-2 glow-text">𝐀𝐣 𝐝𝐞𝐤𝐡𝐚 𝐀𝐝: <span id="ui-ads">0</span>/<span id="ui-limit">200</span></div>
@@ -49,10 +38,7 @@
       <span id="refLink" class="text-emerald-400"></span>
       <button onclick="copyRef()" class="bg-gray-700 px-2 rounded text-xs ml-2">𝐂𝐨𝐩𝐲</button>
     </div>
-  </section>
-
-  <!-- Withdraw -->
-  <section id="tab-withdraw" class="tab glass p-4">
+  </section>  <!-- Withdraw -->  <section id="tab-withdraw" class="tab glass p-4">
     <h2 class="text-xl glow-text">💳 𝐓𝐚𝐤𝐚 𝐔𝐭𝐭𝐨𝐥𝐨𝐧</h2>
     <select id="method" class="w-full p-2 mt-2 rounded text-black font-bold italic">
       <option value="bkash">𝐁𝐢𝐤𝐚𝐬𝐡 (Min 10)</option>
@@ -62,16 +48,10 @@
     <input id="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐍𝐮𝐦𝐛𝐞𝐫"/>
     <input id="amount" type="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐏𝐨𝐫𝐢𝐦𝐚𝐧"/>
     <button onclick="withdraw()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">📩 𝐑𝐞𝐪𝐮𝐞𝐬𝐭 𝐏𝐚𝐭𝐡𝐚𝐧</button>
-  </section>
-
-  <!-- History -->
-  <section id="tab-history" class="tab glass p-4">
+  </section>  <!-- History -->  <section id="tab-history" class="tab glass p-4">
     <h2 class="text-xl glow-text">📜 𝐇𝐢𝐬𝐭𝐨𝐫𝐲</h2>
     <ul id="withdrawHistory" class="mt-2 space-y-2 text-sm"></ul>
-  </section>
-
-  <!-- Admin -->
-  <section id="tab-admin" class="tab glass p-4">
+  </section>  <!-- Admin -->  <section id="tab-admin" class="tab glass p-4">
     <h2 class="text-xl glow-text">⚙ 𝐀𝐝𝐦𝐢𝐧 𝐏𝐚𝐧𝐞𝐥</h2>
     <input id="adminPass" type="password" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="𝐀𝐝𝐦𝐢𝐧 𝐏𝐚𝐬𝐬"/>
     <button onclick="adminLogin()" class="w-full py-2 bg-blue-600 mt-2 rounded glow-text">𝐋𝐨𝐠𝐢𝐧</button>
@@ -82,28 +62,22 @@
       </div>
     </div>
   </section>
-</main>
-
-<!-- Bottom Nav -->
-<nav class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur p-2 grid grid-cols-4 gap-2">
+</main><!-- Bottom Nav --><nav class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur p-2 grid grid-cols-4 gap-2">
   <button onclick="openTab('home')" class="py-2 rounded bg-white/10 glow-text">🏠</button>
   <button onclick="openTab('withdraw')" class="py-2 rounded bg-white/10 glow-text">💳</button>
   <button onclick="openTab('history')" class="py-2 rounded bg-white/10 glow-text">📜</button>
   <button onclick="openTab('admin')" class="py-2 rounded bg-white/10 glow-text">⚙</button>
-</nav>
-
-<script>
+</nav><script>
 const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
 const ADMIN_ID = "7691157254";
 const CHANNEL_ID = "-1002830661384";
-const BOT_USERNAME = "@SharifBD_TM_Bot";
+const BOT_USERNAME = "@BD_TM_MINI_BOT";
 
 let user = {};
 let balance = 0;
 let adsToday = 0;
 const limit = 200;
 
-// Load saved
 if(localStorage.user){user=JSON.parse(localStorage.user);}
 if(localStorage.balance) balance=parseFloat(localStorage.balance);
 if(localStorage.adsToday){adsToday=parseInt(localStorage.adsToday);}
@@ -112,6 +86,7 @@ updateUI();
 function register(){
   const name=document.getElementById("username").value.trim();
   if(!name){alert("⚠ ইউজারনেম দিন");return;}
+  if(JSON.parse(localStorage.banned||"[]").includes(name)){alert("🚫 আপনি ব্যান হয়েছেন");return;}
   user={name,joined:true};
   localStorage.user=JSON.stringify(user);
   document.getElementById("refLink").innerText=location.origin+"?ref="+name;
@@ -133,12 +108,8 @@ function watchAd(){
   if(!user.name){alert("⚠ প্রথমে ইউজারনেম সেট করুন");return;}
   if(adsToday>=limit){alert("⚠ আজকের লিমিট শেষ");return;}
   if(typeof show_9803310==="function"){
-    show_9803310().then(()=>{
-      startTimers();
-    });
-  } else {
-    alert("⚠ এড লোড হয়নি");
-  }
+    show_9803310().then(()=>{startTimers();});
+  } else {alert("⚠ এড লোড হয়নি");}
 }
 
 function startTimers(){
@@ -160,7 +131,7 @@ function runTimer(sec,boxId,timerId){
       localStorage.balance=balance;
       localStorage.adsToday=adsToday;
       updateUI();
-      sendNotification(`🎬 ${user.name} ${adsToday} Ad Dekhse | +0.20৳ | ${new Date().toLocaleTimeString()} | ${BOT_USERNAME}`);
+      sendNotification(`*🎬 ${user.name}* | *${adsToday} Ad Dekhse* | *+0.20৳* | *${new Date().toLocaleTimeString()}* | *${BOT_USERNAME}*`);
       alert("✨ Balance Added Successfully!");
     }
     t--;
@@ -168,7 +139,7 @@ function runTimer(sec,boxId,timerId){
 }
 
 function sendNotification(msg){
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&text=${encodeURIComponent(msg)}`);
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&parse_mode=Markdown&text=${encodeURIComponent(msg)}`);
 }
 
 function copyRef(){
@@ -176,7 +147,6 @@ function copyRef(){
   alert("✅ কপি হয়েছে");
 }
 
-// Withdraw
 function withdraw(){
   let amt=parseFloat(document.getElementById("amount").value);
   let num=document.getElementById("number").value.trim();
@@ -190,7 +160,7 @@ function withdraw(){
   let list=JSON.parse(localStorage.requests||"[]");
   list.push(req);localStorage.requests=JSON.stringify(list);
   loadHistory();
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_ID}&text=🆕 Withdraw: ${req.user} ${amt}৳`);
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_ID}&parse_mode=Markdown&text=${encodeURIComponent('*🆕 Withdraw:* '+req.user+' '+amt+'৳')}`);
 }
 
 function loadHistory(){
@@ -203,7 +173,6 @@ function loadHistory(){
 }
 loadHistory();
 
-// Admin Panel
 function adminLogin(){
   if(document.getElementById("adminPass").value==="018"){
     document.getElementById("adminPanel").classList.remove("hidden");
@@ -232,7 +201,7 @@ function approve(i){
   if(list[i].status!=="pending") return;
   list[i].status="success";
   localStorage.requests=JSON.stringify(list);
-  sendNotification("✅ Withdraw Approved: "+list[i].user);
+  sendNotification("*✅ Withdraw Approved:* "+list[i].user);
   loadRequests();loadHistory();
 }
 function reject(i){
@@ -240,7 +209,7 @@ function reject(i){
   if(list[i].status!=="pending") return;
   list[i].status="failed";
   localStorage.requests=JSON.stringify(list);
-  sendNotification("❌ Withdraw Rejected: "+list[i].user);
+  sendNotification("*❌ Withdraw Rejected:* "+list[i].user);
   loadRequests();loadHistory();
 }
 function delReq(i){
@@ -251,10 +220,9 @@ function delReq(i){
 }
 function banUser(name){
   localStorage.banned=JSON.stringify([...(JSON.parse(localStorage.banned||"[]")),name]);
-  alert(name+" Banned");
+  alert(name+" 🚫 Banned");
 }
 
-// Reset daily ads
 let today=new Date().toDateString();
 if(localStorage.lastDay!==today){
   adsToday=0;
@@ -262,6 +230,5 @@ if(localStorage.lastDay!==today){
   localStorage.lastDay=today;
   updateUI();
 }
-</script>
-</body>
+</script></body>
 </html>
