@@ -18,7 +18,6 @@
     .badge.pending{background:#fbbf24;color:#000}
     .badge.success{background:#4ade80;color:#000}
     .badge.failed{background:#f87171;color:#000}
-    /* ⚡ Glow Button */
     .glow-btn{
       background:linear-gradient(90deg,#ff0080,#7928ca,#2af598);
       background-size:200% 200%;
@@ -56,7 +55,7 @@
   <section id="tab-home" class="tab glass p-4 text-center">
     <div class="text-sm">বর্তমান ব্যালেন্স</div>
     <div class="text-3xl font-bold"><span id="ui-balance">0.00</span> ৳</div>
-    <div class="text-sm mt-2">আজ দেখা এড: <span id="ui-ads">0</span>/<span id="ui-limit">0</span></div>
+    <div class="text-sm mt-2">আজ দেখা এড: <span id="ui-ads">0</span>/200</div>
     <div id="timerBox" class="text-lg font-bold text-emerald-400 mt-2 hidden">⏳ <span id="timer">17</span> সেকেন্ড</div>
     <button onclick="watchAd()" class="w-full py-2 mt-3 glow-btn">🎬 এড দেখুন</button>
     <button onclick="openTab('withdraw')" class="w-full py-2 bg-green-600 mt-3 rounded">💳 উইথড্র</button>
@@ -100,11 +99,6 @@
         <h3 class="font-semibold">ইউজার লিস্ট</h3>
         <ul id="userList" class="mt-2 space-y-2 text-sm"></ul>
       </div>
-      <div>
-        <h3 class="font-semibold">Daily Ad Limit</h3>
-        <input id="dailyLimitInput" type="number" class="w-full p-2 mt-2 rounded text-black" placeholder="লিমিট দিন"/>
-        <button onclick="setDailyLimit()" class="w-full py-2 bg-purple-600 mt-2 rounded">✔️ সেভ করুন</button>
-      </div>
     </div>
   </section>
 </main>
@@ -126,113 +120,41 @@ const ADMIN_CHAT_ID="7691157254";
 const CHANNEL_ID="-1002830661384";
 const BOT_USERNAME="@BD_TM_MINI_BOT";
 const AD_REWARD=0.20;
+const DAILY_AD_LIMIT=200;
 
-let DAILY_AD_LIMIT=localStorage.getItem("dailyLimit")?parseInt(localStorage.getItem("dailyLimit")):5;
 let SESSION=JSON.parse(localStorage.getItem("session"))||{username:null,tgId:null,balance:0,ads:0,lastDate:null,history:[],requests:[]};
 let USERS=JSON.parse(localStorage.getItem("users"))||[];
 
-// Helper Functions
 function saveSession(){localStorage.setItem("session",JSON.stringify(SESSION));if(SESSION.username){const i=USERS.findIndex(u=>u.username===SESSION.username);if(i>=0)USERS[i]=SESSION;else USERS.push(SESSION);localStorage.setItem("users",JSON.stringify(USERS));}}
 function openTab(k){document.querySelectorAll(".tab").forEach(x=>x.classList.remove("show"));document.getElementById("tab-"+k).classList.add("show");}
 function fmt(n){return Number(n||0).toFixed(2);}
 function copyRef(){navigator.clipboard.writeText(document.getElementById("refLink").innerText);alert("✅ কপি হয়েছে");}
-function nowTime(){return new Date().toLocaleString("bn-BD",{hour12:true});}
-async function sendTelegram(t,cid=ADMIN_CHAT_ID){try{await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:cid,text:t,parse_mode:"HTML"})});}catch(e){}}
+async function sendTelegram(t,cid=ADMIN_CHAT_ID){try{await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:cid,text:t})});}catch(e){}}
 function sendChannel(msg){sendTelegram(msg,CHANNEL_ID);}
 
-// Register
-function register(){
-  const u=document.getElementById("username").value.trim();
-  const id=document.getElementById("tgId").value.trim();
-  if(!u||!id)return alert("সব তথ্য দিন");
-  SESSION.username=u;SESSION.tgId=id;SESSION.balance=0;SESSION.ads=0;SESSION.history=[];SESSION.requests=[];
-  saveSession();
-  document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
-  document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${u}`;
-  document.getElementById("ui-limit").innerText=DAILY_AD_LIMIT;
-  openTab("home");
-}
+function register(){const u=document.getElementById("username").value.trim();const id=document.getElementById("tgId").value.trim();if(!u||!id)return alert("সব তথ্য দিন");SESSION.username=u;SESSION.tgId=id;SESSION.balance=0;SESSION.ads=0;SESSION.history=[];SESSION.requests=[];SESSION.lastDate=new Date().toDateString();saveSession();document.getElementById("ui-balance").innerText=fmt(SESSION.balance);document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${u}`;document.getElementById("ui-limit").innerText=DAILY_AD_LIMIT;openTab("home");}
 
-// Watch Ad
+function resetDailyAds(){let today=new Date().toDateString();if(SESSION.lastDate!==today){SESSION.lastDate=today;SESSION.ads=0;saveSession();}}
+
 function watchAd(){
-  let today=new Date().toDateString();
-  if(SESSION.lastDate!==today){SESSION.lastDate=today;SESSION.ads=0;}
+  resetDailyAds();
   if(SESSION.ads>=DAILY_AD_LIMIT)return alert("আজকের এড লিমিট শেষ হয়েছে");
-
   if(typeof show_9803310==="function"){show_9803310();}
   document.getElementById("timerBox").classList.remove("hidden");
   let t=17;document.getElementById("timer").innerText=t;
-  let interval=setInterval(()=>{
-    t--;document.getElementById("timer").innerText=t;
-    if(t<=0){
-      clearInterval(interval);
-      SESSION.ads+=1;SESSION.balance+=AD_REWARD;saveSession();updateUI();
-      sendChannel(`📺 <b>𝐀𝐝 𝐂𝐨𝐦𝐩𝐥𝐞𝐭𝐞</b>\n👤 ${SESSION.username}\n🆔 ${SESSION.tgId}\n🤖 ${BOT_USERNAME}\n💰 ৳${fmt(SESSION.balance)}\n⏰ ${nowTime()}`);
-      alert("✅ এড সম্পূর্ণ হয়েছে, ৳"+AD_REWARD+" যোগ হয়েছে");
-      document.getElementById("timerBox").classList.add("hidden");
-    }
-  },1000);
+  let interval=setInterval(()=>{t--;document.getElementById("timer").innerText=t;if(t<=0){clearInterval(interval);SESSION.ads+=1;SESSION.balance+=AD_REWARD;saveSession();updateUI();sendChannel(`👤 ${SESSION.username}\n📺 ${SESSION.ads} এড দেখেছে\n💰 ব্যালেন্স: ৳${fmt(SESSION.balance)}\n🤖 ${BOT_USERNAME}`);alert("✅ এড সম্পূর্ণ হয়েছে, ৳"+AD_REWARD+" যোগ হয়েছে");document.getElementById("timerBox").classList.add("hidden");}},1000);
 }
 
-// Withdraw
-function withdraw(){
-  const m=document.getElementById("method").value;
-  const num=document.getElementById("number").value.trim();
-  const amt=parseFloat(document.getElementById("amount").value);
-  if(!num||!amt)return alert("সব তথ্য দিন");
-  if(amt>SESSION.balance)return alert("ব্যালেন্স যথেষ্ট নেই");
-  if(m==="bkash"&&amt<10)return alert("Min 10");
-  if(m==="nagad"&&amt<50)return alert("Min 50");
-  if(m==="recharge"&&amt<20)return alert("Min 20");
-  SESSION.balance-=amt;
-  const r={id:Date.now(),username:SESSION.username,tgId:SESSION.tgId,method:m,number:num,amount:amt,status:"Pending"};
-  SESSION.history.push(r);SESSION.requests.push(r);saveSession();updateUI();
-  sendTelegram(`💳 <b>𝐍𝐞𝐰 𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰</b>\n👤 ${SESSION.username}\n🆔 ${SESSION.tgId}\n🤖 ${BOT_USERNAME}\nMethod: ${m}\nNumber: ${num}\nAmount: ৳${amt}\n⏰ ${nowTime()}`);
-  alert("📩 পাঠানো হয়েছে");
-}
+function withdraw(){const m=document.getElementById("method").value;const num=document.getElementById("number").value.trim();const amt=parseFloat(document.getElementById("amount").value);if(!num||!amt)return alert("সব তথ্য দিন");if(amt>SESSION.balance)return alert("ব্যালেন্স যথেষ্ট নেই");if(m==="bkash"&&amt<10)return alert("Min 10");if(m==="nagad"&&amt<50)return alert("Min 50");if(m==="recharge"&&amt<20)return alert("Min 20");SESSION.balance-=amt;const r={id:Date.now(),username:SESSION.username,tgId:SESSION.tgId,method:m,number:num,amount:amt,status:"Pending"};SESSION.history.push(r);SESSION.requests.push(r);saveSession();updateUI();sendTelegram(`💳 নতুন উইথড্র\n👤 User: ${SESSION.username}\nMethod: ${m}\nNumber: ${num}\nAmount: ৳${amt}\n🤖 ${BOT_USERNAME}`);alert("📩 পাঠানো হয়েছে");}
 
-// Update UI
-function updateUI(){
-  document.getElementById("ui-balance").innerText=fmt(SESSION.balance);
-  document.getElementById("ui-ads").innerText=SESSION.ads;
-  document.getElementById("ui-limit").innerText=DAILY_AD_LIMIT;
-  const h=document.getElementById("withdrawHistory");h.innerHTML="";
-  SESSION.history.forEach(r=>{
-    h.innerHTML+=`<li class="glass p-2 flex justify-between"><div>${r.method} → ${r.number}<br/>৳${fmt(r.amount)}</div><div class="badge ${r.status.toLowerCase()}">${r.status}</div></li>`;
-  });
-}
-
-// Admin Panel
-function updateAdmin(){
-  const reqBox=document.getElementById("adminRequests");reqBox.innerHTML="";
-  SESSION.requests.forEach(r=>{
-    reqBox.innerHTML+=`<li class="glass p-2"><b>${r.username}</b> (${r.tgId})<br/>৳${r.amount} → ${r.method} (${r.number})<br/><span class="badge ${r.status.toLowerCase()}">${r.status}</span><br/><button onclick="approve(${r.id})" class="bg-emerald-600 px-2 rounded text-xs">Approve</button> <button onclick="reject(${r.id})" class="bg-red-600 px-2 rounded text-xs">Reject</button> <button onclick="delReq(${r.id})" class="bg-gray-600 px-2 rounded text-xs">🗑 Delete</button></li>`;
-  });
-  const uBox=document.getElementById("userList");uBox.innerHTML="";
-  USERS.forEach(u=>{
-    uBox.innerHTML+=`<li class="glass p-2"><b>${u.username}</b> (${u.tgId})<br/>ব্যালেন্স: ৳${fmt(u.balance)} • এড: ${u.ads}</li>`;
-  });
-}
-function approve(id){
-  const r=SESSION.requests.find(x=>x.id===id);
-  if(r&&r.status==="Pending"){
-    r.status="Success";SESSION.history.find(x=>x.id===id).status="Success";saveSession();updateUI();updateAdmin();
-    sendTelegram(`✅ <b>𝐀𝐩𝐩𝐫𝐨𝐯𝐞𝐝</b>\n👤 ${r.username}\n🆔 ${r.tgId}\n🤖 ${BOT_USERNAME}\n৳${r.amount} পাঠানো হলো\n⏰ ${nowTime()}`);
-  }
-}
-function reject(id){
-  const r=SESSION.requests.find(x=>x.id===id);
-  if(r&&r.status==="Pending"){
-    r.status="Failed";SESSION.balance+=r.amount;SESSION.history.find(x=>x.id===id).status="Failed";saveSession();updateUI();updateAdmin();
-    sendTelegram(`❌ <b>𝐑𝐞𝐣𝐞𝐜𝐭</b>\n👤 ${r.username}\n🆔 ${r.tgId}\n🤖 ${BOT_USERNAME}\n৳${r.amount} ফেরত\n⏰ ${nowTime()}`);
-  }
-}
+function updateUI(){document.getElementById("ui-balance").innerText=fmt(SESSION.balance);document.getElementById("ui-ads").innerText=SESSION.ads;const h=document.getElementById("withdrawHistory");h.innerHTML="";SESSION.history.forEach(r=>{h.innerHTML+=`<li class="glass p-2 flex justify-between"><div>${r.method} → ${r.number}<br/>৳${fmt(r.amount)}</div><div class="badge ${r.status.toLowerCase()}">${r.status}</div></li>`});}
+function updateAdmin(){const reqBox=document.getElementById("adminRequests");reqBox.innerHTML="";SESSION.requests.forEach(r=>{reqBox.innerHTML+=`<li class="glass p-2"><b>${r.username}</b> (${r.tgId})<br/>৳${r.amount} → ${r.method} (${r.number})<br/><span class="badge ${r.status.toLowerCase()}">${r.status}</span><br/><button onclick="approve(${r.id})" class="bg-emerald-600 px-2 rounded text-xs">Approve</button> <button onclick="reject(${r.id})" class="bg-red-600 px-2 rounded text-xs">Reject</button> <button onclick="delReq(${r.id})" class="bg-gray-600 px-2 rounded text-xs">🗑 Delete</button></li>`});const uBox=document.getElementById("userList");uBox.innerHTML="";USERS.forEach(u=>{uBox.innerHTML+=`<li class="glass p-2"><b>${u.username}</b> (${u.tgId})<br/>ব্যালেন্স: ৳${fmt(u.balance)} • এড: ${u.ads}</li>`});}
+function approve(id){const r=SESSION.requests.find(x=>x.id===id);if(r&&r.status==="Pending"){r.status="Success";SESSION.history.find(x=>x.id===id).status="Success";saveSession();updateUI();updateAdmin();sendTelegram(`✅ Approve\n👤 ${r.username}\n৳${r.amount} পাঠানো হলো`);}}
+function reject(id){const r=SESSION.requests.find(x=>x.id===id);if(r&&r.status==="Pending"){r.status="Failed";SESSION.balance+=r.amount;SESSION.history.find(x=>x.id===id).status="Failed";saveSession();updateUI();updateAdmin();sendTelegram(`❌ Reject\n👤 ${r.username}\n৳${r.amount} ফেরত`);}}
 function delReq(id){SESSION.requests=SESSION.requests.filter(r=>r.id!==id);SESSION.history=SESSION.history.filter(r=>r.id!==id);saveSession();updateUI();updateAdmin();}
-function setDailyLimit(){let v=parseInt(document.getElementById("dailyLimitInput").value);if(v>0){DAILY_AD_LIMIT=v;localStorage.setItem("dailyLimit",DAILY_AD_LIMIT);document.getElementById("ui-limit").innerText=DAILY_AD_LIMIT;alert("✔️ Limit সেট হয়েছে");}}
 function adminLogin(){if(document.getElementById("adminPass").value!==ADMIN_PASSWORD)return alert("ভুল");document.getElementById("adminPanel").classList.remove("hidden");updateAdmin();}
 
-// On Load
-window.onload=()=>{if(SESSION.username){document.getElementById("ui-balance").innerText=fmt(SESSION.balance);document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${SESSION.username}`;document.getElementById("ui-limit").innerText=DAILY_AD_LIMIT;updateUI();openTab("home");}};
+window.onload=()=>{if(SESSION.username){resetDailyAds();document.getElementById("ui-balance").innerText=fmt(SESSION.balance);document.getElementById("refLink").innerText=`https://t.me/${BOT_USERNAME}?start=${SESSION.username}`;updateUI();openTab("home");}};
 </script>
 </body>
 </html>
