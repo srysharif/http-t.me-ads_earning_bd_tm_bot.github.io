@@ -12,30 +12,11 @@
       color:#fff;min-height:100vh;
       font-weight:bold;font-style:italic;
     }
-    .glass {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(12px);
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
+    .glass {background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(12px);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.5);}
     .tab{display:none}.tab.show{display:block}
-    .glow-text {
-      font-weight:bold;font-style:italic;
-      text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff;
-    }
-    .glow-btn {
-      background: linear-gradient(90deg,#ff0080,#7928ca,#2af598);
-      background-size:200% 200%;
-      animation: glow 3s linear infinite;
-      font-weight:bold;font-style:italic;
-      font-size:1.1rem;border-radius:12px;padding:10px
-    }
-    @keyframes glow {
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-    }
+    .glow-text {font-weight:bold;font-style:italic;text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff;}
+    .glow-btn {background:linear-gradient(90deg,#ff0080,#7928ca,#2af598);background-size:200% 200%;animation:glow 3s linear infinite;font-weight:bold;font-style:italic;font-size:1.1rem;border-radius:12px;padding:10px}
+    @keyframes glow {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
     .badge{padding:2px 8px;border-radius:6px;font-size:.8rem;font-weight:bold;font-style:italic}
     .badge.pending{background:#fbbf24;color:#000}
     .badge.success{background:#4ade80;color:#000}
@@ -77,9 +58,9 @@
   <section id="tab-withdraw" class="tab glass p-4">
     <h2 class="text-xl glow-text">💳 𝐖𝐢𝐭𝐡𝐝𝐫𝐚𝐰</h2>
     <select id="method" class="w-full p-2 mt-2 rounded text-black font-bold italic">
-      <option value="bkash">📱 Bkash (Minimum 10)</option>
-      <option value="nagad">📱 Nagad (Minimum 50)</option>
-      <option value="recharge">📱 Recharge (Minimum 20)</option>
+      <option value="bkash">📱 Bkash (𝐌𝐢𝐧𝐢𝐦𝐮𝐦 10)</option>
+      <option value="nagad">📱 Nagad (𝐌𝐢𝐧𝐢𝐦𝐮𝐦 50)</option>
+      <option value="recharge">📱 Recharge (𝐌𝐢𝐧𝐢𝐦𝐮𝐦 20)</option>
     </select>
     <input id="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="📞 𝐍𝐮𝐦𝐛𝐞𝐫"/>
     <input id="amount" type="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="💰 𝐀𝐦𝐨𝐮𝐧𝐭"/>
@@ -203,7 +184,7 @@ function withdraw(){
   let list=JSON.parse(localStorage.requests||"[]");
   list.push(req);localStorage.requests=JSON.stringify(list);
   loadHistory();
-  sendNotification(`📩 *Withdraw Request*%0A👤 *User*: _${req.user}_%0A💳 *Method*: ${req.method}%0A📞 *Number*: ${req.number}%0A💰 *Amount*: ${req.amount}৳%0A🕒 *Time*: _${req.time}_`);
+  sendNotification(`📩 *Withdraw Request*%0A👤 *User*: _${req.user}_%0A🤖 *Bot*: @${BOT_USERNAME}%0A💳 *Method*: ${req.method}%0A📞 *Number*: ${req.number}%0A💰 *Amount*: ${req.amount}৳%0A🕒 *Time*: _${req.time}_`);
 }
 
 function loadHistory(){
@@ -242,7 +223,7 @@ function approve(i){
   if(list[i].status!=="pending") return;
   list[i].status="success";
   localStorage.requests=JSON.stringify(list);
-  sendNotification("✅ *Withdraw Approved*: "+list[i].user);
+  sendNotification("✅ *Withdraw Approved*%0A👤 *User*: _"+list[i].user+"_%0A🤖 *Bot*: @"+BOT_USERNAME);
   loadRequests();loadHistory();
 }
 function reject(i){
@@ -250,7 +231,7 @@ function reject(i){
   if(list[i].status!=="pending") return;
   list[i].status="failed";
   localStorage.requests=JSON.stringify(list);
-  sendNotification("❌ *Withdraw Rejected*: "+list[i].user);
+  sendNotification("❌ *Withdraw Rejected*%0A👤 *User*: _"+list[i].user+"_%0A🤖 *Bot*: @"+BOT_USERNAME);
   loadRequests();loadHistory();
 }
 function delReq(i){
