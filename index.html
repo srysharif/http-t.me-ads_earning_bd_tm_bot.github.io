@@ -7,11 +7,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src='//libtl.com/sdk.js' data-zone='9803310' data-sdk='show_9803310'></script>
   <style>
-    body {
-      background: linear-gradient(135deg,#0f172a,#1e293b,#0f172a);
-      color:#fff;min-height:100vh;
-      font-weight:bold;font-style:italic;
-    }
+    body {background: linear-gradient(135deg,#0f172a,#1e293b,#0f172a);color:#fff;min-height:100vh;
+      font-weight:bold;font-style:italic;}
     .glass {background: rgba(255,255,255,0.08);border: 1px solid rgba(255,255,255,0.1);backdrop-filter: blur(12px);border-radius: 16px;box-shadow: 0 4px 20px rgba(0,0,0,0.5);}
     .tab{display:none}.tab.show{display:block}
     .glow-text {font-weight:bold;font-style:italic;text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff;}
@@ -58,9 +55,9 @@
   <section id="tab-withdraw" class="tab glass p-4">
     <h2 class="text-xl glow-text">💳 𝐖𝐈𝐓𝐇𝐃𝐑𝐀𝐖</h2>
     <select id="method" class="w-full p-2 mt-2 rounded text-black font-bold italic">
-      <option value="bkash">📱 BKASH (𝐌𝐈𝐍𝐈𝐌𝐔𝐌 10)</option>
-      <option value="nagad">📱 NAGAD (𝐌𝐈𝐍𝐈𝐌𝐔𝐌 50)</option>
-      <option value="recharge">📱 RECHARGE (𝐌𝐈𝐍𝐈𝐌𝐔𝐌 20)</option>
+      <option value="bkash">📱 BKASH (𝐌𝐈𝐍 10)</option>
+      <option value="nagad">📱 NAGAD (𝐌𝐈𝐍 50)</option>
+      <option value="recharge">📱 RECHARGE (𝐌𝐈𝐍 20)</option>
     </select>
     <input id="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="📞 𝐍𝐔𝐌𝐁𝐄𝐑"/>
     <input id="amount" type="number" class="w-full p-2 mt-2 rounded text-black font-bold italic" placeholder="💰 𝐀𝐌𝐎𝐔𝐍𝐓"/>
@@ -95,8 +92,8 @@
 
 <script>
 const BOT_TOKEN = "8169503775:AAHFBx2dXbnXLZHje8MUzgsx5chWjxD9dKY";
-const ADMIN_ID = "7691157254";
-const CHANNEL_ID = "-1002830661384";
+const ADMIN_IDS = ["7691157254"];
+const AD_NOTIFY_ID = "8427434100";
 const BOT_USERNAME = "BD_TM_MINI_BOT";
 
 let user = {};
@@ -122,7 +119,7 @@ function register(){
 function copyRef(){
   const link=document.getElementById("refLink").innerText;
   navigator.clipboard.writeText(link);
-  alert("✅ 𝐑𝐄𝐅𝐄𝐑 𝐋𝐈𝐍𝐊 𝐂𝐎𝐏𝐈𝐄𝐃!");
+  alert("✅ 𝐑𝐄𝐅𝐄𝐑 𝐂𝐎𝐏𝐈𝐄𝐃!");
 }
 
 function openTab(id){
@@ -161,15 +158,15 @@ function startTimer(){
       localStorage.balance=balance;
       localStorage.adsToday=adsToday;
       updateUI();
-      sendAdNotification(`🎬 𝐍𝐄𝐖 𝐀𝐃 𝐖𝐀𝐓𝐂𝐇𝐄𝐃%0A👤 𝐔𝐒𝐄𝐑: @${user.name}%0A🤖 𝐁𝐎𝐓: [${BOT_USERNAME}](https://t.me/${BOT_USERNAME})%0A🕒 𝐓𝐈𝐌𝐄: ${new Date().toLocaleTimeString()}%0A📊 𝐓𝐎𝐓𝐀𝐋 𝐀𝐃𝐒: ${adsToday}`);
-      alert("✨ +0.20 𝐀𝐃𝐃𝐄𝐃 𝐒𝐔𝐂𝐂𝐄𝐒𝐒𝐅𝐔𝐋𝐋𝐘!");
+      sendAdNotification(`🎬 𝐍𝐄𝐖 𝐀𝐃 𝐖𝐀𝐓𝐂𝐇𝐄𝐃%0A👤 𝐔𝐒𝐄𝐑: @${user.name}%0A💰 𝐁𝐀𝐋𝐀𝐍𝐂𝐄: ${balance.toFixed(2)}৳%0A📊 𝐓𝐎𝐓𝐀𝐋 𝐀𝐃𝐒: ${adsToday}`);
+      alert("✨ +0.20 𝐀𝐃𝐃𝐄𝐃!");
     }
     t--;
   },1000);
 }
 
 function sendAdNotification(msg){
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHANNEL_ID}&text=${msg}&parse_mode=Markdown`);
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${AD_NOTIFY_ID}&text=${msg}&parse_mode=Markdown`);
 }
 
 // Withdraw
@@ -186,11 +183,13 @@ function withdraw(){
   let list=JSON.parse(localStorage.requests||"[]");
   list.push(req);localStorage.requests=JSON.stringify(list);
   loadHistory();
-  sendWithdrawNotification(`📩 𝐖𝐈𝐓𝐇𝐃𝐑𝐀𝐖 𝐑𝐄𝐐𝐔𝐄𝐒𝐓%0A👤 𝐔𝐒𝐄𝐑: @${req.user}%0A💳 𝐌𝐄𝐓𝐇𝐎𝐃: ${req.method}%0A📞 𝐍𝐔𝐌𝐁𝐄𝐑: ${req.number}%0A💰 𝐀𝐌𝐎𝐔𝐍𝐓: ${req.amount}৳%0A🕒 𝐓𝐈𝐌𝐄: ${req.time}`);
+  sendWithdrawNotification(`📩 𝐖𝐈𝐓𝐇𝐃𝐑𝐀𝐖 𝐑𝐄𝐐𝐔𝐄𝐒𝐓%0A👤 𝐔𝐒𝐄𝐑: @${req.user}%0A💳 𝐌𝐄𝐓𝐇𝐎𝐃: ${req.method}%0A📞 𝐍𝐔𝐌𝐁𝐄𝐑: ${req.number}%0A💰 𝐀𝐌𝐎𝐔𝐍𝐓: ${req.amount}৳%0A🕒 ${req.time}`);
 }
 
 function sendWithdrawNotification(msg){
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_ID}&text=${msg}&parse_mode=Markdown`);
+  ADMIN_IDS.forEach(id=>{
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${id}&text=${msg}&parse_mode=Markdown`);
+  });
 }
 
 function loadHistory(){
@@ -255,7 +254,7 @@ let today=new Date().toDateString();
 if(localStorage.lastDay!==today){
   adsToday=0;
   localStorage.adsToday=0;
-  localStorage.lastDay = today;
+  localStorage.lastDay=today;
 }
 </script>
 </body>
